@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1017541681933",
+    "project_id": "signin-63f4d",
+    "storage_bucket": "signin-63f4d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1017541681933:android:d5f66dcf8ea157941bc644",
+        "android_client_info": {
+          "package_name": "br.com.fiapstatupone.vigiaseguro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1017541681933-on8fola42or869vtpu15atkimgi145k9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.fiapstatupone.vigiaseguro",
+            "certificate_hash": "e9426a93e62c16f590c5b04f3d490cc0b8841a27"
+          }
+        },
+        {
+          "client_id": "1017541681933-r102d2l3carulo4n6s59b8v9dmkkk0mu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7X8lAGr7vXN2J5Ts9-asEYZHbKTFNS34"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1017541681933-r102d2l3carulo4n6s59b8v9dmkkk0mu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
