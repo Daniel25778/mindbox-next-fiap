@@ -3,7 +3,7 @@ package br.com.mindbox.presentation.sign_in
 import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
-import br.com.fiapstatupone.mindbox.R
+import br.com.mindbox.R
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.BeginSignInRequest.GoogleIdTokenRequestOptions
 import com.google.android.gms.auth.api.identity.SignInClient

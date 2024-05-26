@@ -11,5 +11,5 @@
 <!--</resources>-->
 
 <resources>
-    <style name="Theme.VigiaSeguro" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.Mindbox" parent="android:Theme.Material.Light.NoActionBar" />
 </resources>

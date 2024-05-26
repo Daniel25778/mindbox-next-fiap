@@ -37,8 +37,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import br.com.fiapstatupone.mindbox.R
-import br.com.fiapstatupone.mindbox.ui.theme.MontserratSemibold
+import br.com.mindbox.R
+import br.com.mindbox.ui.theme.MontserratSemibold
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

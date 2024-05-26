@@ -1,4 +1,4 @@
-package br.com.fiapstatupone.mindbox.screens.register.alert
+package br.com.mindbox.screens.register.alert
 
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
@@ -24,7 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import br.com.fiapstatupone.mindbox.R
+import br.com.mindbox.R
 import kotlinx.coroutines.delay
 
 

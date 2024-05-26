@@ -1,6 +1,6 @@
 package br.com.mindbox.service
 
-import br.com.fiapstatupone.mindbox.model.Advice
+import br.com.mindbox.model.Advice
 import retrofit2.Call
 import retrofit2.http.GET
 

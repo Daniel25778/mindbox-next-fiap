@@ -1,4 +1,4 @@
-package br.com.fiapstatupone.mindbox
+package br.com.mindbox
 
 import org.junit.Test
 

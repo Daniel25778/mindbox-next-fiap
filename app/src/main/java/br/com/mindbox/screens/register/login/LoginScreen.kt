@@ -37,11 +37,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import br.com.fiapstatupone.mindbox.R
-import br.com.fiapstatupone.mindbox.components.Input
-import br.com.fiapstatupone.mindbox.presentation.sign_in.SignInState
-import br.com.fiapstatupone.mindbox.ui.theme.Montserrat
-import br.com.fiapstatupone.mindbox.ui.theme.MontserratSemibold
+import br.com.mindbox.R
+import br.com.mindbox.components.Input
+import br.com.mindbox.presentation.sign_in.SignInState
+import br.com.mindbox.ui.theme.Montserrat
+import br.com.mindbox.ui.theme.MontserratSemibold
 
 @Composable
     fun Login(navController: NavController, state: SignInState,

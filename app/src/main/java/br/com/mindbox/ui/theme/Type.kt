@@ -8,9 +8,9 @@ import androidx.compose.ui.unit.sp
 
 // Set of Material typography styles to start with
 
-val Montserrat = FontFamily(androidx.compose.ui.text.font.Font(br.com.fiapstatupone.mindbox.R.font.montserrat_regular))
+val Montserrat = FontFamily(androidx.compose.ui.text.font.Font(br.com.mindbox.R.font.montserrat_regular))
 val MontserratSemibold = FontFamily(androidx.compose.ui.text.font.
-Font(br.com.fiapstatupone.mindbox.R.font.semibold_montserrat))
+Font(br.com.mindbox.R.font.semibold_montserrat))
 val Typography = Typography(
     bodyLarge = TextStyle(
         fontFamily = FontFamily.Default,
