@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Vigia Seguro"
+rootProject.name = "Mindbox"
 include(":app")

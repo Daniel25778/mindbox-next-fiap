@@ -2,14 +2,17 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id ("com.google.gms.google-services")
+
+    // Room
+    id("kotlin-kapt")
 }
 
 android {
-    namespace = "br.com.fiapstatupone.vigiaseguro"
+    namespace = "br.com.mindbox"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "br.com.fiapstatupone.vigiaseguro"
+        applicationId = "br.com.mindbox"
         minSdk = 27
         targetSdk = 34
         versionCode = 1
@@ -98,4 +101,11 @@ dependencies {
     implementation ("androidx.lifecycle:lifecycle-runtime-compose:2.6.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
 
+    // Room
+    implementation("androidx.room:room-runtime:2.5.2")
+    annotationProcessor("androidx.room:room-compiler:2.5.2")
+    kapt("androidx.room:room-compiler:2.5.2")
+
+    // Password Hash
+    implementation("androidx.security:security-crypto:1.1.0-alpha01")
 }

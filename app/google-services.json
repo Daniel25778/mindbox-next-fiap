@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:1017541681933:android:d5f66dcf8ea157941bc644",
         "android_client_info": {
-          "package_name": "br.com.fiapstatupone.vigiaseguro"
+          "package_name": "br.com.mindbox"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "1017541681933-on8fola42or869vtpu15atkimgi145k9.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "br.com.fiapstatupone.vigiaseguro",
+            "package_name": "br.com.mindbox",
             "certificate_hash": "e9426a93e62c16f590c5b04f3d490cc0b8841a27"
           }
         },
