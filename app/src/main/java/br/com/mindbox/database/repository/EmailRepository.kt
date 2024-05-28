@@ -6,7 +6,6 @@ import br.com.mindbox.database.settings.ConfigDb
 import br.com.mindbox.database.dao.EmailDAO
 import br.com.mindbox.database.dao.EmailRecipientDAO
 import br.com.mindbox.database.dao.EmailTaskDAO
-import br.com.mindbox.dto.email.CreateEmailDTO
 import br.com.mindbox.model.email.Email
 import br.com.mindbox.model.email.EmailRecipient
 import br.com.mindbox.model.email.EmailTask
@@ -31,9 +30,7 @@ class EmailRepository(context: Context) {
         val emailTasks = createEmailDTO.tasks.map { task ->
             EmailTask(
                 emailId = emailId,
-                description = task.description,
-                dueDate = task.dueDate,
-                isCompleted = false
+                description = task.description
             )
 
         }

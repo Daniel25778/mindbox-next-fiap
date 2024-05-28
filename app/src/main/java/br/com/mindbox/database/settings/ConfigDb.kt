@@ -21,10 +21,8 @@ import br.com.mindbox.model.email.EmailCategory
 import br.com.mindbox.model.email.EmailRecipient
 import br.com.mindbox.model.email.EmailTask
 import br.com.mindbox.model.email.EmailTemplate
-import br.com.mindbox.model.email.EmailWithTasks
 import br.com.mindbox.model.externalAccount.ExternalAccount
 import br.com.mindbox.model.user.User
-import br.com.mindbox.util.convertion.ConverterUtil
 
 @Database(
     entities = [User::class, Email::class, EmailApproval::class, EmailCategory::class, EmailRecipient::class, EmailTask::class, EmailTemplate::class, ExternalAccount::class, CalendarHoliday::class, CalendarEvent::class],
