@@ -108,4 +108,10 @@ dependencies {
 
     // Password Hash
     implementation("androidx.security:security-crypto:1.1.0-alpha01")
+
+    implementation ("com.google.accompanist:accompanist-pager:0.19.0")
+
+    implementation ("com.airbnb.android:lottie-compose:5.2.0")
+
+
 }

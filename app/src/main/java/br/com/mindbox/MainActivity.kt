@@ -1,6 +1,7 @@
 package br.com.mindbox
 
 
+import GetStartedScreen
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -38,6 +39,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.composable
+import br.com.mindbox.components.AnimatedGradientBackground
 import br.com.mindbox.presentation.sign_in.GoogleAuthUiClient
 import br.com.mindbox.presentation.sign_in.SignInViewModel
 import br.com.mindbox.screens.register.Register
@@ -130,6 +132,8 @@ class MainActivity : ComponentActivity() {
                                 })
                         }
                         composable(route = "splash") { AnimatedSplashScreen(navController) }
+
+                        composable(route = "apresentation") { GetStartedScreen() }
 
                         composable(route = "dashboard") {
                             DashBoard(
