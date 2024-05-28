@@ -3,6 +3,8 @@ package br.com.mindbox.service
 import android.content.Context
 import br.com.mindbox.database.repository.EmailCategoryRepository
 import br.com.mindbox.database.repository.EmailRepository
+import br.com.mindbox.dto.email.CreateEmailDTO
+import br.com.mindbox.dto.email.SendEmailDTO
 import br.com.mindbox.exception.EmailCategoryNotFoundException
 import br.com.mindbox.model.email.Email
 import br.com.mindbox.util.emailCategory.EmailCategoryClassifier
