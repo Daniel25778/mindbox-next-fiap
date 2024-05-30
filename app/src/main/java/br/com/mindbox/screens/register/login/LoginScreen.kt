@@ -213,6 +213,7 @@ fun Login(
                 Row {
                     Text(
                         text = "Não tem uma conta ainda? Registrar",
+                        color = colorResource(id = R.color.white),
                         style = MaterialTheme.typography.bodyMedium,
                         textAlign = TextAlign.Start
                     )

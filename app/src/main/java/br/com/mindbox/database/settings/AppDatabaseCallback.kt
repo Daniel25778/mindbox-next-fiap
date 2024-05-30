@@ -20,12 +20,6 @@ class AppDatabaseCallback(private val context: Context) : RoomDatabase.Callback(
         populateDatabase()
     }
 
-    override fun onOpen(db: SupportSQLiteDatabase) {
-        super.onOpen(db)
-        resetDatabase()
-        populateDatabase()
-    }
-
     @OptIn(DelicateCoroutinesApi::class)
     private fun populateDatabase() {
         val database = ConfigDb.getDatabase(context)
@@ -47,9 +41,5 @@ class AppDatabaseCallback(private val context: Context) : RoomDatabase.Callback(
             database.calendarEventDAO().insertAll(DefaultCalendarEvents.get())
             database.calendarHolidayDAO().insertAll(DefaultCalendarHolidays.get())
         }
-    }
-
-    private fun resetDatabase() {
-        ConfigDb.resetDatabase(context)
     }
 }
