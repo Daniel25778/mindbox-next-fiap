@@ -10,7 +10,7 @@ class DefaultSendEmailDTOs {
                 // Education Emails
                 SendEmailDTO(
                     senderId = 1,
-                    recipientIds = listOf(2L, 3L),
+                    recipientIds = listOf(2L, 3L, 5L),
                     subject = "Escola - Aula de Matemática",
                     text = "Lembrete: Aula de matemática amanhã às 10h.",
                     tasks = listOf(
@@ -20,7 +20,7 @@ class DefaultSendEmailDTOs {
                 ),
                 SendEmailDTO(
                     senderId = 2,
-                    recipientIds = listOf(1L, 3L),
+                    recipientIds = listOf(1L, 3L, 6L),
                     subject = "Seminário de Educação",
                     text = "Participe do seminário sobre novas técnicas de ensino.",
                     tasks = listOf(
@@ -112,7 +112,7 @@ class DefaultSendEmailDTOs {
                 // Personal Emails
                 SendEmailDTO(
                     senderId = 1,
-                    recipientIds = listOf(2L, 3L),
+                    recipientIds = listOf(2L, 3L, 5L, 6L),
                     subject = "Festa de Aniversário",
                     text = "Você está convidado para a minha festa de aniversário neste sábado.",
                     tasks = listOf(
@@ -122,7 +122,7 @@ class DefaultSendEmailDTOs {
                 ),
                 SendEmailDTO(
                     senderId = 2,
-                    recipientIds = listOf(1L, 3L),
+                    recipientIds = listOf(1L, 3L, 5L, 6L),
                     subject = "Jantar com Amigos",
                     text = "Vamos organizar um jantar com amigos na próxima sexta-feira.",
                     tasks = listOf(
@@ -131,7 +131,7 @@ class DefaultSendEmailDTOs {
                     )
                 ),
                 SendEmailDTO(
-                    senderId = 3,
+                    senderId = 5,
                     recipientIds = listOf(1L, 2L),
                     subject = "Viagem de Férias",
                     text = "Estou planejando uma viagem de férias para o próximo mês.",
@@ -141,7 +141,7 @@ class DefaultSendEmailDTOs {
                     )
                 ),
                 SendEmailDTO(
-                    senderId = 4,
+                    senderId = 6,
                     recipientIds = listOf(1L, 2L),
                     subject = "Almoço em Família",
                     text = "Lembrete: Almoço em família no domingo ao meio-dia.",

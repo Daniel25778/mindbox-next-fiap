@@ -4,18 +4,18 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import androidx.room.Transaction
 import androidx.room.Update
 import br.com.mindbox.model.calendar.CalendarEvent
 import br.com.mindbox.model.calendar.CalendarEventWithUser
-import br.com.mindbox.model.calendar.CalendarHoliday
-import br.com.mindbox.model.user.User
 import java.util.Date
 
 @Dao
 interface CalendarEventDAO {
     @Insert
     fun save(calendarEvent: CalendarEvent): Long
+
+    @Insert
+    fun insertAll(calendarEvents: List<CalendarEvent>): List<Long>
 
     @Update
     fun update(calendarEvent: CalendarEvent): Int

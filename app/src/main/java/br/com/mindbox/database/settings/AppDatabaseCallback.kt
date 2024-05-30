@@ -1,6 +1,8 @@
 import android.content.Context
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import br.com.mindbox.database.mock.DefaultCalendarEvents
+import br.com.mindbox.database.mock.DefaultCalendarHolidays
 import br.com.mindbox.database.mock.DefaultEmailCategories
 import br.com.mindbox.database.mock.DefaultRegisterUserDTOs
 import br.com.mindbox.database.mock.DefaultSendEmailDTOs
@@ -41,6 +43,9 @@ class AppDatabaseCallback(private val context: Context) : RoomDatabase.Callback(
             sendEmailDTOs.forEach { sendEmailDTO ->
                 emailService.sendMail(sendEmailDTO)
             }
+
+            database.calendarEventDAO().insertAll(DefaultCalendarEvents.get())
+            database.calendarHolidayDAO().insertAll(DefaultCalendarHolidays.get())
         }
     }
 
