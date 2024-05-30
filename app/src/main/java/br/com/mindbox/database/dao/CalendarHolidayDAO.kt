@@ -12,6 +12,9 @@ interface CalendarHolidayDAO {
     @Insert
     fun save(calendarHoliday: CalendarHoliday): Long
 
+    @Insert
+    fun insertAll(holidays: List<CalendarHoliday>)
+
     @Update
     fun update(calendarHoliday: CalendarHoliday): Int
 
