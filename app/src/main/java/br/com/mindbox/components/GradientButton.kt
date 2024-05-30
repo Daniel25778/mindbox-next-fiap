@@ -18,7 +18,8 @@ import br.com.mindbox.R
 
 @Composable
 fun GradientButton(
-    text: String
+    text: String,
+    onClick: () -> Unit
 ) {
     val gradient = Brush.horizontalGradient(
         colors = listOf(
@@ -27,7 +28,7 @@ fun GradientButton(
         )
     )
 
-    Button(onClick = { /*TODO*/ }, modifier = Modifier.background(gradient).fillMaxWidth(), shape = RoundedCornerShape(0.dp), colors = ButtonDefaults.buttonColors(
+    Button(onClick = { onClick() }, modifier = Modifier.background(gradient).fillMaxWidth(), shape = RoundedCornerShape(0.dp), colors = ButtonDefaults.buttonColors(
         disabledContentColor = Color.Transparent,
         containerColor = Color.Transparent,
         contentColor = Color.Transparent

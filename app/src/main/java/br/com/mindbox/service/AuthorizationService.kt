@@ -6,6 +6,7 @@ import br.com.mindbox.dto.auth.LoginDTO
 import br.com.mindbox.dto.user.RegisterUserDTO
 import br.com.mindbox.model.user.User
 import br.com.mindbox.util.crypto.HashUtil
+import br.com.mindbox.service.AuthorizationService
 
 class AuthorizationService(private val context: Context) {
     private val userRepository = UserRepository(context)
