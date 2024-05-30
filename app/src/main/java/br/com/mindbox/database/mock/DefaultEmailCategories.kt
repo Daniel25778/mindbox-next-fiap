@@ -21,9 +21,6 @@ class DefaultEmailCategories {
                     name = EmailCategoryName.PROMOTION,
                     iconResId = R.drawable.ic_call_decline
                 ), EmailCategory(
-                    name = EmailCategoryName.SOCIAL,
-                    iconResId = R.drawable.ic_call_decline
-                ), EmailCategory(
                     name = EmailCategoryName.FINANCE,
                     iconResId = R.drawable.ic_call_decline
                 ), EmailCategory(
@@ -31,9 +28,6 @@ class DefaultEmailCategories {
                     iconResId = R.drawable.ic_call_decline
                 ), EmailCategory(
                     name = EmailCategoryName.TRAVEL,
-                    iconResId = R.drawable.ic_call_decline
-                ), EmailCategory(
-                    name = EmailCategoryName.SHOPPING,
                     iconResId = R.drawable.ic_call_decline
                 ), EmailCategory(
                     name = EmailCategoryName.NEWSLETTER,

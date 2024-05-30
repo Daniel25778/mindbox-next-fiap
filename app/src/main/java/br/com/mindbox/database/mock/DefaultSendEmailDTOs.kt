@@ -11,7 +11,7 @@ class DefaultSendEmailDTOs {
                 SendEmailDTO(
                     senderId = 1,
                     recipientIds = listOf(2L, 3L),
-                    subject = "Aula de Matemática",
+                    subject = "Escola - Aula de Matemática",
                     text = "Lembrete: Aula de matemática amanhã às 10h.",
                     tasks = listOf(
                         CreateEmailTaskDTO(description = "Revisar lição de casa"),
@@ -32,7 +32,7 @@ class DefaultSendEmailDTOs {
                     senderId = 3,
                     recipientIds = listOf(1L, 2L),
                     subject = "Exame Final",
-                    text = "Data do exame final foi marcada para a próxima segunda-feira.",
+                    text = "Data do exame final da universidade foi marcada para a próxima segunda-feira.",
                     tasks = listOf(
                         CreateEmailTaskDTO(description = "Estudar capítulos 1 a 5"),
                         CreateEmailTaskDTO(description = "Revisar notas de aula")
@@ -103,7 +103,7 @@ class DefaultSendEmailDTOs {
                     senderId = 5,
                     recipientIds = listOf(3L, 4L),
                     subject = "Avaliação de Desempenho",
-                    text = "A avaliação de desempenho será realizada na próxima semana.",
+                    text = "A avaliação de desempenho do trabalho será realizada na próxima semana.",
                     tasks = listOf(
                         CreateEmailTaskDTO(description = "Preencher formulário de autoavaliação"),
                         CreateEmailTaskDTO(description = "Agendar reunião com o gestor")
@@ -211,63 +211,12 @@ class DefaultSendEmailDTOs {
                         CreateEmailTaskDTO(description = "Oferecer brindes para compras acima de $100")
                     )
                 ),
-                // Social Emails
-                SendEmailDTO(
-                    senderId = 1,
-                    recipientIds = listOf(2L, 3L),
-                    subject = "Encontro de Amigos",
-                    text = "Vamos nos encontrar para um café na sexta-feira.",
-                    tasks = listOf(
-                        CreateEmailTaskDTO(description = "Confirmar presença"),
-                        CreateEmailTaskDTO(description = "Escolher café")
-                    )
-                ),
-                SendEmailDTO(
-                    senderId = 2,
-                    recipientIds = listOf(1L, 3L),
-                    subject = "Festa de Fim de Ano",
-                    text = "Você está convidado para nossa festa de fim de ano.",
-                    tasks = listOf(
-                        CreateEmailTaskDTO(description = "Enviar convites"),
-                        CreateEmailTaskDTO(description = "Organizar decoração")
-                    )
-                ),
-                SendEmailDTO(
-                    senderId = 3,
-                    recipientIds = listOf(1L, 2L),
-                    subject = "Reunião de Networking",
-                    text = "Participe da nossa reunião de networking na próxima semana.",
-                    tasks = listOf(
-                        CreateEmailTaskDTO(description = "Preparar cartões de visita"),
-                        CreateEmailTaskDTO(description = "Enviar confirmações")
-                    )
-                ),
-                SendEmailDTO(
-                    senderId = 4,
-                    recipientIds = listOf(1L, 2L),
-                    subject = "Churrasco no Parque",
-                    text = "Vamos fazer um churrasco no parque no sábado.",
-                    tasks = listOf(
-                        CreateEmailTaskDTO(description = "Trazer carne para churrasco"),
-                        CreateEmailTaskDTO(description = "Levar bebidas")
-                    )
-                ),
-                SendEmailDTO(
-                    senderId = 5,
-                    recipientIds = listOf(3L, 4L),
-                    subject = "Cinema com Amigos",
-                    text = "Vamos assistir a um filme no cinema no domingo.",
-                    tasks = listOf(
-                        CreateEmailTaskDTO(description = "Comprar ingressos"),
-                        CreateEmailTaskDTO(description = "Escolher filme")
-                    )
-                ),
                 // Finance Emails
                 SendEmailDTO(
                     senderId = 1,
                     recipientIds = listOf(2L, 3L),
                     subject = "Resumo de Conta",
-                    text = "Seu resumo de conta do mês está disponível.",
+                    text = "Seu resumo do dinheiro na conta do mês está disponível.",
                     tasks = listOf(
                         CreateEmailTaskDTO(description = "Revisar resumo de conta"),
                         CreateEmailTaskDTO(description = "Verificar transações recentes")
@@ -306,7 +255,7 @@ class DefaultSendEmailDTOs {
                 SendEmailDTO(
                     senderId = 5,
                     recipientIds = listOf(3L, 4L),
-                    subject = "Atualização de Conta Corrente",
+                    subject = "Atualização de Financeiro",
                     text = "Atualize suas informações de conta corrente para evitar interrupções.",
                     tasks = listOf(
                         CreateEmailTaskDTO(description = "Enviar documentação necessária"),
@@ -415,56 +364,41 @@ class DefaultSendEmailDTOs {
                         CreateEmailTaskDTO(description = "Trazer lanche e água")
                     )
                 ),
-                // Shopping Emails
+                //Newsletter Emails
                 SendEmailDTO(
                     senderId = 1,
                     recipientIds = listOf(2L, 3L),
-                    subject = "Lista de Compras",
-                    text = "Confira nossa lista de compras para o mês.",
-                    tasks = listOf(
-                        CreateEmailTaskDTO(description = "Comprar mantimentos"),
-                        CreateEmailTaskDTO(description = "Verificar ofertas no supermercado")
-                    )
+                    subject = "Últimas Notícias da Semana",
+                    text = "Confira as últimas notícias da semana em nossa newsletter!",
+                    tasks = emptyList()
                 ),
                 SendEmailDTO(
                     senderId = 2,
                     recipientIds = listOf(1L, 3L),
-                    subject = "Compras de Natal",
-                    text = "Prepare-se para as compras de Natal com nossas dicas.",
-                    tasks = listOf(
-                        CreateEmailTaskDTO(description = "Fazer lista de presentes"),
-                        CreateEmailTaskDTO(description = "Pesquisar ofertas de Natal")
-                    )
+                    subject = "Novidades e Atualizações",
+                    text = "Fique por dentro das novidades e atualizações em nossa newsletter mensal.",
+                    tasks = emptyList()
                 ),
                 SendEmailDTO(
                     senderId = 3,
                     recipientIds = listOf(1L, 2L),
-                    subject = "Liquidação de Inverno",
-                    text = "Aproveite nossa liquidação de inverno com descontos incríveis.",
-                    tasks = listOf(
-                        CreateEmailTaskDTO(description = "Visitar lojas participantes"),
-                        CreateEmailTaskDTO(description = "Comprar itens necessários")
-                    )
+                    subject = "Destaques da Indústria",
+                    text = "Os principais destaques da indústria em nossa newsletter quinzenal.",
+                    tasks = emptyList()
                 ),
                 SendEmailDTO(
                     senderId = 4,
-                    recipientIds = listOf(1L, 2L),
-                    subject = "Feira de Produtos Orgânicos",
-                    text = "Participe da feira de produtos orgânicos neste domingo.",
-                    tasks = listOf(
-                        CreateEmailTaskDTO(description = "Fazer lista de compras orgânicas"),
-                        CreateEmailTaskDTO(description = "Levar sacolas reutilizáveis")
-                    )
+                    recipientIds = listOf(1L, 2L, 3L),
+                    subject = "Resumo Semanal",
+                    text = "Confira nosso resumo semanal com as notícias mais importantes.",
+                    tasks = emptyList()
                 ),
                 SendEmailDTO(
                     senderId = 5,
-                    recipientIds = listOf(3L, 4L),
-                    subject = "Compras Online",
-                    text = "Aproveite nossas ofertas exclusivas para compras online.",
-                    tasks = listOf(
-                        CreateEmailTaskDTO(description = "Visitar site de compras"),
-                        CreateEmailTaskDTO(description = "Adicionar itens ao carrinho")
-                    )
+                    recipientIds = listOf(2L, 4L),
+                    subject = "Melhores Artigos do Mês",
+                    text = "Veja os melhores artigos do mês em nossa newsletter especial.",
+                    tasks = emptyList()
                 )
             )
         }
