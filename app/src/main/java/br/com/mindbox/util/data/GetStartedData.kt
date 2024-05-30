@@ -3,22 +3,22 @@ package br.com.mindbox.util.data
 import androidx.annotation.RawRes
 import br.com.mindbox.R
 
-class GetStartedData(@RawRes val resId: Int, val title: String, val desc: String)
-
 val listData = listOf(
     GetStartedData(
         R.raw.apresentation1,
         "Define Your Goal",
-        "Aliquam pharetra tortor nec odio pellentesque dignissim. Etiam ultricies sollicitudin est sit amet rutrum.",
+        "Desperte para a revolução do e-mail: sua caixa de entrada nunca foi tão inteligente e moderna.",
     ),
     GetStartedData(
-        R.raw.app_logo_horizontal,
+        R.raw.apresentation2,
         "Green Marketing",
-        "Maecenas gravida, ipsum eget ultricies cursus, nisl lectus ullamcorper mi, egestas blandit mi sem vitae lorem.",
+        "Deixe a inteligência artificial organizar sua vida digital: simplificando sua caixa de entrada, um e-mail de cada vez.",
     ),
     GetStartedData(
-        R.raw.app_logo_horizontal,
+        R.raw.apresentation3,
         "Secured Storage",
-        "Vivamus convallis odio posuere, tempus nulla eget, ullamcorper erat. In ut tortor consequat, pharetra ex id, interdum mauris.",
+        "Converse com eficiência: nosso chat com IA está sempre pronto para  ajudar a redigir suas respostas de e-mail de forma inteligente e rápida.",
     ),
 )
+
+class GetStartedData(@RawRes val resId: Int, val title: String, val desc: String)

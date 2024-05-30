@@ -32,7 +32,7 @@ fun AnimatedSplashScreen(navController: NavController) {
         animationSpec = tween(
             durationMillis = 5000,
             easing = LinearEasing
-        )
+        ), label = ""
     )
 
     LaunchedEffect(key1 = true) {

@@ -133,7 +133,7 @@ class MainActivity : ComponentActivity() {
                         }
                         composable(route = "splash") { AnimatedSplashScreen(navController) }
 
-                        composable(route = "apresentation") { GetStartedScreen() }
+                        composable(route = "apresentation") { GetStartedScreen(navController) }
 
                         composable(route = "dashboard") {
                             DashBoard(
