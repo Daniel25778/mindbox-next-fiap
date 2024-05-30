@@ -39,10 +39,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import br.com.mindbox.R
 import br.com.mindbox.components.AnimatedGradientBackground
 import br.com.mindbox.components.GradientButton
@@ -51,7 +49,6 @@ import br.com.mindbox.dto.auth.LoginDTO
 import br.com.mindbox.model.user.User
 import br.com.mindbox.presentation.sign_in.SignInState
 import br.com.mindbox.service.AuthorizationService
-import br.com.mindbox.util.data.listData
 
 @SuppressLint("SuspiciousIndentation")
 @Composable

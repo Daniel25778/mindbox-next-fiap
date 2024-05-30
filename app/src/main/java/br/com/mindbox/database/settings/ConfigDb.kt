@@ -57,14 +57,6 @@ abstract class ConfigDb : RoomDatabase() {
                 newInstance
             }
         }
-
-        fun resetDatabase(context: Context) {
-            synchronized(this) {
-                context.deleteDatabase("mindbox_db")
-                instance = null
-                getDatabase(context)
-            }
-        }
     }
 
 }
