@@ -17,7 +17,6 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -33,7 +32,7 @@ import br.com.mindbox.util.data.listData
 fun GetStartedScreen(
     navController: NavController,
 ) {
-    var startAnimation by remember { mutableStateOf(false) }
+    val startAnimation by remember { mutableStateOf(false) }
     val alphaAnim: State<Float> = animateFloatAsState(
         targetValue = if (startAnimation) 1f else 0f,
         animationSpec = tween(
@@ -78,6 +77,7 @@ fun GetStartedScreen(
                             Text(
                                 listData[page].desc,
                                 textAlign = TextAlign.Center,
+                                color = colorResource(id = R.color.white),
                                 style = MaterialTheme.typography.titleMedium,
                             )
                         }
@@ -133,7 +133,7 @@ fun GetStartedScreen(
                             },
                             modifier = Modifier.height(36.dp)
                         ) {
-                            Text(text = "Próximo")
+                            Text(text = "Próximo", color = colorResource(id = R.color.white))
                         }
                     }
                 }
@@ -149,7 +149,7 @@ fun GetStartedScreen(
                             .height(36.dp)
                             .clip(RoundedCornerShape(16.dp))
                     ) {
-                        Text(text = "Vamos lá")
+                        Text(text = "Vamos lá", color = colorResource(id = R.color.white))
                     }
                 }
             }

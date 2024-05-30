@@ -39,7 +39,7 @@ fun AnimatedSplashScreen(navController: NavController) {
         startAnimation = true
         delay(3000)
         navController.popBackStack()
-        navController.navigate("apresentation")
+        navController.navigate("presentation")
     }
     AnimatedGradientBackground(alphaAnimate = alphaAnim.value) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {

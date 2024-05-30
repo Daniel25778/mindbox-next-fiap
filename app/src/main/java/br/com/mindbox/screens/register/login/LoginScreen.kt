@@ -107,7 +107,7 @@ fun Login(
                     contentAlignment = Alignment.TopStart,
                     modifier = Modifier
                         .height(40.dp)
-                        .width(200.dp)
+                        .width(150.dp)
                 ) {
                     Image(
                         painter = painterResource(id = R.drawable.app_logo_horizontal),
@@ -120,6 +120,7 @@ fun Login(
                 Spacer(modifier = Modifier.height(20.dp))
                 Text(
                     text = "Bem-vindo ao seu novo e-mail Inteligente",
+                    color = colorResource(id = R.color.white),
                     style = MaterialTheme.typography.titleLarge.copy(
                         fontWeight = FontWeight.Bold
                     )
@@ -151,6 +152,7 @@ fun Login(
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(
                     text = "Esqueceu a senha?",
+                    color = colorResource(id = R.color.white),
                     style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier.align(Alignment.End)
                 )
@@ -165,6 +167,7 @@ fun Login(
                 Text(
                     text = "ou",
                     style = MaterialTheme.typography.bodyMedium,
+                    color = colorResource(id = R.color.white),
                     modifier = Modifier.align(Alignment.CenterHorizontally)
                 )
 
@@ -198,7 +201,7 @@ fun Login(
                     ) {
                         Icon(
                             modifier = Modifier.size(40.dp).padding(10.dp),
-                            painter = painterResource(id = R.drawable.flat_color_icons_google),
+                            painter = painterResource(id = R.drawable.outlook_icon),
                             contentDescription = "Outlook",
                             tint = Color.Unspecified
                         )
@@ -206,10 +209,10 @@ fun Login(
 
 
                 }
-                Spacer(modifier = Modifier.width(16.dp))
+                Spacer(modifier = Modifier.height(16.dp))
                 Row {
                     Text(
-                        text = "Não tem uma conta ainda? Registar",
+                        text = "Não tem uma conta ainda? Registrar",
                         style = MaterialTheme.typography.bodyMedium,
                         textAlign = TextAlign.Start
                     )
