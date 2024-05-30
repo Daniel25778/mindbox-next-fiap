@@ -38,22 +38,33 @@ abstract class ConfigDb : RoomDatabase() {
     abstract fun calendarEventDAO(): CalendarEventDAO
     abstract fun emailRecipientDAO(): EmailRecipientDAO
     abstract fun emailTaskDAO(): EmailTaskDAO
-
     abstract fun emailCategoryDAO(): EmailCategoryDAO
 
     companion object {
 
-        private lateinit var instance: ConfigDb
+        @Volatile
+        private var instance: ConfigDb? = null
 
         fun getDatabase(context: Context): ConfigDb {
-            if (!Companion::instance.isInitialized) {
-                instance = Room.databaseBuilder(
-                    context, ConfigDb::class.java, "mindbox_db"
+            return instance ?: synchronized(this) {
+                val newInstance = Room.databaseBuilder(
+                    context.applicationContext,
+                    ConfigDb::class.java, "mindbox_db"
                 ).addCallback(AppDatabaseCallback(context))
                     .allowMainThreadQueries() // Talvez seja necessário remover
                     .fallbackToDestructiveMigration().build()
+                instance = newInstance
+                newInstance
             }
-            return instance
+        }
+
+        fun resetDatabase(context: Context) {
+            synchronized(this) {
+                context.deleteDatabase("mindbox_db")
+                instance = null
+                getDatabase(context)
+            }
         }
     }
+
 }

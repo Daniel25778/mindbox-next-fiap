@@ -8,7 +8,6 @@ import br.com.mindbox.dto.emailTask.CreateEmailTaskDTO
 import br.com.mindbox.dto.user.RegisterUserDTO
 import br.com.mindbox.model.email.EmailCategory
 import br.com.mindbox.model.email.EmailCategoryName
-import br.com.mindbox.model.email.EmailTask
 import br.com.mindbox.service.AuthorizationService
 import br.com.mindbox.service.EmailService
 import br.com.mindbox.util.date.DateUtils
@@ -21,6 +20,11 @@ class AppDatabaseCallback(private val context: Context) : RoomDatabase.Callback(
     override fun onCreate(db: SupportSQLiteDatabase) {
         super.onCreate(db)
         populateDatabase()
+    }
+
+    override fun onOpen(db: SupportSQLiteDatabase) {
+        super.onOpen(db)
+        resetDatabase()
     }
 
     @OptIn(DelicateCoroutinesApi::class)
@@ -41,6 +45,10 @@ class AppDatabaseCallback(private val context: Context) : RoomDatabase.Callback(
                 emailService.sendMail(sendEmailDTO)
             }
         }
+    }
+
+    private fun resetDatabase() {
+        ConfigDb.resetDatabase(context)
     }
 
     companion object {
