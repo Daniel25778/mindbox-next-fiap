@@ -17,7 +17,8 @@ class AuthorizationService(private val context: Context) {
             email = userDTO.email,
             fullName = userDTO.fullName,
             passwordHash = hashedPassword,
-            isLoggedIn = true
+            isLoggedIn = true,
+            profilePictureUrl = userDTO.profilePictureUrl ?: "https://storage.needpix.com/rsynced_images/blank-profile-picture-973460_1280.png"
         )
         val userId = userRepository.save(user)
         return user.copy(id = userId)
