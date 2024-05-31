@@ -6,7 +6,6 @@ import br.com.mindbox.dto.auth.LoginDTO
 import br.com.mindbox.dto.user.RegisterUserDTO
 import br.com.mindbox.model.user.User
 import br.com.mindbox.util.crypto.HashUtil
-import br.com.mindbox.service.AuthorizationService
 
 class AuthorizationService(private val context: Context) {
     private val userRepository = UserRepository(context)
@@ -18,7 +17,8 @@ class AuthorizationService(private val context: Context) {
             email = userDTO.email,
             fullName = userDTO.fullName,
             passwordHash = hashedPassword,
-            isLoggedIn = true
+            isLoggedIn = true,
+            profilePictureUrl = userDTO.profilePictureUrl ?: "https://storage.needpix.com/rsynced_images/blank-profile-picture-973460_1280.png",
         )
         val userId = userRepository.save(user)
         return user.copy(id = userId)

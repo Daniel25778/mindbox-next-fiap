@@ -6,5 +6,6 @@ data class RegisterUserDTO(
     val email: String,
     val password: String,
     val fullName: String,
-    val birthDate: Date
+    val birthDate: Date,
+    val profilePictureUrl: String?
 )
