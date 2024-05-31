@@ -20,7 +20,7 @@ private val DarkColorScheme = darkColorScheme(
     primary =LayerMid, // Cor principal para elementos primários (TopAppBar, botões principais)
     secondary = Grey350, // Cor secundária para elementos que complementam os principais (botões secundários)
     tertiary = PurpleMid, // Cor terciária para acentos adicionais e elementos menos importantes
-
+    inversePrimary = LayerMid,
     background = Primary, // Cor de fundo da aplicação
     surface = LayerMid, // Cor das superfícies de componentes (cartões, folhas de fundo)
     onPrimary = Color.White, // Cor do texto/ícones sobre a cor principal
@@ -36,7 +36,7 @@ private val LightColorScheme = lightColorScheme(
     primary = LayerMid, // Cor principal para elementos primários (TopAppBar, botões principais)
     secondary = Grey350, // Cor secundária para elementos que complementam os principais (botões secundários)
     tertiary = PurpleMid, // Cor terciária para acentos adicionais e elementos menos importantes
-
+    inversePrimary = LayerMid,
     background = Primary, // Cor de fundo da aplicação
     surface = LayerMid, // Cor das superfícies de componentes (cartões, folhas de fundo)
     onPrimary = Color.White, // Cor do texto/ícones sobre a cor principal

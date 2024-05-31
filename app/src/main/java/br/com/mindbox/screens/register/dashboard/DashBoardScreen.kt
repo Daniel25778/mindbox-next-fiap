@@ -87,16 +87,20 @@ fun DashBoard(
 
 
     ModalNavigationDrawer(
+        modifier = Modifier.background(MaterialTheme.colorScheme.onPrimary),
         drawerState = drawerState,
         drawerContent = {
-            ModalDrawerSheet {
-                Column {
+            ModalDrawerSheet (modifier = Modifier.background(MaterialTheme.colorScheme.onPrimary)){
+                Column(
+                    modifier = Modifier.background(MaterialTheme.colorScheme.onPrimary)
+                ) {
                     Spacer(modifier = Modifier.height(100.dp))
                     Box(
                         contentAlignment = Alignment.TopStart,
                         modifier = Modifier
                             .height(40.dp)
                             .width(150.dp)
+                            .background(MaterialTheme.colorScheme.onPrimary)
                     ) {
                         Image(
                             painter = painterResource(id = R.drawable.app_logo_horizontal),
@@ -352,7 +356,7 @@ fun DashBoard(
 
 @Composable
 fun DrawerItem(text: String, navController: NavController, destination: String) {
-    Row(modifier = Modifier.clickable {
+    Row(modifier = Modifier.background(MaterialTheme.colorScheme.onPrimary).clickable {
         navController.navigate(destination)
     }, horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically) {
         Icon(
