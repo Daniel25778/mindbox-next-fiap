@@ -82,29 +82,41 @@ fun DashBoard(
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
-    val authorizationService = AuthorizationService(context = context)
+    val authorizationService = AuthorizationService(context)
     val user = authorizationService.getLoggedUsers()[0];
+
 
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet {
-                Box(
-                    contentAlignment = Alignment.TopStart,
-                    modifier = Modifier
-                        .height(40.dp)
-                        .width(150.dp)
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.app_logo_horizontal),
-                        contentDescription = "App Logo",
-                        contentScale = ContentScale.Fit,
+                Column {
+                    Spacer(modifier = Modifier.height(100.dp))
+                    Box(
+                        contentAlignment = Alignment.TopStart,
                         modifier = Modifier
-                            .fillMaxSize()
-                    )
+                            .height(40.dp)
+                            .width(150.dp)
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.app_logo_horizontal),
+                            contentDescription = "App Logo",
+                            contentScale = ContentScale.Fit,
+                            modifier = Modifier
+                                .fillMaxSize()
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Divider()
+                    Spacer(modifier = Modifier.height(10.dp))
+                    DrawerItem("Alert", navController, "alert")
+                    DrawerItem("Alert", navController, "alert")
+                    DrawerItem("Alert", navController, "alert")
+                    DrawerItem("Alert", navController, "alert")
+                    DrawerItem("Alert", navController, "alert")
+                    DrawerItem("Alert", navController, "alert")
+                    DrawerItem("Alert", navController, "alert")
                 }
-                Divider()
-                DrawerItem("Alert", navController, "alert")
             }
         }
     ) {
@@ -113,47 +125,48 @@ fun DashBoard(
                 .fillMaxSize(),
             topBar = {
                 TopAppBar(
-                    title = { Text("Dashboard") },
+                    title = {},
+                    navigationIcon = {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.width(500.dp)
+                        ) {
+                            IconButton(onClick = {
+                                coroutineScope.launch { drawerState.open() }
+                            }) {
+                                Icon(
+                                    Icons.Default.Menu,
+                                    contentDescription = "Menu",
+                                    tint = colorResource(id = R.color.white)
+                                )
+                            }
+                            Image(
+                                painter = painterResource(id = R.drawable.app_logo_horizontal),
+                                contentDescription = "App Logo",
+                                contentScale = ContentScale.Fit,
+                                modifier = Modifier
+                                    .height(30.dp)
+                                    .padding(start = 8.dp)
+                            )
+                        }
+                    },
                     actions = {
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier.padding(end = 8.dp)
                         ) {
-                            Box(
-                                contentAlignment = Alignment.TopStart,
-                                modifier = Modifier
-                                    .height(40.dp)
-                                    .width(150.dp)
-                            ) {
-                                Image(
-                                    painter = painterResource(id = R.drawable.app_logo_horizontal),
-                                    contentDescription = "App Logo",
-                                    contentScale = ContentScale.Fit,
+
+                            if (user?.profilePictureUrl != null) {
+                                AsyncImage(
+                                    model = user.profilePictureUrl,
+                                    contentDescription = "Profile picture",
                                     modifier = Modifier
-                                        .fillMaxSize()
+                                        .size(30.dp)
+                                        .clip(CircleShape),
+                                    contentScale = ContentScale.Crop
                                 )
                             }
                         }
-                    },
-                    navigationIcon = {
-                        IconButton(onClick = {
-                            coroutineScope.launch { drawerState.open() }
-                        }) {
-                            Icon(
-                                Icons.Default.Menu,
-                                contentDescription = "Menu",
-                                tint = colorResource(
-                                    id = R.color.white
-                                )
-                            )
-                        }
-                        AsyncImage(
-                            model = user.profilePictureUrl,
-                            contentDescription = "Avatar",
-                            modifier = Modifier
-                                .size(40.dp)
-                                .clip(CircleShape)
-                        )
                     }
                 )
             }
@@ -339,15 +352,22 @@ fun DashBoard(
 
 @Composable
 fun DrawerItem(text: String, navController: NavController, destination: String) {
-    Text(
-        text = text,
-        color = colorResource(id = R.color.white),
-        fontSize = 18.sp,
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable {
-                navController.navigate(destination)
-            }
-            .padding(16.dp)
-    )
+    Row(modifier = Modifier.clickable {
+        navController.navigate(destination)
+    }, horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically) {
+        Icon(
+            modifier = Modifier.size(20.dp),
+            painter = painterResource(id = R.drawable.flat_color_icons_google),
+            contentDescription = "teste"
+        )
+        Text(
+            text = text,
+            color = colorResource(id = R.color.white),
+            fontSize = 18.sp,
+            modifier = Modifier
+                .fillMaxWidth()
+
+                .padding(16.dp)
+        )
+    }
 }

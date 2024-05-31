@@ -30,7 +30,7 @@ class AppDatabaseCallback(private val context: Context) : RoomDatabase.Callback(
             database.emailCategoryDAO().insertAll(DefaultEmailCategories.get())
             val registerUserDTOs = DefaultRegisterUserDTOs.get()
             registerUserDTOs.forEach { registerUserDTO ->
-                authorizationService.registerUser(registerUserDTO)
+                authorizationService.registerUser(registerUserDTO, mustAuthenticate = false)
             }
 
             val sendEmailDTOs = DefaultSendEmailDTOs.get()

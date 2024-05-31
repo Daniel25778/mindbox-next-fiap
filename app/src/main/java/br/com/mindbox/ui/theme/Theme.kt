@@ -17,31 +17,33 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple40, // Cor principal para elementos primários (TopAppBar, botões principais)
-    secondary = PurpleGrey40, // Cor secundária para elementos que complementam os principais (botões secundários)
-    tertiary = Pink40, // Cor terciária para acentos adicionais e elementos menos importantes
+    primary =LayerMid, // Cor principal para elementos primários (TopAppBar, botões principais)
+    secondary = Grey350, // Cor secundária para elementos que complementam os principais (botões secundários)
+    tertiary = PurpleMid, // Cor terciária para acentos adicionais e elementos menos importantes
 
-    background = Color(0xFF1E1E1E), // Cor de fundo da aplicação
-    surface = Color(0xFF1E1E1E), // Cor das superfícies de componentes (cartões, folhas de fundo)
+    background = Primary, // Cor de fundo da aplicação
+    surface = LayerMid, // Cor das superfícies de componentes (cartões, folhas de fundo)
     onPrimary = Color.White, // Cor do texto/ícones sobre a cor principal
     onSecondary = Color.White, // Cor do texto/ícones sobre a cor secundária
     onTertiary = Color.White, // Cor do texto/ícones sobre a cor terciária
-    onBackground = Color(0xFF1C1B1F), // Cor do texto/ícones sobre a cor de fundo
-    onSurface = Color(0xFF1C1B1F), // Cor do texto/ícones sobre a cor das superfícies
+    onBackground = Layer, // Cor do texto/ícones sobre a cor de fundo
+    onSurface = Layer, // Cor do texto/ícones sobre a cor das superfícies
+
+    // agora vamos la, ó cache limpinho, mas o cara ja ta logado deixa o zap no outro minitor
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40, // Cor principal para elementos primários (TopAppBar, botões principais)
-    secondary = PurpleGrey40, // Cor secundária para elementos que complementam os principais (botões secundários)
-    tertiary = Pink40, // Cor terciária para acentos adicionais e elementos menos importantes
+    primary = LayerMid, // Cor principal para elementos primários (TopAppBar, botões principais)
+    secondary = Grey350, // Cor secundária para elementos que complementam os principais (botões secundários)
+    tertiary = PurpleMid, // Cor terciária para acentos adicionais e elementos menos importantes
 
-    background = Color(0xFF1E1E1E), // Cor de fundo da aplicação
-    surface = Color(0xFF1E1E1E), // Cor das superfícies de componentes (cartões, folhas de fundo)
+    background = Primary, // Cor de fundo da aplicação
+    surface = LayerMid, // Cor das superfícies de componentes (cartões, folhas de fundo)
     onPrimary = Color.White, // Cor do texto/ícones sobre a cor principal
     onSecondary = Color.White, // Cor do texto/ícones sobre a cor secundária
     onTertiary = Color.White, // Cor do texto/ícones sobre a cor terciária
-    onBackground = Color(0xFF1C1B1F), // Cor do texto/ícones sobre a cor de fundo
-    onSurface = Color(0xFF1C1B1F), // Cor do texto/ícones sobre a cor das superfícies
+    onBackground = Layer, // Cor do texto/ícones sobre a cor de fundo
+    onSurface = Layer, // Cor do texto/ícones sobre a cor das superfícies
 )
 
 

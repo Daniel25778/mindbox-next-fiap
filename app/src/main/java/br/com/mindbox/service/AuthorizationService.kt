@@ -10,14 +10,14 @@ import br.com.mindbox.util.crypto.HashUtil
 class AuthorizationService(private val context: Context) {
     private val userRepository = UserRepository(context)
 
-    fun registerUser(userDTO: RegisterUserDTO): User {
+    fun registerUser(userDTO: RegisterUserDTO, mustAuthenticate: Boolean): User {
         val hashedPassword = HashUtil.hashPassword(userDTO.password)
         val user = User(
             birthDate = userDTO.birthDate,
             email = userDTO.email,
             fullName = userDTO.fullName,
             passwordHash = hashedPassword,
-            isLoggedIn = true,
+            isLoggedIn = mustAuthenticate,
             profilePictureUrl = userDTO.profilePictureUrl ?: "https://storage.needpix.com/rsynced_images/blank-profile-picture-973460_1280.png"
         )
         val userId = userRepository.save(user)

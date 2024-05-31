@@ -6,11 +6,11 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
-    <color name="primary">#03011C</color>
-    <color name="layer">#7C2D077E</color>
 
 
 <!--    colors-->
+    <color name="primary">#03011C</color>
+    <color name="layer">#7C2D077E</color>
     <color name="grey_550">#707070</color>
     <color name="grey_250">#DFDFDF</color>
     <color name="grey_350">#C4C4C4</color>
