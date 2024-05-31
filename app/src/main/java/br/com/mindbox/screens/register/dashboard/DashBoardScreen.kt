@@ -18,7 +18,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -46,6 +46,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -57,6 +58,7 @@ import br.com.mindbox.R
 import br.com.mindbox.model.Advice
 import br.com.mindbox.model.Slip
 import br.com.mindbox.presentation.sign_in.UserData
+import br.com.mindbox.service.AuthorizationService
 import br.com.mindbox.service.RetrofitFactory
 import br.com.mindbox.ui.theme.Montserrat
 import br.com.mindbox.ui.theme.MontserratSemibold
@@ -79,6 +81,9 @@ fun DashBoard(
     var isApiCallMade by remember { mutableStateOf(false) }
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val coroutineScope = rememberCoroutineScope()
+    val context = LocalContext.current
+    val authorizationService = AuthorizationService(context = context)
+    val user = authorizationService.getLoggedUsers()[0];
 
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -109,18 +114,46 @@ fun DashBoard(
             topBar = {
                 TopAppBar(
                     title = { Text("Dashboard") },
+                    actions = {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.padding(end = 8.dp)
+                        ) {
+                            Box(
+                                contentAlignment = Alignment.TopStart,
+                                modifier = Modifier
+                                    .height(40.dp)
+                                    .width(150.dp)
+                            ) {
+                                Image(
+                                    painter = painterResource(id = R.drawable.app_logo_horizontal),
+                                    contentDescription = "App Logo",
+                                    contentScale = ContentScale.Fit,
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                )
+                            }
+                        }
+                    },
                     navigationIcon = {
                         IconButton(onClick = {
                             coroutineScope.launch { drawerState.open() }
                         }) {
                             Icon(
-                                Icons.Default.MoreVert,
+                                Icons.Default.Menu,
                                 contentDescription = "Menu",
                                 tint = colorResource(
                                     id = R.color.white
                                 )
                             )
                         }
+                        AsyncImage(
+                            model = user.profilePictureUrl,
+                            contentDescription = "Avatar",
+                            modifier = Modifier
+                                .size(40.dp)
+                                .clip(CircleShape)
+                        )
                     }
                 )
             }

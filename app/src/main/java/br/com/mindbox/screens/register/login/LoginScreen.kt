@@ -64,25 +64,31 @@ fun Login(
             easing = LinearEasing
         ), label = ""
     )
+    val defaultEmail = "gilberto@locaweb.com.br"
+    var email by remember {
+        mutableStateOf(defaultEmail)
+    }
+    val defaultPassword = "Senha@123"
+    var password by remember {
+        mutableStateOf(defaultPassword)
+    }
+
+    val context = LocalContext.current
+    val authorizationService = AuthorizationService(context = context)
+    val loggedUsers = authorizationService.getLoggedUsers()
+
+    if (loggedUsers.isNotEmpty())
+        navController.navigate("dashboard")
+
+    val onAuthenticationResult = { user: User? ->
+        if (user != null) {
+            Toast.makeText(context, "Autenticação bem sucedida", Toast.LENGTH_SHORT).show()
+            navController.navigate("dashboard")
+        } else {
+            Toast.makeText(context, "Falha na autenticação. Email ou senha incorretos.", Toast.LENGTH_SHORT).show()
+        }
+    }
     Box {
-        var email by remember {
-            mutableStateOf("gilberto@locaweb.com.br")
-        }
-        var password by remember {
-            mutableStateOf("Senha@123")
-        }
-
-        val context = LocalContext.current
-        val authorizationService = AuthorizationService(context = context)
-
-        val onAuthenticationResult = { user: User? ->
-            if (user != null) {
-                Toast.makeText(context, "Autenticação bem sucedida", Toast.LENGTH_SHORT).show()
-                navController.navigate("dashboard")
-            } else {
-                Toast.makeText(context, "Falha na autenticação. Email ou senha incorretos.", Toast.LENGTH_SHORT).show()
-            }
-        }
 
         LaunchedEffect(key1 = state.signInError) {
             state.signInError?.let { error ->
@@ -131,7 +137,7 @@ fun Login(
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 Input(
-                    value = email,
+                    value = email ?: defaultEmail,
                     placeholder = "Email",
                     label = "Email",
                     keyboardType = KeyboardType.Email,
@@ -140,7 +146,7 @@ fun Login(
 
                 Input(
                     isPassword = true,
-                    value = password,
+                    value = password ?: defaultPassword,
                     placeholder = "Senha",
                     label = "Senha",
                     keyboardType = KeyboardType.Password,

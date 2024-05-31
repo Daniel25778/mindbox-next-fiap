@@ -17,32 +17,33 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Color.Black,
-    secondary = Color.Black,
-    tertiary = Color.Black,
+    primary = Purple40, // Cor principal para elementos primários (TopAppBar, botões principais)
+    secondary = PurpleGrey40, // Cor secundária para elementos que complementam os principais (botões secundários)
+    tertiary = Pink40, // Cor terciária para acentos adicionais e elementos menos importantes
 
-    background = Color.Black,
-    surface = Color.Black,
-    onPrimary = Color.Black,
-    onSecondary = Color.Black,
-    onTertiary = Color.Black,
-    onBackground = Color.Black,
-    onSurface = Color.Black,
+    background = Color(0xFF1E1E1E), // Cor de fundo da aplicação
+    surface = Color(0xFF1E1E1E), // Cor das superfícies de componentes (cartões, folhas de fundo)
+    onPrimary = Color.White, // Cor do texto/ícones sobre a cor principal
+    onSecondary = Color.White, // Cor do texto/ícones sobre a cor secundária
+    onTertiary = Color.White, // Cor do texto/ícones sobre a cor terciária
+    onBackground = Color(0xFF1C1B1F), // Cor do texto/ícones sobre a cor de fundo
+    onSurface = Color(0xFF1C1B1F), // Cor do texto/ícones sobre a cor das superfícies
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Color.Black,
-    secondary = Color.Black,
-    tertiary = Color.Black,
+    primary = Purple40, // Cor principal para elementos primários (TopAppBar, botões principais)
+    secondary = PurpleGrey40, // Cor secundária para elementos que complementam os principais (botões secundários)
+    tertiary = Pink40, // Cor terciária para acentos adicionais e elementos menos importantes
 
-    background = Color.Black,
-    surface = Color.Black,
-    onPrimary = Color.Black,
-    onSecondary = Color.Black,
-    onTertiary = Color.Black,
-    onBackground = Color.Black,
-    onSurface = Color.Black,
-    )
+    background = Color(0xFF1E1E1E), // Cor de fundo da aplicação
+    surface = Color(0xFF1E1E1E), // Cor das superfícies de componentes (cartões, folhas de fundo)
+    onPrimary = Color.White, // Cor do texto/ícones sobre a cor principal
+    onSecondary = Color.White, // Cor do texto/ícones sobre a cor secundária
+    onTertiary = Color.White, // Cor do texto/ícones sobre a cor terciária
+    onBackground = Color(0xFF1C1B1F), // Cor do texto/ícones sobre a cor de fundo
+    onSurface = Color(0xFF1C1B1F), // Cor do texto/ícones sobre a cor das superfícies
+)
+
 
 @Composable
 fun Theme(
