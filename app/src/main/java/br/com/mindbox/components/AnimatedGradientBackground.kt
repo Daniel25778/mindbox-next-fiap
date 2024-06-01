@@ -32,9 +32,9 @@ fun AnimatedGradientBackground(alphaAnimate: Float, content: @Composable () -> U
 
     val gradient = Brush.linearGradient(
         colors = listOf(
-            colorResource(id = R.color.layer),
-            colorResource(id = R.color.primary),
-            colorResource(id = R.color.layer)
+            colorResource(id = R.color.layer_mid),
+            colorResource(id = R.color.black),
+            colorResource(id = R.color.layer_mid)
         ),
         start = Offset(0.0f, 0.0f),
         end = Offset(animatedOffsetX, 1900.0f)
