@@ -10,39 +10,48 @@ class DefaultEmailCategories {
             return listOf(
                 EmailCategory(
                     name = EmailCategoryName.EDUCATION,
-                    iconResId = R.drawable.ic_call_decline
+                    iconResIdPurple = R.drawable.ic_call_decline,
+                    iconResIdWhite = R.drawable.ic_call_decline
                 ),
                 EmailCategory(
                     name = EmailCategoryName.WORK,
-                    iconResId = R.drawable.ic_call_decline
+                    iconResIdPurple = R.drawable.ic_call_decline,
+                    iconResIdWhite = R.drawable.ic_call_decline
                 ),
                 EmailCategory(
                     name = EmailCategoryName.PERSONAL,
-                    iconResId = R.drawable.ic_call_decline
+                    iconResIdPurple = R.drawable.ic_call_decline,
+                    iconResIdWhite = R.drawable.ic_call_decline
                 ),
                 EmailCategory(
                     name = EmailCategoryName.PROMOTION,
-                    iconResId = R.drawable.ic_call_decline
+                    iconResIdPurple = R.drawable.ic_call_decline,
+                    iconResIdWhite = R.drawable.ic_call_decline
                 ),
                 EmailCategory(
                     name = EmailCategoryName.FINANCE,
-                    iconResId = R.drawable.ic_call_decline
+                    iconResIdPurple = R.drawable.ic_call_decline,
+                    iconResIdWhite = R.drawable.ic_call_decline
                 ),
                 EmailCategory(
                     name = EmailCategoryName.HEALTH,
-                    iconResId = R.drawable.ic_call_decline
+                    iconResIdPurple = R.drawable.ic_call_decline,
+                    iconResIdWhite = R.drawable.ic_call_decline
                 ),
                 EmailCategory(
                     name = EmailCategoryName.TRAVEL,
-                    iconResId = R.drawable.ic_call_decline
+                    iconResIdPurple = R.drawable.ic_call_decline,
+                    iconResIdWhite = R.drawable.ic_call_decline
                 ),
                 EmailCategory(
                     name = EmailCategoryName.NEWSLETTER,
-                    iconResId = R.drawable.ic_call_decline
+                    iconResIdPurple = R.drawable.ic_call_decline,
+                    iconResIdWhite = R.drawable.ic_call_decline
                 ),
                 EmailCategory(
                     name = EmailCategoryName.OTHERS,
-                    iconResId = R.drawable.ic_call_decline
+                    iconResIdPurple = R.drawable.ic_call_decline,
+                    iconResIdWhite = R.drawable.ic_call_decline
                 )
             )
         }
