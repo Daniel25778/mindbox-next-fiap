@@ -1,4 +1,4 @@
-package br.com.mindbox.screens.register.login
+package br.com.mindbox.screens.login
 
 import android.annotation.SuppressLint
 import android.widget.Toast

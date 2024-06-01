@@ -1,4 +1,4 @@
-package br.com.mindbox.screens.register.alert
+package br.com.mindbox.screens.alert
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

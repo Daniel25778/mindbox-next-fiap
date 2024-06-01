@@ -1,4 +1,4 @@
-package br.com.mindbox.screens.register.dashboard
+package br.com.mindbox.screens.dashboard
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.core.LinearEasing
