@@ -1,4 +1,4 @@
-package br.com.mindbox.screens.register.dashboard
+package br.com.mindbox.screens.dashboard
 
 import android.util.Log
 import androidx.compose.foundation.Image

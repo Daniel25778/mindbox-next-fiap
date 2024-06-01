@@ -25,11 +25,10 @@ import androidx.navigation.compose.composable
 import br.com.mindbox.dto.auth.LoginDTO
 import br.com.mindbox.presentation.sign_in.GoogleAuthUiClient
 import br.com.mindbox.presentation.sign_in.SignInViewModel
-import br.com.mindbox.screens.register.Register
-import br.com.mindbox.screens.register.alert.Alert
+import br.com.mindbox.screens.alert.Alert
+import br.com.mindbox.screens.dashboard.DashBoard
+import br.com.mindbox.screens.login.Login
 import br.com.mindbox.screens.register.alert.AnimatedSplashScreen
-import br.com.mindbox.screens.register.dashboard.DashBoard
-import br.com.mindbox.screens.register.login.Login
 import br.com.mindbox.service.AuthorizationService
 import br.com.mindbox.ui.theme.Theme
 import com.google.accompanist.navigation.animation.AnimatedNavHost
@@ -138,7 +137,6 @@ class MainActivity : ComponentActivity() {
                                 }
                             )
                         }
-                        composable(route = "register") { Register(navController) }
                         composable(route = "alert") { Alert(navController, MenuText="Alertas Próximos") }
                     }
                 }
