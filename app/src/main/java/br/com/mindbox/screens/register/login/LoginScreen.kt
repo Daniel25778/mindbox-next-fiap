@@ -77,8 +77,8 @@ fun Login(
     val authorizationService = AuthorizationService(context = context)
     val loggedUsers = authorizationService.getLoggedUsers()
 
-    if (loggedUsers.isNotEmpty())
-        navController.navigate("dashboard")
+//    if (loggedUsers.isNotEmpty())
+//        navController.navigate("dashboard")
 
     val onAuthenticationResult = { user: User? ->
         if (user != null) {

@@ -10,7 +10,6 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
@@ -18,32 +17,33 @@ import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
     primary =LayerMid, // Cor principal para elementos primários (TopAppBar, botões principais)
-    secondary = Grey350, // Cor secundária para elementos que complementam os principais (botões secundários)
-    tertiary = PurpleMid, // Cor terciária para acentos adicionais e elementos menos importantes
-    inversePrimary = LayerMid,
-    background = Primary, // Cor de fundo da aplicação
+    secondary = LayerMid, // Cor secundária para elementos que complementam os principais (botões secundários)
+    tertiary = LayerMid, // Cor terciária para acentos adicionais e elementos menos importantes
+    inversePrimary =LayerMid,
+    background = LayerMid, // Cor de fundo da aplicação
     surface = LayerMid, // Cor das superfícies de componentes (cartões, folhas de fundo)
-    onPrimary = Color.White, // Cor do texto/ícones sobre a cor principal
-    onSecondary = Color.White, // Cor do texto/ícones sobre a cor secundária
-    onTertiary = Color.White, // Cor do texto/ícones sobre a cor terciária
-    onBackground = Layer, // Cor do texto/ícones sobre a cor de fundo
-    onSurface = Layer, // Cor do texto/ícones sobre a cor das superfícies
-
-    // agora vamos la, ó cache limpinho, mas o cara ja ta logado deixa o zap no outro minitor
+    onPrimary = LayerMid, // Cor do texto/ícones sobre a cor principal
+    onSecondary =LayerMid, // Cor do texto/ícones sobre a cor secundária
+    onTertiary = LayerMid, // Cor do texto/ícones sobre a cor terciária
+    onBackground = LayerMid, // Cor do texto/ícones sobre a cor de fundo
+    onSurface = LayerMid, // Cor do texto/ícones sobre a cor das superfícies
+    inverseSurface = LayerMid
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = LayerMid, // Cor principal para elementos primários (TopAppBar, botões principais)
-    secondary = Grey350, // Cor secundária para elementos que complementam os principais (botões secundários)
-    tertiary = PurpleMid, // Cor terciária para acentos adicionais e elementos menos importantes
+    primary =LayerMid, // Cor principal para elementos primários (TopAppBar, botões principais)
+    secondary = LayerMid, // Cor secundária para elementos que complementam os principais (botões secundários)
+    tertiary = LayerMid, // Cor terciária para acentos adicionais e elementos menos importantes
     inversePrimary = LayerMid,
-    background = Primary, // Cor de fundo da aplicação
+    inverseSurface = LayerMid,
+    background = LayerMid, // Cor de fundo da aplicação
     surface = LayerMid, // Cor das superfícies de componentes (cartões, folhas de fundo)
-    onPrimary = Color.White, // Cor do texto/ícones sobre a cor principal
-    onSecondary = Color.White, // Cor do texto/ícones sobre a cor secundária
-    onTertiary = Color.White, // Cor do texto/ícones sobre a cor terciária
-    onBackground = Layer, // Cor do texto/ícones sobre a cor de fundo
-    onSurface = Layer, // Cor do texto/ícones sobre a cor das superfícies
+    onPrimary = LayerMid, // Cor do texto/ícones sobre a cor principal
+    onSecondary = LayerMid, // Cor do texto/ícones sobre a cor secundária
+    onTertiary =LayerMid, // Cor do texto/ícones sobre a cor terciária
+    onBackground = LayerMid, // Cor do texto/ícones sobre a cor de fundo
+    onSurface = LayerMid
+// Cor do texto/ícones sobre a cor das superfícies
 )
 
 
@@ -66,7 +66,7 @@ fun Theme(
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            window.statusBarColor = colorScheme.primary.toArgb()
+            window.statusBarColor = Primary.toArgb()
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
         }
     }

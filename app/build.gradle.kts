@@ -114,4 +114,8 @@ dependencies {
     implementation ("com.airbnb.android:lottie-compose:5.2.0")
 
 
+    implementation("com.exyte:animated-navigation-bar:1.0.0")
+
+
+
 }
