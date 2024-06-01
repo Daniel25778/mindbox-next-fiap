@@ -1,7 +1,7 @@
 package br.com.mindbox.database.mock
 
 import br.com.mindbox.dto.email.SendEmailDTO
-import br.com.mindbox.dto.emailTask.CreateEmailTaskDTO
+import br.com.mindbox.dto.email_task.CreateEmailTaskDTO
 
 class DefaultSendEmailDTOs {
     companion object {

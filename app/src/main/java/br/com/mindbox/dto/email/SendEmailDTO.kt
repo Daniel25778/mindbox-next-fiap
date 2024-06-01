@@ -1,8 +1,6 @@
 package br.com.mindbox.dto.email
 
-import br.com.mindbox.dto.emailTask.CreateEmailTaskDTO
-import br.com.mindbox.model.email.EmailCategory
-import br.com.mindbox.model.email.EmailTask
+import br.com.mindbox.dto.email_task.CreateEmailTaskDTO
 
 data class SendEmailDTO(
     val senderId: Long,

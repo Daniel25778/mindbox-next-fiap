@@ -7,7 +7,7 @@ import br.com.mindbox.dto.email.CreateEmailDTO
 import br.com.mindbox.dto.email.SendEmailDTO
 import br.com.mindbox.exception.EmailCategoryNotFoundException
 import br.com.mindbox.model.email.Email
-import br.com.mindbox.util.emailCategory.EmailCategoryClassifier
+import br.com.mindbox.util.email_category.EmailCategoryClassifier
 
 class EmailService(private val context: Context) {
     private val emailRepository = EmailRepository(context)
