@@ -1,4 +1,4 @@
-package br.com.mindbox.model.externalAccount
+package br.com.mindbox.model.external_account
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

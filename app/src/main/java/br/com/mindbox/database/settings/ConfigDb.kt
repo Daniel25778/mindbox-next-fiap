@@ -21,7 +21,7 @@ import br.com.mindbox.model.email.EmailCategory
 import br.com.mindbox.model.email.EmailRecipient
 import br.com.mindbox.model.email.EmailTask
 import br.com.mindbox.model.email.EmailTemplate
-import br.com.mindbox.model.externalAccount.ExternalAccount
+import br.com.mindbox.model.external_account.ExternalAccount
 import br.com.mindbox.model.user.User
 import br.com.mindbox.util.convertion.ConverterUtil
 

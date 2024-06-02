@@ -11,5 +11,6 @@ data class EmailCategory(
     @ColumnInfo(name = "email_category_id")
     var id: Long = 0,
     var name: EmailCategoryName = EmailCategoryName.EDUCATION,
-    @DrawableRes var iconResId: Int = 0
+    @DrawableRes var iconResIdWhite: Int = 0,
+    @DrawableRes var iconResIdPurple: Int = 0
 )

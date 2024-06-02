@@ -1,4 +1,4 @@
-package br.com.mindbox.util.emailCategory
+package br.com.mindbox.util.email_category
 
 import br.com.mindbox.model.email.Email
 import br.com.mindbox.model.email.EmailCategoryName
