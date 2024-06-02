@@ -27,7 +27,7 @@ import br.com.mindbox.data.onboarding.ChatOnboardingDataProvider
 import br.com.mindbox.dto.auth.LoginDTO
 import br.com.mindbox.presentation.sign_in.GoogleAuthUiClient
 import br.com.mindbox.presentation.sign_in.SignInViewModel
-import br.com.mindbox.screens.ChatScreen
+import br.com.mindbox.screens.chat.ChatScreen
 import br.com.mindbox.screens.alert.Alert
 import br.com.mindbox.screens.dashboard.DashBoard
 import br.com.mindbox.screens.login.Login

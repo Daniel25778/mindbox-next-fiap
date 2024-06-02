@@ -1,4 +1,4 @@
-package br.com.mindbox.screens
+package br.com.mindbox.screens.chat
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.core.LinearEasing
