@@ -83,15 +83,16 @@ class ChatBot(private val emailService: EmailService, private val authorizationS
     private fun getEmailPreviewResponse(): ChatBotResponse {
         return ChatBotResponse(
             message = """
-                Aqui está o e-mail. Posso enviar desse jeito?
+Aqui está o e-mail. Posso enviar desse jeito?
                 
-                Assunto: ${sendEmailDTO.subject}
-                
-                Para:
-                $GABRIEL_EMAIL
-                
-                Texto:
-                ${sendEmailDTO.text}
+Assunto: 
+${sendEmailDTO.subject}
+
+Para:
+$GABRIEL_EMAIL
+
+Texto:
+${sendEmailDTO.text}
             """.trimIndent(),
             expectedUserResponse = ExpectedResponses.SEND_EMAIL
         )
