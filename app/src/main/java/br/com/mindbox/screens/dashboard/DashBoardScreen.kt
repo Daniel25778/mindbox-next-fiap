@@ -130,7 +130,7 @@ fun DashBoard(
         ),
         BottomNavigationItem(
             title = "Chat",
-            url = "chat",
+            url = "chatOnboarding",
             selectedIcon = Icons.Filled.Settings,
             unselectedIcon = Icons.Outlined.Settings,
             hasNews = true,

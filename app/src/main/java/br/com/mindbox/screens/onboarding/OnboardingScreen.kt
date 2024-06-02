@@ -44,14 +44,16 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import br.com.mindbox.R
 import br.com.mindbox.components.AnimatedGradientBackground
-import br.com.mindbox.util.data.listData
+import br.com.mindbox.model.onboarding.OnboardingItem
 import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "ResourceType")
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun GetStartedScreen(
+fun OnboardingScreen(
     navController: NavController,
+    onboardingItems: List<OnboardingItem>,
+    destinationScreen: String
 ) {
     val startAnimation by remember { mutableStateOf(false) }
     val alphaAnim: State<Float> = animateFloatAsState(
@@ -62,7 +64,7 @@ fun GetStartedScreen(
         ), label = ""
     )
     val scope = rememberCoroutineScope()
-    val pagerState = rememberPagerState(initialPage = 0, pageCount = { listData.size })
+    val pagerState = rememberPagerState(initialPage = 0, pageCount = { onboardingItems.size })
     val (selectedPage, setSelectedPage) = remember {
         mutableStateOf(0)
     }
@@ -85,7 +87,7 @@ fun GetStartedScreen(
                             .fillMaxWidth()
                     ) {
                         Image(
-                            painter = painterResource(id = listData[page].resId),
+                            painter = painterResource(id = onboardingItems[page].resId),
                             contentDescription = null,
                             contentScale = ContentScale.Crop,
                             modifier = Modifier
@@ -99,7 +101,7 @@ fun GetStartedScreen(
                                 .padding(15.dp)
                         ) {
                             Text(
-                                listData[page].desc,
+                                onboardingItems[page].desc,
                                 textAlign = TextAlign.Center,
                                 color = colorResource(id = R.color.white),
                                 fontWeight = FontWeight.Bold,
@@ -116,10 +118,10 @@ fun GetStartedScreen(
                         .fillMaxWidth()
                         .padding(16.dp)
                 ) {
-                    for (i in listData.indices) {
+                    for (i in onboardingItems.indices) {
                         Box(
                             modifier = Modifier
-                                .padding(end = if (i == listData.size - 1) 0.dp else 5.dp)
+                                .padding(end = if (i == onboardingItems.size - 1) 0.dp else 5.dp)
                                 .width(if (i == selectedPage) 20.dp else 10.dp)
                                 .height(10.dp)
                                 .clip(RoundedCornerShape(10.dp))
@@ -132,7 +134,7 @@ fun GetStartedScreen(
                     }
                 }
 
-                if (selectedPage != listData.size - 1) {
+                if (selectedPage != onboardingItems.size - 1) {
                     Row(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         modifier = Modifier
@@ -142,7 +144,7 @@ fun GetStartedScreen(
                         TextButton(
                             onClick = {
                                 scope.launch {
-                                    pagerState.animateScrollToPage(listData.size - 1)
+                                    pagerState.animateScrollToPage(onboardingItems.size - 1)
                                 }
                             },
                             modifier = Modifier.height(36.dp)
@@ -169,7 +171,7 @@ fun GetStartedScreen(
                     }
                 }
 
-                if (selectedPage == listData.size - 1) {
+                if (selectedPage == onboardingItems.size - 1) {
                     Button(
                         colors = ButtonDefaults.buttonColors(
                             disabledContentColor = Color.Transparent,
@@ -177,7 +179,7 @@ fun GetStartedScreen(
                             contentColor = colorResource(id = R.color.white)
                         ),
                         onClick = {
-                            navController.navigate("login")
+                            navController.navigate(destinationScreen)
                         },
                         modifier = Modifier
                             .padding(16.dp)

@@ -2,7 +2,6 @@ package br.com.mindbox.screens.register.alert
 
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloatAsState
-import br.com.mindbox.components.AnimatedGradientBackground
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -21,6 +20,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import br.com.mindbox.R
+import br.com.mindbox.components.AnimatedGradientBackground
 import kotlinx.coroutines.delay
 
 
@@ -39,7 +39,7 @@ fun AnimatedSplashScreen(navController: NavController) {
         startAnimation = true
         delay(3000)
         navController.popBackStack()
-        navController.navigate("presentation")
+        navController.navigate("appOnboarding")
     }
     AnimatedGradientBackground(alphaAnimate = alphaAnim.value) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {

@@ -1,7 +1,7 @@
 package br.com.mindbox
 
 
-import GetStartedScreen
+import OnboardingScreen
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -22,6 +22,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.composable
+import br.com.mindbox.data.onboarding.AppOnboardingDataProvider
+import br.com.mindbox.data.onboarding.ChatOnboardingDataProvider
 import br.com.mindbox.dto.auth.LoginDTO
 import br.com.mindbox.presentation.sign_in.GoogleAuthUiClient
 import br.com.mindbox.presentation.sign_in.SignInViewModel
@@ -58,7 +60,7 @@ class MainActivity : ComponentActivity() {
 
                     AnimatedNavHost(
                         navController = navController,
-                        startDestination = "splash",
+                        startDestination = "appOnboarding",
                         exitTransition = {
                             slideOutOfContainer(
                                 towards =
@@ -117,7 +119,9 @@ class MainActivity : ComponentActivity() {
                         }
                         composable(route = "splash") { AnimatedSplashScreen(navController) }
 
-                        composable(route = "presentation") { GetStartedScreen(navController) }
+                        composable(route = "appOnboarding") { OnboardingScreen(navController, AppOnboardingDataProvider().getItems(), "login") }
+
+                        composable(route = "chatOnboarding") { OnboardingScreen(navController, ChatOnboardingDataProvider().getItems(), "chat") }
 
                         composable(route = "dashboard") {
                             DashBoard(
