@@ -12,9 +12,10 @@
     <color name="primary">#03011C</color>
     <color name="layer">#7C2D077E</color>
     <color name="layer_mid">#19093E</color>
-    <color name="grey_550">#707070</color>
+    <color name="grey_150">#F3F5F9</color>
     <color name="grey_250">#DFDFDF</color>
     <color name="grey_350">#C4C4C4</color>
+    <color name="grey_550">#707070</color>
     <color name="white">#FFFFFFFF</color>
     <color name="purple_mid">#7E0DEF</color>
 </resources>

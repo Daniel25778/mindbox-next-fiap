@@ -20,9 +20,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -34,6 +31,7 @@ import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
@@ -50,6 +48,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import br.com.mindbox.R
@@ -63,16 +62,13 @@ data class ChatMessage(val text: String, val isUserMessage: Boolean)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ChatScreen(
-    navController: NavController,
-    chatBot: ChatBot
+    navController: NavController, chatBot: ChatBot
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val startAnimation by remember { mutableStateOf(false) }
     val alphaAnim: State<Float> = animateFloatAsState(
-        targetValue = if (startAnimation) 1f else 0f,
-        animationSpec = tween(
-            durationMillis = 5000,
-            easing = LinearEasing
+        targetValue = if (startAnimation) 1f else 0f, animationSpec = tween(
+            durationMillis = 5000, easing = LinearEasing
         ), label = ""
     )
 
@@ -89,13 +85,11 @@ fun ChatScreen(
         chatMessages = chatMessages + ChatMessage(responseText, isUserMessage = false)
     }
 
-    ModalNavigationDrawer(
-        modifier = Modifier.background(colorResource(id = R.color.layer_mid)),
+    ModalNavigationDrawer(modifier = Modifier.background(colorResource(id = R.color.layer_mid)),
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet(
-                modifier = Modifier
-                    .background(colorResource(id = R.color.layer_mid))
+                modifier = Modifier.background(colorResource(id = R.color.layer_mid))
             ) {
                 Column(
                     modifier = Modifier
@@ -117,8 +111,7 @@ fun ChatScreen(
                             painter = painterResource(id = R.drawable.app_logo_horizontal),
                             contentDescription = "App Logo",
                             contentScale = ContentScale.Fit,
-                            modifier = Modifier
-                                .fillMaxSize()
+                            modifier = Modifier.fillMaxSize()
                         )
                     }
                     Spacer(modifier = Modifier.height(10.dp))
@@ -130,72 +123,101 @@ fun ChatScreen(
         }
 
     ) {
-        Scaffold(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(colorResource(id = R.color.layer_mid)),
+        Scaffold(modifier = Modifier
+            .fillMaxSize()
+            .background(colorResource(id = R.color.layer_mid)),
             topBar = {
-                TopAppBar(
-                    title = {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            IconButton(onClick = { navController.popBackStack() }) {
-                                Icon(
-                                    imageVector = Icons.Default.ArrowBack,
-                                    contentDescription = "Voltar"
-                                )
-                            }
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Box(
-                                modifier = Modifier
-                                    .size(40.dp)
-                                    .clip(CircleShape)
-                                    .background(MaterialTheme.colorScheme.onBackground)
-                            ) {
-                                // Placeholder for image
-                            }
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Text(
-                                text = "Goma",
-                                style = MaterialTheme.typography.titleMedium
+                TopAppBar(title = {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(colorResource(id = R.color.layer))
+                    ) {
+                        IconButton(onClick = { navController.popBackStack() }) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.pngegg),
+                                modifier = Modifier.size(16.dp),
+                                contentDescription = "Voltar"
                             )
                         }
-                    },
-                    navigationIcon = {}
-                )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Box(
+                            modifier = Modifier
+                                .size(40.dp)
+                                .clip(CircleShape)
+                                .background(colorResource(id = R.color.layer)),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Image(
+                                painter = painterResource(id = R.drawable.chat_icon),
+                                contentDescription = "IA Icon",
+                                modifier = Modifier.size(24.dp)
+                            )
+                        }
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = "Goma", style = MaterialTheme.typography.titleMedium
+                        )
+                    }
+                }, navigationIcon = {})
             },
             bottomBar = {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
-                        .background(colorResource(id = R.color.layer_mid))
-                        .padding(8.dp)
+                        .padding(16.dp)
                         .fillMaxWidth()
+                        .background(Color.Transparent)
                 ) {
                     TextField(
                         value = messageText,
                         onValueChange = {},
                         enabled = false,
-                        modifier = Modifier.weight(1f),
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(end = 8.dp)
+                            .clip(RoundedCornerShape(16.dp)),
+                        colors = TextFieldDefaults.textFieldColors(
+                            containerColor = colorResource(id = R.color.white)
+                        ),
+                        textStyle = TextStyle(color = colorResource(id = R.color.black)),
                         placeholder = { Text(text = "Digite uma mensagem") }
                     )
                     Spacer(modifier = Modifier.width(8.dp))
-                    Button(
-                        onClick = {
-                            chatMessages = chatMessages + ChatMessage(messageText, isUserMessage = true)
+                    Box(
+                        modifier = Modifier
+                            .size(48.dp)
+                            .background(
+                                color = colorResource(id = R.color.layer),
+                                shape = CircleShape
+                            ),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        IconButton(onClick = {
+                            chatMessages =
+                                chatMessages + ChatMessage(messageText, isUserMessage = true)
                             val chatBotResponse = chatBot.processMessage(messageText)
                             responseText = chatBotResponse.message
                             expectedUserResponse = chatBotResponse.expectedUserResponse
                             messageText = chatBotResponse.expectedUserResponse
-                            chatMessages = chatMessages + ChatMessage(responseText, isUserMessage = false)
-                        }
-                    ) {
-                        Text(text = "Enviar")
+                            chatMessages =
+                                chatMessages + ChatMessage(responseText, isUserMessage = false)
+                        },
+                            enabled = expectedUserResponse.isNotEmpty(),
+                            modifier = Modifier.size(48.dp),
+                            content = {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.send_chat_message_icon),
+                                    contentDescription = "Enviar mensagem",
+                                    modifier = Modifier.size(24.dp),
+                                    tint = Color.White
+                                )
+                            })
                     }
                 }
             }
+
         ) { paddingValues ->
 
             Column(
@@ -227,8 +249,7 @@ fun ChatScreen(
 @Composable
 fun ChatBotMessage(message: String) {
     Row(
-        verticalAlignment = Alignment.Top,
-        modifier = Modifier
+        verticalAlignment = Alignment.Top, modifier = Modifier
             .padding(8.dp)
             .fillMaxWidth()
     ) {
@@ -236,20 +257,27 @@ fun ChatBotMessage(message: String) {
             modifier = Modifier
                 .size(40.dp)
                 .clip(CircleShape)
-                .background(MaterialTheme.colorScheme.onBackground)
+                .background(colorResource(id = R.color.layer)), contentAlignment = Alignment.Center
         ) {
-            // Placeholder for image
+            Image(
+                painter = painterResource(id = R.drawable.chat_icon),
+                contentDescription = "IA Icon",
+                modifier = Modifier.size(24.dp)
+            )
         }
         Spacer(modifier = Modifier.width(8.dp))
         Box(
             modifier = Modifier
-                .background(Color.White, RoundedCornerShape(8.dp))
+                .background(
+                    colorResource(id = R.color.grey_150), RoundedCornerShape(8.dp)
+                )
                 .padding(16.dp)
         ) {
             Text(
                 text = message,
                 style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.padding(top = 4.dp)
+                modifier = Modifier.padding(top = 4.dp),
+                color = colorResource(id = R.color.primary)
             )
         }
     }
@@ -266,13 +294,15 @@ fun UserMessage(message: String) {
     ) {
         Box(
             modifier = Modifier
-                .background(Color(0xFF6200EE), RoundedCornerShape(8.dp))
+                .background(
+                    colorResource(id = R.color.layer), RoundedCornerShape(8.dp)
+                )
                 .padding(16.dp)
         ) {
             Text(
                 text = message,
                 style = MaterialTheme.typography.titleMedium,
-                color = Color.White,
+                color = colorResource(id = R.color.grey_150),
                 modifier = Modifier.padding(top = 4.dp)
             )
         }
