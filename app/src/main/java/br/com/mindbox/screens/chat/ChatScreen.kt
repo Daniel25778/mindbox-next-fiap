@@ -46,6 +46,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -53,8 +54,12 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import br.com.mindbox.R
 import br.com.mindbox.components.AnimatedGradientBackground
+import br.com.mindbox.components.Avatar
 import br.com.mindbox.components.DrawerItem
-import br.com.mindbox.service.ChatBot
+import br.com.mindbox.model.user.User
+import br.com.mindbox.service.AuthorizationService
+import br.com.mindbox.service.ChatBotService
+import br.com.mindbox.service.EmailService
 
 data class ChatMessage(val text: String, val isUserMessage: Boolean)
 
@@ -62,8 +67,14 @@ data class ChatMessage(val text: String, val isUserMessage: Boolean)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ChatScreen(
-    navController: NavController, chatBot: ChatBot
+    navController: NavController
 ) {
+    val context = LocalContext.current
+    val emailService = EmailService(context)
+    val authorizationService = AuthorizationService(context)
+    val loggedUser = authorizationService.getLoggedUsers()[0]
+    val chatBotService = ChatBotService(emailService, loggedUser)
+
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val startAnimation by remember { mutableStateOf(false) }
     val alphaAnim: State<Float> = animateFloatAsState(
@@ -78,7 +89,7 @@ fun ChatScreen(
     var chatMessages by remember { mutableStateOf(listOf<ChatMessage>()) }
 
     LaunchedEffect(Unit) {
-        val initialResponse = chatBot.processMessage("")
+        val initialResponse = chatBotService.processMessage("")
         responseText = initialResponse.message
         expectedUserResponse = initialResponse.expectedUserResponse
         messageText = initialResponse.expectedUserResponse
@@ -170,8 +181,7 @@ fun ChatScreen(
                         .fillMaxWidth()
                         .background(Color.Transparent)
                 ) {
-                    TextField(
-                        value = messageText,
+                    TextField(value = messageText,
                         onValueChange = {},
                         enabled = false,
                         modifier = Modifier
@@ -182,22 +192,20 @@ fun ChatScreen(
                             containerColor = colorResource(id = R.color.white)
                         ),
                         textStyle = TextStyle(color = colorResource(id = R.color.black)),
-                        placeholder = { Text(text = "Digite uma mensagem") }
-                    )
+                        placeholder = { Text(text = "Digite uma mensagem") })
                     Spacer(modifier = Modifier.width(8.dp))
                     Box(
                         modifier = Modifier
                             .size(48.dp)
                             .background(
-                                color = colorResource(id = R.color.layer),
-                                shape = CircleShape
+                                color = colorResource(id = R.color.layer), shape = CircleShape
                             ),
                         contentAlignment = Alignment.Center,
                     ) {
                         IconButton(onClick = {
                             chatMessages =
                                 chatMessages + ChatMessage(messageText, isUserMessage = true)
-                            val chatBotResponse = chatBot.processMessage(messageText)
+                            val chatBotResponse = chatBotService.processMessage(messageText)
                             responseText = chatBotResponse.message
                             expectedUserResponse = chatBotResponse.expectedUserResponse
                             messageText = chatBotResponse.expectedUserResponse
@@ -234,7 +242,7 @@ fun ChatScreen(
                         items(chatMessages.size) { index ->
                             val chatMessage = chatMessages[index]
                             if (chatMessage.isUserMessage) {
-                                UserMessage(chatMessage.text)
+                                UserMessage(chatMessage.text, loggedUser)
                             } else {
                                 ChatBotMessage(chatMessage.text)
                             }
@@ -284,7 +292,7 @@ fun ChatBotMessage(message: String) {
 }
 
 @Composable
-fun UserMessage(message: String) {
+fun UserMessage(message: String, user: User) {
     Row(
         verticalAlignment = Alignment.Top,
         horizontalArrangement = Arrangement.End,
@@ -311,9 +319,9 @@ fun UserMessage(message: String) {
             modifier = Modifier
                 .size(40.dp)
                 .clip(CircleShape)
-                .background(MaterialTheme.colorScheme.onBackground)
+                .background(colorResource(id = R.color.layer)), contentAlignment = Alignment.Center
         ) {
-            // Placeholder for image
+            Avatar(user = user, size = 40.dp, withText = false)
         }
     }
 }

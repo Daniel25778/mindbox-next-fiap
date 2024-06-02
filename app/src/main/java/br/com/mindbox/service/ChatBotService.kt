@@ -5,9 +5,7 @@ import br.com.mindbox.dto.email.SendEmailDTO
 import br.com.mindbox.model.chat.ChatBotResponse
 import br.com.mindbox.model.user.User
 
-class ChatBot(private val emailService: EmailService, private val authorizationService: AuthorizationService) {
-
-    private val loggedUser: User = authorizationService.getLoggedUsers()[0]
+class ChatBotService(private val emailService: EmailService, private val loggedUser: User) {
     private val sendEmailDTO = createSendEmailDTO()
 
     companion object {

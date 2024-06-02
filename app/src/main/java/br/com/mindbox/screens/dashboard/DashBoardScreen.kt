@@ -266,7 +266,7 @@ fun DashBoard(
                                 )
                                 Spacer(modifier = Modifier.height(16.dp))
                             } else
-                                Avatar(data = user, size = 40.dp, withText = false)
+                                Avatar(user = user, size = 40.dp, withText = false)
                         }
                     }
 
@@ -292,7 +292,7 @@ fun DashBoard(
                             horizontalArrangement = Arrangement.spacedBy(20.dp)
                         ) {
                             items(usersWithRecentEmails) { item ->
-                                Avatar(data = item, withText = true, size = 60.dp)
+                                Avatar(user = item, withText = true, size = 60.dp)
                             }
                         }
                         Spacer(modifier = Modifier.height(10.dp))

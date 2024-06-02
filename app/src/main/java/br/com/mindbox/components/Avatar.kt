@@ -18,7 +18,7 @@ import coil.compose.AsyncImage
 
 @Composable
 fun Avatar(
-    data: User,
+    user: User,
     size: Dp,
     withText: Boolean
 ) {
@@ -27,21 +27,21 @@ fun Avatar(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             AsyncImage(
-                model = data.profilePictureUrl,
+                model = user.profilePictureUrl,
                 contentDescription = null,
                 modifier = Modifier
                     .size(60.dp)
                     .clip(CircleShape)
             )
             Text(
-                text = data.fullName,
+                text = user.fullName,
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.padding(top = 4.dp)
             )
         }
     else (
             AsyncImage(
-                model = data.profilePictureUrl,
+                model = user.profilePictureUrl,
                 contentDescription = "Profile picture",
                 modifier = Modifier
                     .size(size)
