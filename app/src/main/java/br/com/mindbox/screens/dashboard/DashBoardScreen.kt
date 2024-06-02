@@ -22,13 +22,11 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.outlined.Email
-import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material.icons.outlined.Add
+import androidx.compose.material.icons.outlined.DateRange
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Divider
@@ -105,7 +103,7 @@ fun DashBoard(
 
     data class BottomNavigationItem(
         val title: String,
-        val selectedIcon: ImageVector,
+        val selectedIcon: ImageVector ,
         val unselectedIcon: ImageVector,
         val url: String,
         val hasNews: Boolean,
@@ -116,24 +114,23 @@ fun DashBoard(
         BottomNavigationItem(
             title = "Calendário",
             url = "dashboard",
-            selectedIcon = Icons.Filled.Home,
-            unselectedIcon = Icons.Outlined.Home,
+            selectedIcon = Icons.Filled.DateRange,
+            unselectedIcon = Icons.Outlined.DateRange,
             hasNews = false,
         ),
         BottomNavigationItem(
             title = "Novo",
-            url = "",
-            selectedIcon = Icons.Filled.Email,
-            unselectedIcon = Icons.Outlined.Email,
+            url = "alert",
+            selectedIcon = Icons.Filled.Add,
+            unselectedIcon = Icons.Outlined.Add,
             hasNews = false,
-            badgeCount = 45
         ),
         BottomNavigationItem(
             title = "Chat",
             url = "chat",
-            selectedIcon = Icons.Filled.Settings,
-            unselectedIcon = Icons.Outlined.Settings,
-            hasNews = true,
+            selectedIcon = Icons.Filled.Add,
+            unselectedIcon = Icons.Outlined.Add,
+            hasNews = false,
         ),
     )
     var selectedItemIndex by rememberSaveable {
@@ -320,8 +317,3 @@ fun DashBoard(
         }
     }
 }
-
-
-
-
-

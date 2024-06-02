@@ -116,6 +116,10 @@ dependencies {
 
     implementation("com.exyte:animated-navigation-bar:1.0.0")
 
+    implementation ("androidx.compose.ui:ui-graphics:1.0.0")
+    implementation ("androidx.compose.ui:ui-tooling:1.0.0")
+    implementation ("androidx.compose.material:material:1.0.0")
+
 
 
 }

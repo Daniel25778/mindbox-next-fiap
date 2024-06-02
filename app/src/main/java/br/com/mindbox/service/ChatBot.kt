@@ -101,7 +101,7 @@ class ChatBot(private val emailService: EmailService, private val authorizationS
         emailService.sendMail(sendEmailDTO)
         return ChatBotResponse(
             message = "Seu e-mail foi enviado com sucesso ❤️! Ajudo em algo mais?",
-            expectedUserResponse = ExpectedResponses.UNKNOWN
+            expectedUserResponse = ExpectedResponses.WELCOME
         )
     }
 
