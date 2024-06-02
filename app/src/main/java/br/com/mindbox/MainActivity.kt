@@ -27,11 +27,14 @@ import br.com.mindbox.data.onboarding.ChatOnboardingDataProvider
 import br.com.mindbox.dto.auth.LoginDTO
 import br.com.mindbox.presentation.sign_in.GoogleAuthUiClient
 import br.com.mindbox.presentation.sign_in.SignInViewModel
+import br.com.mindbox.screens.ChatScreen
 import br.com.mindbox.screens.alert.Alert
 import br.com.mindbox.screens.dashboard.DashBoard
 import br.com.mindbox.screens.login.Login
 import br.com.mindbox.screens.register.alert.AnimatedSplashScreen
 import br.com.mindbox.service.AuthorizationService
+import br.com.mindbox.service.ChatBot
+import br.com.mindbox.service.EmailService
 import br.com.mindbox.ui.theme.Theme
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
@@ -45,6 +48,10 @@ class MainActivity : ComponentActivity() {
             oneTapClient = Identity.getSignInClient(applicationContext)
         )
     }
+
+    private val emailService: EmailService by lazy { EmailService(applicationContext) }
+    private val authorizationService: AuthorizationService by lazy { AuthorizationService(applicationContext) }
+    private val chatBot: ChatBot by lazy { ChatBot(emailService, authorizationService) }
 
     @OptIn(ExperimentalAnimationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -142,6 +149,7 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                         composable(route = "alert") { Alert(navController, MenuText="Alertas Próximos") }
+                        composable(route = "chat") { ChatScreen(navController, chatBot) }
                     }
                 }
             }

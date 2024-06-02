@@ -5,6 +5,6 @@ import java.util.Date
 data class ChatBotResponse(
     val message: String,
     val alternatives: List<String> = listOf(),
-    val expectedUserResponse: String? = null,
+    val expectedUserResponse: String = "",
     val date: Date = Date(),
 )
