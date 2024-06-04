@@ -42,6 +42,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
@@ -78,9 +79,7 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DashBoard(
-    navController: NavController,
-    userData: UserData?,
-    onSignOut: () -> Unit
+    navController: NavController, userData: UserData?, onSignOut: () -> Unit
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val coroutineScope = rememberCoroutineScope()
@@ -94,16 +93,14 @@ fun DashBoard(
     val findEmailsSentToUsers = remember { emailRepository.findEmailsSentToUsers(listRecipients) }
     val startAnimation by remember { mutableStateOf(false) }
     val alphaAnim: State<Float> = animateFloatAsState(
-        targetValue = if (startAnimation) 1f else 0f,
-        animationSpec = tween(
-            durationMillis = 5000,
-            easing = LinearEasing
+        targetValue = if (startAnimation) 1f else 0f, animationSpec = tween(
+            durationMillis = 5000, easing = LinearEasing
         ), label = ""
     )
 
     data class BottomNavigationItem(
         val title: String,
-        val selectedIcon: ImageVector ,
+        val selectedIcon: ImageVector,
         val unselectedIcon: ImageVector,
         val url: String,
         val hasNews: Boolean,
@@ -137,13 +134,11 @@ fun DashBoard(
         mutableStateOf(0)
     }
 
-    ModalNavigationDrawer(
-        modifier = Modifier.background(colorResource(id = R.color.layer_mid)),
+    ModalNavigationDrawer(modifier = Modifier.background(colorResource(id = R.color.layer_mid)),
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet(
-                modifier = Modifier
-                    .background(colorResource(id = R.color.layer_mid))
+                modifier = Modifier.background(colorResource(id = R.color.layer_mid))
             ) {
                 Column(
                     modifier = Modifier
@@ -165,8 +160,7 @@ fun DashBoard(
                             painter = painterResource(id = R.drawable.app_logo_horizontal),
                             contentDescription = "App Logo",
                             contentScale = ContentScale.Fit,
-                            modifier = Modifier
-                                .fillMaxSize()
+                            modifier = Modifier.fillMaxSize()
                         )
                     }
                     Spacer(modifier = Modifier.height(10.dp))
@@ -178,101 +172,88 @@ fun DashBoard(
         }
 
     ) {
-        Scaffold(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(colorResource(id = R.color.layer_mid)),
+        Scaffold(modifier = Modifier
+            .fillMaxSize()
+            .background(colorResource(id = R.color.layer_mid)),
             bottomBar = {
                 NavigationBar(
                     containerColor = colorResource(id = R.color.layer_mid),
                     modifier = Modifier.background(colorResource(id = R.color.layer_mid))
                 ) {
                     items.forEachIndexed { index, item ->
-                        NavigationBarItem(
-                            selected = selectedItemIndex == index,
-                            onClick = {
-                                selectedItemIndex = index
-                                navController.navigate(item.url)
-                            },
-                            label = {
-                                Text(text = item.title)
-                            },
-                            alwaysShowLabel = false,
-                            icon = {
-                                BadgedBox(
-                                    badge = {
-                                        if (item.badgeCount != null) {
-                                            Badge {
-                                                Text(text = item.badgeCount.toString())
-                                            }
-                                        } else if (item.hasNews) {
-                                            Badge()
-                                        }
+                        NavigationBarItem(selected = selectedItemIndex == index, onClick = {
+                            selectedItemIndex = index
+                            navController.navigate(item.url)
+                        }, label = {
+                            Text(text = item.title)
+                        }, alwaysShowLabel = false, icon = {
+                            BadgedBox(badge = {
+                                if (item.badgeCount != null) {
+                                    Badge {
+                                        Text(text = item.badgeCount.toString())
                                     }
-                                ) {
-                                    Icon(
-                                        imageVector = if (index == selectedItemIndex) {
-                                            item.selectedIcon
-                                        } else item.unselectedIcon,
-                                        contentDescription = item.title
-                                    )
+                                } else if (item.hasNews) {
+                                    Badge()
                                 }
+                            }) {
+                                Icon(
+                                    imageVector = if (index == selectedItemIndex) {
+                                        item.selectedIcon
+                                    } else item.unselectedIcon, contentDescription = item.title
+                                )
                             }
-                        )
+                        })
                     }
                 }
             },
             topBar = {
-                TopAppBar(
-                    title = {},
-                    navigationIcon = {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier
-                                .width(500.dp)
-                                .background(colorResource(id = R.color.layer_mid))
-                        ) {
-                            IconButton(onClick = {
-                                coroutineScope.launch { drawerState.open() }
-                            }) {
-                                Icon(
-                                    Icons.Default.Menu,
-                                    contentDescription = "Menu",
-                                )
-                            }
-                            Image(
-                                painter = painterResource(id = R.drawable.app_logo_horizontal),
-                                contentDescription = "App Logo",
-                                contentScale = ContentScale.Fit,
-                                modifier = Modifier
-                                    .height(30.dp)
-                                    .padding(start = 8.dp)
+                TopAppBar(title = {}, colors = TopAppBarDefaults.smallTopAppBarColors(
+                    containerColor = colorResource(
+                        id = R.color.layer_mid
+                    )
+                ), navigationIcon = {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.width(500.dp)
+                    ) {
+                        IconButton(onClick = {
+                            coroutineScope.launch { drawerState.open() }
+                        }) {
+                            Icon(
+                                Icons.Default.Menu,
+                                contentDescription = "Menu",
                             )
                         }
-                    },
-                    actions = {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.padding(end = 8.dp)
-                        ) {
-                            if (userData?.profilePictureUrl != null) {
-                                AsyncImage(
-                                    model = userData.profilePictureUrl,
-                                    contentDescription = "Profile picture",
-                                    modifier = Modifier
-                                        .size(30.dp)
-                                        .clip(CircleShape),
-                                    contentScale = ContentScale.Crop
-                                )
-                                Spacer(modifier = Modifier.height(16.dp))
-                            } else
-                                Avatar(user = user, size = 40.dp, withText = false)
-                        }
+                        Image(
+                            painter = painterResource(id = R.drawable.app_logo_horizontal),
+                            contentDescription = "App Logo",
+                            contentScale = ContentScale.Fit,
+                            modifier = Modifier
+                                .height(30.dp)
+                                .padding(start = 8.dp)
+                        )
                     }
+                }, actions = {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.padding(end = 8.dp)
+                    ) {
+                        if (userData?.profilePictureUrl != null) {
+                            AsyncImage(
+                                model = userData.profilePictureUrl,
+                                contentDescription = "Profile picture",
+                                modifier = Modifier
+                                    .size(30.dp)
+                                    .clip(CircleShape),
+                                contentScale = ContentScale.Crop
+                            )
+                            Spacer(modifier = Modifier.height(16.dp))
+                        } else Avatar(user = user, size = 40.dp, withText = false)
+                    }
+                }
 
                 )
-            }
-        ) { paddingValues ->
+            }) { paddingValues ->
 
             Column(
                 modifier = Modifier

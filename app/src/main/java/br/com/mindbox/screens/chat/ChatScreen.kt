@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Divider
@@ -29,10 +30,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -40,6 +43,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -60,6 +64,8 @@ import br.com.mindbox.model.user.User
 import br.com.mindbox.service.AuthorizationService
 import br.com.mindbox.service.ChatBotService
 import br.com.mindbox.service.EmailService
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 data class ChatMessage(val text: String, val isUserMessage: Boolean)
 
@@ -87,6 +93,9 @@ fun ChatScreen(
     var messageText by remember { mutableStateOf("") }
     var expectedUserResponse by remember { mutableStateOf("") }
     var chatMessages by remember { mutableStateOf(listOf<ChatMessage>()) }
+
+    val listState = rememberLazyListState()
+    val coroutineScope = rememberCoroutineScope()
 
     LaunchedEffect(Unit) {
         val initialResponse = chatBotService.processMessage("")
@@ -138,20 +147,15 @@ fun ChatScreen(
             .fillMaxSize()
             .background(colorResource(id = R.color.layer_mid)),
             topBar = {
-                TopAppBar(title = {
+                TopAppBar(colors = TopAppBarDefaults.smallTopAppBarColors(
+                    containerColor = colorResource(
+                        id = R.color.layer_mid
+                    )
+                ), title = {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .background(colorResource(id = R.color.layer))
+                        modifier = Modifier.fillMaxWidth()
                     ) {
-                        IconButton(onClick = { navController.popBackStack() }) {
-                            Icon(
-                                painter = painterResource(id = R.drawable.pngegg),
-                                modifier = Modifier.size(16.dp),
-                                contentDescription = "Voltar"
-                            )
-                        }
                         Spacer(modifier = Modifier.width(8.dp))
                         Box(
                             modifier = Modifier
@@ -171,60 +175,86 @@ fun ChatScreen(
                             text = "Goma", style = MaterialTheme.typography.titleMedium
                         )
                     }
-                }, navigationIcon = {})
+                }, navigationIcon = {
+                    IconButton(onClick = {
+                        navController.navigate("dashboard") {
+                            popUpTo(navController.graph.startDestinationId) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.pngegg),
+                            modifier = Modifier.size(16.dp),
+                            contentDescription = "Voltar"
+                        )
+                    }
+                })
             },
             bottomBar = {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxWidth()
-                        .background(Color.Transparent)
+                Surface(
+                    color = colorResource(id = R.color.layer_mid),
+                    modifier = Modifier.fillMaxWidth()
                 ) {
-                    TextField(value = messageText,
-                        onValueChange = {},
-                        enabled = false,
-                        modifier = Modifier
-                            .weight(1f)
-                            .padding(end = 8.dp)
-                            .clip(RoundedCornerShape(16.dp)),
-                        colors = TextFieldDefaults.textFieldColors(
-                            containerColor = colorResource(id = R.color.white)
-                        ),
-                        textStyle = TextStyle(color = colorResource(id = R.color.black)),
-                        placeholder = { Text(text = "Digite uma mensagem") })
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Box(
-                        modifier = Modifier
-                            .size(48.dp)
-                            .background(
-                                color = colorResource(id = R.color.layer), shape = CircleShape
-                            ),
-                        contentAlignment = Alignment.Center,
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.padding(16.dp)
                     ) {
-                        IconButton(onClick = {
-                            chatMessages =
-                                chatMessages + ChatMessage(messageText, isUserMessage = true)
-                            val chatBotResponse = chatBotService.processMessage(messageText)
-                            responseText = chatBotResponse.message
-                            expectedUserResponse = chatBotResponse.expectedUserResponse
-                            messageText = chatBotResponse.expectedUserResponse
-                            chatMessages =
-                                chatMessages + ChatMessage(responseText, isUserMessage = false)
-                        },
-                            enabled = expectedUserResponse.isNotEmpty(),
-                            modifier = Modifier.size(48.dp),
-                            content = {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.send_chat_message_icon),
-                                    contentDescription = "Enviar mensagem",
-                                    modifier = Modifier.size(24.dp),
-                                    tint = Color.White
+                        TextField(value = messageText,
+                            onValueChange = {},
+                            enabled = false,
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(end = 8.dp)
+                                .clip(RoundedCornerShape(16.dp)),
+                            colors = TextFieldDefaults.textFieldColors(
+                                containerColor = colorResource(id = R.color.white),
+                            ),
+                            textStyle = TextStyle(color = colorResource(id = R.color.black), ),
+                            placeholder = { Text(text = "Digite uma mensagem") })
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Box(
+                            modifier = Modifier
+                                .size(48.dp)
+                                .background(
+                                    color = colorResource(id = R.color.layer), shape = CircleShape
+                                ),
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            IconButton(onClick = {
+                                chatMessages = chatMessages + ChatMessage(
+                                    messageText,
+                                    isUserMessage = true
                                 )
-                            })
+                                val chatBotResponse = chatBotService.processMessage(messageText)
+                                coroutineScope.launch {
+                                    delay(1000)
+                                    responseText = chatBotResponse.message
+                                    expectedUserResponse = chatBotResponse.expectedUserResponse
+                                    messageText = chatBotResponse.expectedUserResponse
+                                    chatMessages = chatMessages + ChatMessage(
+                                        responseText,
+                                        isUserMessage = false
+                                    )
+                                }
+                            },
+                                enabled = expectedUserResponse.isNotEmpty(),
+                                modifier = Modifier.size(48.dp),
+                                content = {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.send_chat_message_icon),
+                                        contentDescription = "Enviar mensagem",
+                                        modifier = Modifier.size(24.dp),
+                                        tint = Color.White
+                                    )
+                                })
+                        }
                     }
                 }
             }
+
 
         ) { paddingValues ->
 
@@ -302,6 +332,7 @@ fun UserMessage(message: String, user: User) {
     ) {
         Box(
             modifier = Modifier
+                .weight(1f)
                 .background(
                     colorResource(id = R.color.layer), RoundedCornerShape(8.dp)
                 )
