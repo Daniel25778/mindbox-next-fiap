@@ -1,4 +1,4 @@
-package br.com.mindbox.screens.dashboard
+package br.com.mindbox.screens.calendar
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.core.LinearEasing
@@ -6,20 +6,15 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
@@ -61,7 +56,6 @@ import br.com.mindbox.R
 import br.com.mindbox.components.AnimatedGradientBackground
 import br.com.mindbox.components.Avatar
 import br.com.mindbox.components.DrawerItem
-import br.com.mindbox.components.EmailListItem
 import br.com.mindbox.components.loadNavBottomItemsWithIcons
 import br.com.mindbox.database.repository.EmailRepository
 import br.com.mindbox.database.repository.UserRepository
@@ -75,7 +69,7 @@ import kotlinx.coroutines.launch
 @SuppressLint("SuspiciousIndentation")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DashBoardScreen(
+fun CalendarScreen(
     navController: NavController,
     userData: UserData?,
     onSignOut: () -> Unit,
@@ -98,7 +92,7 @@ fun DashBoardScreen(
         ), label = ""
     )
     var selectedItemIndex by rememberSaveable {
-        mutableStateOf(0)
+        mutableStateOf(1)
     }
     val navBottomItems = loadNavBottomItemsWithIcons(items = rawNavBottomItems)
 
@@ -237,34 +231,11 @@ fun DashBoardScreen(
                 AnimatedGradientBackground(alphaAnimate = alphaAnim.value) {
                     Column(modifier = Modifier.padding(start = 20.dp)) {
                         Text(
-                            text = "Recentes",
+                            text = "Calendário",
                             style = MaterialTheme.typography.titleMedium,
                             modifier = Modifier.padding(top = 4.dp)
                         )
-                        Spacer(modifier = Modifier.height(20.dp))
-                        LazyRow(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.spacedBy(20.dp)
-                        ) {
-                            items(usersWithRecentEmails) { item ->
-                                Avatar(user = item, withText = true, size = 60.dp)
-                            }
-                        }
-                        Spacer(modifier = Modifier.height(10.dp))
-                        Divider()
-                        Spacer(modifier = Modifier.height(10.dp))
-                        Text(
-                            text = "Todos da caixa de entrada",
-                            style = MaterialTheme.typography.titleMedium,
-                        )
-                        Spacer(modifier = Modifier.height(10.dp))
-                        LazyColumn(
-                            verticalArrangement = Arrangement.spacedBy(20.dp)
-                        ) {
-                            items(findEmailsSentToUsers) {
-                                EmailListItem(data = user)
-                            }
-                        }
+
                     }
 
                 }

@@ -24,13 +24,17 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.composable
 import br.com.mindbox.data.onboarding.AppOnboardingDataProvider
 import br.com.mindbox.data.onboarding.ChatOnboardingDataProvider
+import br.com.mindbox.data.onboarding.NavBottomItemDataProvider
 import br.com.mindbox.dto.auth.LoginDTO
 import br.com.mindbox.presentation.sign_in.GoogleAuthUiClient
 import br.com.mindbox.presentation.sign_in.SignInViewModel
 import br.com.mindbox.screens.alert.Alert
+import br.com.mindbox.screens.calendar.CalendarScreen
 import br.com.mindbox.screens.chat.ChatScreen
-import br.com.mindbox.screens.dashboard.DashBoard
+import br.com.mindbox.screens.contact.ContactScreen
+import br.com.mindbox.screens.dashboard.DashBoardScreen
 import br.com.mindbox.screens.login.Login
+import br.com.mindbox.screens.new_email.NewEmailScreen
 import br.com.mindbox.screens.register.alert.AnimatedSplashScreen
 import br.com.mindbox.service.AuthorizationService
 import br.com.mindbox.ui.theme.Theme
@@ -125,7 +129,7 @@ class MainActivity : ComponentActivity() {
                         composable(route = "chatOnboarding") { OnboardingScreen(navController, ChatOnboardingDataProvider().getItems(), "chat") }
 
                         composable(route = "dashboard") {
-                            DashBoard(
+                            DashBoardScreen(
                                 navController,
                                 userData = googleAuthUiClient.getSignedInUser(),
                                 onSignOut = {
@@ -139,7 +143,65 @@ class MainActivity : ComponentActivity() {
 
                                         navController.popBackStack()
                                     }
-                                }
+                                },
+                                NavBottomItemDataProvider().getItems()
+                            )
+                        }
+                        composable(route = "new-email") {
+                            NewEmailScreen(
+                                navController,
+                                userData = googleAuthUiClient.getSignedInUser(),
+                                onSignOut = {
+                                    lifecycleScope.launch {
+                                        googleAuthUiClient.signOut()
+                                        Toast.makeText(
+                                            applicationContext,
+                                            "Saiu da conta",
+                                            Toast.LENGTH_LONG
+                                        ).show()
+
+                                        navController.popBackStack()
+                                    }
+                                },
+                                NavBottomItemDataProvider().getItems()
+                            )
+                        }
+                        composable(route = "calendar") {
+                            CalendarScreen(
+                                navController,
+                                userData = googleAuthUiClient.getSignedInUser(),
+                                onSignOut = {
+                                    lifecycleScope.launch {
+                                        googleAuthUiClient.signOut()
+                                        Toast.makeText(
+                                            applicationContext,
+                                            "Saiu da conta",
+                                            Toast.LENGTH_LONG
+                                        ).show()
+
+                                        navController.popBackStack()
+                                    }
+                                },
+                                NavBottomItemDataProvider().getItems()
+                            )
+                        }
+                        composable(route = "contact") {
+                            ContactScreen(
+                                navController,
+                                userData = googleAuthUiClient.getSignedInUser(),
+                                onSignOut = {
+                                    lifecycleScope.launch {
+                                        googleAuthUiClient.signOut()
+                                        Toast.makeText(
+                                            applicationContext,
+                                            "Saiu da conta",
+                                            Toast.LENGTH_LONG
+                                        ).show()
+
+                                        navController.popBackStack()
+                                    }
+                                },
+                                NavBottomItemDataProvider().getItems()
                             )
                         }
                         composable(route = "alert") { Alert(navController, MenuText="Alertas Próximos") }
