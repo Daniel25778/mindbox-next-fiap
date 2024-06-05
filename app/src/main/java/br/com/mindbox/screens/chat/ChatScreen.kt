@@ -165,7 +165,7 @@ fun ChatScreen(
                             contentAlignment = Alignment.Center
                         ) {
                             Image(
-                                painter = painterResource(id = R.drawable.chat_icon),
+                                painter = painterResource(id = R.drawable.chat_unselected_icon),
                                 contentDescription = "IA Icon",
                                 modifier = Modifier.size(24.dp)
                             )
@@ -298,7 +298,7 @@ fun ChatBotMessage(message: String) {
                 .background(colorResource(id = R.color.layer)), contentAlignment = Alignment.Center
         ) {
             Image(
-                painter = painterResource(id = R.drawable.chat_icon),
+                painter = painterResource(id = R.drawable.chat_unselected_icon),
                 contentDescription = "IA Icon",
                 modifier = Modifier.size(24.dp)
             )
