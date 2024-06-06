@@ -47,7 +47,7 @@ class NavBottomItemDataProvider: NavBottomDataProviderInterface {
             ),
             NavBottomItem(
                 title = "Chat",
-                url = "chat",
+                url = "chatOnboarding",
                 selectedIcon = null,
                 unselectedIcon = null,
                 hasNews = false,
