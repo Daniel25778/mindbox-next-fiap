@@ -1,6 +1,7 @@
 package br.com.mindbox.screens.dashboard
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -89,14 +90,17 @@ fun DashBoardScreen(
     val userRepository = UserRepository(context)
     val emailRepository = EmailRepository(context)
     val listRecipients: List<Long> = listOf<Long>(user.id)
-    val usersWithRecentEmails = remember { userRepository.findUsersWithRecentEmailsSent(user.id) }
-    val findEmailsSentToUsers = remember { emailRepository.findEmailsByRecipientIds(listRecipients) }
+    val usersWithRecentEmails = remember { userRepository.findReceiversBySenderIdOrderByRecentEmails(user.id) }
+    val emailsSentToUsers = remember { emailRepository.findEmailsByRecipientIds(listRecipients) }
     val startAnimation by remember { mutableStateOf(false) }
     val alphaAnim: State<Float> = animateFloatAsState(
         targetValue = if (startAnimation) 1f else 0f, animationSpec = tween(
             durationMillis = 5000, easing = LinearEasing
         ), label = ""
     )
+    Log.d("mindbox-aoba", remember {emailsSentToUsers.toString()})
+    Log.d("mindbox-aoba", remember {emailRepository.findAll().toString()})
+    Log.d("mindbox-aoba", user.toString())
     var selectedItemIndex by rememberSaveable {
         mutableStateOf(0)
     }
@@ -246,8 +250,8 @@ fun DashBoardScreen(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.spacedBy(20.dp)
                         ) {
-                            items(usersWithRecentEmails) { item ->
-                                Avatar(user = item, withText = true, size = 60.dp)
+                            items(usersWithRecentEmails) {
+                                Avatar(user = it, withText = true, size = 60.dp)
                             }
                         }
                         Spacer(modifier = Modifier.height(10.dp))
@@ -261,8 +265,8 @@ fun DashBoardScreen(
                         LazyColumn(
                             verticalArrangement = Arrangement.spacedBy(20.dp)
                         ) {
-                            items(findEmailsSentToUsers) {
-                                EmailListItem(data = user)
+                            items(emailsSentToUsers) {
+                                EmailListItem(emailWithTasks = it)
                             }
                         }
                     }

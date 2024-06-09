@@ -79,4 +79,8 @@ class EmailRepository(context: Context) {
     fun findSpamEmailsByCategoryAndRecipientIds(recipientIds: List<Long>, categoryId: Long): List<EmailWithTasks> {
         return emailDAO.findSpamEmailsByCategoryAndRecipientIds(recipientIds, categoryId)
     }
+
+    fun findAll(): List<EmailWithTasks> {
+        return emailDAO.findAll()
+    }
 }

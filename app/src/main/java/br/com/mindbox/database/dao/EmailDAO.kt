@@ -93,4 +93,10 @@ interface EmailDAO {
         ORDER BY e.send_date DESC
     """)
     fun findSpamEmailsByCategoryAndRecipientIds(recipientIds: List<Long>, categoryId: Long): List<EmailWithTasks>
+
+    @Transaction
+    @Query("""
+        SELECT * FROM tbl_email
+    """)
+    fun findAll(): List<EmailWithTasks>
 }

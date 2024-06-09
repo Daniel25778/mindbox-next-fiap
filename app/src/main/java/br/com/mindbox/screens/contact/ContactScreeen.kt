@@ -85,7 +85,7 @@ fun ContactScreen(
     val userRepository = UserRepository(context)
     val emailRepository = EmailRepository(context)
     val listRecipients: List<Long> = listOf<Long>(user.id)
-    val usersWithRecentEmails = remember { userRepository.findUsersWithRecentEmailsSent(user.id) }
+    val usersWithRecentEmails = remember { userRepository.findReceiversBySenderIdOrderByRecentEmails(user.id) }
     val findEmailsSentToUsers = remember { emailRepository.findEmailsByRecipientIds(listRecipients) }
     val startAnimation by remember { mutableStateOf(false) }
     val alphaAnim: State<Float> = animateFloatAsState(
