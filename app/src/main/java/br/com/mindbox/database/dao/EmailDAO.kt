@@ -23,10 +23,20 @@ interface EmailDAO {
     @Transaction
     @Query("""
         SELECT * FROM tbl_email e 
-        WHERE e.email_id IN (SELECT email_id FROM tbl_email_recipient WHERE recipient_id IN (:recipientIds)) 
+        INNER JOIN tbl_email_recipient r ON e.email_id = r.email_id
+        WHERE r.recipient_id IN (:recipientIds)
+        AND e.send_date < CURRENT_TIMESTAMP
         ORDER BY e.send_date DESC
     """)
-    fun findEmailsSentToUsers(recipientIds: List<Long>): List<EmailWithTasks>
+    fun findEmailsByRecipientIds(recipientIds: List<Long>): List<EmailWithTasks>
+
+    @Transaction
+    @Query("""
+        SELECT * FROM tbl_email e 
+        WHERE e.sender_id IN (:senderIds)
+        ORDER BY e.send_date DESC
+    """)
+    fun findEmailsBySenderIds(senderIds: List<Long>): List<EmailWithTasks>
 
     @Transaction
     @Query("""
@@ -34,9 +44,10 @@ interface EmailDAO {
         INNER JOIN tbl_email_recipient r ON e.email_id = r.email_id
         WHERE r.recipient_id IN (:recipientIds) 
         AND r.email_category_id = :categoryId
+        AND e.send_date < CURRENT_TIMESTAMP
         ORDER BY e.send_date DESC
     """)
-    fun findEmailsSentToUsersByCategory(recipientIds: List<Long>, categoryId: Long): List<EmailWithTasks>
+    fun findEmailsByCategoryAndRecipientIds(recipientIds: List<Long>, categoryId: Long): List<EmailWithTasks>
 
     @Transaction
     @Query("""
@@ -45,9 +56,10 @@ interface EmailDAO {
         WHERE r.recipient_id IN (:recipientIds) 
         AND r.email_category_id = :categoryId
         AND r.finished_at IS NOT NULL
+        AND e.send_date < CURRENT_TIMESTAMP
         ORDER BY e.send_date DESC
     """)
-    fun findDeletedEmailsSentToUsersByCategory(recipientIds: List<Long>, categoryId: Long): List<EmailWithTasks>
+    fun findDeletedEmailsByCategoryAndRecipientIds(recipientIds: List<Long>, categoryId: Long): List<EmailWithTasks>
 
     @Transaction
     @Query("""
@@ -55,9 +67,10 @@ interface EmailDAO {
         INNER JOIN tbl_email_recipient r ON e.email_id = r.email_id
         WHERE r.recipient_id IN (:recipientIds) 
         AND r.finished_at IS NOT NULL
+        AND e.send_date < CURRENT_TIMESTAMP
         ORDER BY e.send_date DESC
     """)
-    fun findDeletedEmailsSentToUsers(recipientIds: List<Long>): List<EmailWithTasks>
+    fun findDeletedEmailsByRecipientIds(recipientIds: List<Long>): List<EmailWithTasks>
 
 
     @Transaction
@@ -68,7 +81,7 @@ interface EmailDAO {
         AND r.marked_as_spam_at IS NOT NULL
         ORDER BY e.send_date DESC
     """)
-    fun findSpamEmailsSentToUsers(recipientIds: List<Long>): List<EmailWithTasks>
+    fun findSpamEmailsByRecipientIds(recipientIds: List<Long>): List<EmailWithTasks>
 
     @Transaction
     @Query("""
@@ -79,5 +92,5 @@ interface EmailDAO {
         AND r.marked_as_spam_at IS NOT NULL
         ORDER BY e.send_date DESC
     """)
-    fun findSpamEmailsSentToUsersByCategory(recipientIds: List<Long>, categoryId: Long): List<EmailWithTasks>
+    fun findSpamEmailsByCategoryAndRecipientIds(recipientIds: List<Long>, categoryId: Long): List<EmailWithTasks>
 }

@@ -6,7 +6,7 @@ import br.com.mindbox.util.date.DateUtils
 class DefaultRegisterUserDTOs {
     companion object {
         fun get(): List<RegisterUserDTO> {
-            val format = DateUtils.getFormat()
+            val format = DateUtils.getDateFormat()
             return listOf(
                 RegisterUserDTO(
                     email = "gilberto@locaweb.com.br",

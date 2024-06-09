@@ -90,7 +90,7 @@ fun DashBoardScreen(
     val emailRepository = EmailRepository(context)
     val listRecipients: List<Long> = listOf<Long>(user.id)
     val usersWithRecentEmails = remember { userRepository.findUsersWithRecentEmailsSent(user.id) }
-    val findEmailsSentToUsers = remember { emailRepository.findEmailsSentToUsers(listRecipients) }
+    val findEmailsSentToUsers = remember { emailRepository.findEmailsByRecipientIds(listRecipients) }
     val startAnimation by remember { mutableStateOf(false) }
     val alphaAnim: State<Float> = animateFloatAsState(
         targetValue = if (startAnimation) 1f else 0f, animationSpec = tween(

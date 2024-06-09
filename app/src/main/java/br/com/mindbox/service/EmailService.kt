@@ -18,7 +18,8 @@ class EmailService(private val context: Context) {
         val email = Email(
             text = sendEmailDTO.text,
             subject = sendEmailDTO.subject,
-            senderId = sendEmailDTO.senderId
+            senderId = sendEmailDTO.senderId,
+            sendDate = sendEmailDTO.sendDate
         )
         val emailCategoryName = emailCategoryClassifier.classifyEmail(email)
         val emailCategory = emailCategoryRepository.findByName(emailCategoryName)

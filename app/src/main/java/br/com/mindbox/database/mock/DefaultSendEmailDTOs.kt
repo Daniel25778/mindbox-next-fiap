@@ -2,6 +2,7 @@ package br.com.mindbox.database.mock
 
 import br.com.mindbox.dto.email.SendEmailDTO
 import br.com.mindbox.dto.email_task.CreateEmailTaskDTO
+import br.com.mindbox.util.date.DateUtils
 
 class DefaultSendEmailDTOs {
     companion object {
@@ -16,7 +17,8 @@ class DefaultSendEmailDTOs {
                     tasks = listOf(
                         CreateEmailTaskDTO(description = "Revisar lição de casa"),
                         CreateEmailTaskDTO(description = "Trazer livro de matemática")
-                    )
+                    ),
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-12 09:22:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 2,
@@ -26,7 +28,8 @@ class DefaultSendEmailDTOs {
                     tasks = listOf(
                         CreateEmailTaskDTO(description = "Inscrever-se no seminário"),
                         CreateEmailTaskDTO(description = "Preparar apresentação")
-                    )
+                    ),
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-12 10:22:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 3,
@@ -36,7 +39,8 @@ class DefaultSendEmailDTOs {
                     tasks = listOf(
                         CreateEmailTaskDTO(description = "Estudar capítulos 1 a 5"),
                         CreateEmailTaskDTO(description = "Revisar notas de aula")
-                    )
+                    ),
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-12 11:30:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 4,
@@ -46,7 +50,8 @@ class DefaultSendEmailDTOs {
                     tasks = listOf(
                         CreateEmailTaskDTO(description = "Confirmar presença"),
                         CreateEmailTaskDTO(description = "Preparar perguntas")
-                    )
+                    ),
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-11 08:22:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 5,
@@ -56,7 +61,8 @@ class DefaultSendEmailDTOs {
                     tasks = listOf(
                         CreateEmailTaskDTO(description = "Levar materiais necessários"),
                         CreateEmailTaskDTO(description = "Praticar atividades prévias")
-                    )
+                    ),
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-05 09:22:00")!!
                 ),
                 // Work Emails
                 SendEmailDTO(
@@ -67,7 +73,8 @@ class DefaultSendEmailDTOs {
                     tasks = listOf(
                         CreateEmailTaskDTO(description = "Preparar apresentação do projeto"),
                         CreateEmailTaskDTO(description = "Revisar documentos do projeto")
-                    )
+                    ),
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-15 09:22:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 2,
@@ -77,7 +84,8 @@ class DefaultSendEmailDTOs {
                     tasks = listOf(
                         CreateEmailTaskDTO(description = "Coletar dados de vendas"),
                         CreateEmailTaskDTO(description = "Escrever resumo do relatório")
-                    )
+                    ),
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-26 09:40:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 3,
@@ -87,7 +95,8 @@ class DefaultSendEmailDTOs {
                     tasks = listOf(
                         CreateEmailTaskDTO(description = "Listar tarefas prioritárias"),
                         CreateEmailTaskDTO(description = "Atualizar backlog do projeto")
-                    )
+                    ),
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-17 09:22:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 4,
@@ -97,7 +106,8 @@ class DefaultSendEmailDTOs {
                     tasks = listOf(
                         CreateEmailTaskDTO(description = "Preparar materiais de treinamento"),
                         CreateEmailTaskDTO(description = "Enviar convites para a equipe")
-                    )
+                    ),
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-02 15:22:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 5,
@@ -107,7 +117,8 @@ class DefaultSendEmailDTOs {
                     tasks = listOf(
                         CreateEmailTaskDTO(description = "Preencher formulário de autoavaliação"),
                         CreateEmailTaskDTO(description = "Agendar reunião com o gestor")
-                    )
+                    ),
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-05-12 09:22:00")!!
                 ),
                 // Personal Emails
                 SendEmailDTO(
@@ -118,7 +129,8 @@ class DefaultSendEmailDTOs {
                     tasks = listOf(
                         CreateEmailTaskDTO(description = "Confirmar presença"),
                         CreateEmailTaskDTO(description = "Trazer presente")
-                    )
+                    ),
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-03 09:22:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 2,
@@ -128,7 +140,8 @@ class DefaultSendEmailDTOs {
                     tasks = listOf(
                         CreateEmailTaskDTO(description = "Escolher menu"),
                         CreateEmailTaskDTO(description = "Enviar convites")
-                    )
+                    ),
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-05 09:22:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 5,
@@ -138,7 +151,8 @@ class DefaultSendEmailDTOs {
                     tasks = listOf(
                         CreateEmailTaskDTO(description = "Reservar voos"),
                         CreateEmailTaskDTO(description = "Fazer itinerário de viagem")
-                    )
+                    ),
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-09 09:22:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 6,
@@ -148,7 +162,8 @@ class DefaultSendEmailDTOs {
                     tasks = listOf(
                         CreateEmailTaskDTO(description = "Preparar prato principal"),
                         CreateEmailTaskDTO(description = "Trazer sobremesa")
-                    )
+                    ),
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-10 09:22:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 5,
@@ -158,7 +173,8 @@ class DefaultSendEmailDTOs {
                     tasks = listOf(
                         CreateEmailTaskDTO(description = "Levar lanches"),
                         CreateEmailTaskDTO(description = "Organizar atividades ao ar livre")
-                    )
+                    ),
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-11 09:22:00")!!
                 ),
                 // Promotion Emails
                 SendEmailDTO(
@@ -169,7 +185,8 @@ class DefaultSendEmailDTOs {
                     tasks = listOf(
                         CreateEmailTaskDTO(description = "Divulgar promoção nas redes sociais"),
                         CreateEmailTaskDTO(description = "Atualizar site com preços promocionais")
-                    )
+                    ),
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-05-29 09:22:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 2,
@@ -179,7 +196,8 @@ class DefaultSendEmailDTOs {
                     tasks = listOf(
                         CreateEmailTaskDTO(description = "Enviar newsletter"),
                         CreateEmailTaskDTO(description = "Configurar descontos no e-commerce")
-                    )
+                    ),
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-10 09:22:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 3,
@@ -189,7 +207,8 @@ class DefaultSendEmailDTOs {
                     tasks = listOf(
                         CreateEmailTaskDTO(description = "Preparar material de marketing"),
                         CreateEmailTaskDTO(description = "Organizar produtos em promoção")
-                    )
+                    ),
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-12 09:22:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 4,
@@ -199,7 +218,8 @@ class DefaultSendEmailDTOs {
                     tasks = listOf(
                         CreateEmailTaskDTO(description = "Criar código de desconto"),
                         CreateEmailTaskDTO(description = "Enviar e-mail para novos assinantes")
-                    )
+                    ),
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-12 09:22:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 5,
@@ -209,7 +229,8 @@ class DefaultSendEmailDTOs {
                     tasks = listOf(
                         CreateEmailTaskDTO(description = "Lançar campanha de aniversário"),
                         CreateEmailTaskDTO(description = "Oferecer brindes para compras acima de $100")
-                    )
+                    ),
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-12 09:22:00")!!
                 ),
                 // Finance Emails
                 SendEmailDTO(
@@ -220,7 +241,8 @@ class DefaultSendEmailDTOs {
                     tasks = listOf(
                         CreateEmailTaskDTO(description = "Revisar resumo de conta"),
                         CreateEmailTaskDTO(description = "Verificar transações recentes")
-                    )
+                    ),
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-12 09:22:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 2,
@@ -230,7 +252,8 @@ class DefaultSendEmailDTOs {
                     tasks = listOf(
                         CreateEmailTaskDTO(description = "Analisar opções de investimento"),
                         CreateEmailTaskDTO(description = "Agendar consulta com consultor financeiro")
-                    )
+                    ),
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-12 09:22:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 3,
@@ -240,7 +263,8 @@ class DefaultSendEmailDTOs {
                     tasks = listOf(
                         CreateEmailTaskDTO(description = "Preencher questionário financeiro"),
                         CreateEmailTaskDTO(description = "Agendar reunião com consultor")
-                    )
+                    ),
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-12 09:22:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 4,
@@ -250,7 +274,8 @@ class DefaultSendEmailDTOs {
                     tasks = listOf(
                         CreateEmailTaskDTO(description = "Revisar relatório"),
                         CreateEmailTaskDTO(description = "Ajustar portfólio de investimentos")
-                    )
+                    ),
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-12 09:22:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 5,
@@ -260,7 +285,8 @@ class DefaultSendEmailDTOs {
                     tasks = listOf(
                         CreateEmailTaskDTO(description = "Enviar documentação necessária"),
                         CreateEmailTaskDTO(description = "Atualizar dados no sistema")
-                    )
+                    ),
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-12 09:22:00")!!
                 ),
                 // Health Emails
                 SendEmailDTO(
@@ -271,7 +297,8 @@ class DefaultSendEmailDTOs {
                     tasks = listOf(
                         CreateEmailTaskDTO(description = "Confirmar consulta"),
                         CreateEmailTaskDTO(description = "Trazer resultados de exames")
-                    )
+                    ),
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-12 09:22:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 2,
@@ -281,7 +308,8 @@ class DefaultSendEmailDTOs {
                     tasks = listOf(
                         CreateEmailTaskDTO(description = "Agendar vacinação"),
                         CreateEmailTaskDTO(description = "Preencher formulário de vacinação")
-                    )
+                    ),
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-12 09:22:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 3,
@@ -291,7 +319,8 @@ class DefaultSendEmailDTOs {
                     tasks = listOf(
                         CreateEmailTaskDTO(description = "Agendar exames preventivos"),
                         CreateEmailTaskDTO(description = "Levar histórico médico")
-                    )
+                    ),
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-12 09:22:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 4,
@@ -301,7 +330,8 @@ class DefaultSendEmailDTOs {
                     tasks = listOf(
                         CreateEmailTaskDTO(description = "Inscrever-se no programa"),
                         CreateEmailTaskDTO(description = "Trazer roupa de ginástica")
-                    )
+                    ),
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-12 09:22:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 5,
@@ -311,7 +341,8 @@ class DefaultSendEmailDTOs {
                     tasks = listOf(
                         CreateEmailTaskDTO(description = "Inscrever-se no workshop"),
                         CreateEmailTaskDTO(description = "Preparar perguntas para o nutricionista")
-                    )
+                    ),
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-12 09:22:00")!!
                 ),
                 // Travel Emails
                 SendEmailDTO(
@@ -322,7 +353,8 @@ class DefaultSendEmailDTOs {
                     tasks = listOf(
                         CreateEmailTaskDTO(description = "Reservar voos"),
                         CreateEmailTaskDTO(description = "Selecionar hotéis")
-                    )
+                    ),
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-12 09:22:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 2,
@@ -332,7 +364,8 @@ class DefaultSendEmailDTOs {
                     tasks = listOf(
                         CreateEmailTaskDTO(description = "Imprimir itinerário"),
                         CreateEmailTaskDTO(description = "Confirmar reservas")
-                    )
+                    ),
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-12 09:22:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 3,
@@ -342,7 +375,8 @@ class DefaultSendEmailDTOs {
                     tasks = listOf(
                         CreateEmailTaskDTO(description = "Inscrever-se na excursão"),
                         CreateEmailTaskDTO(description = "Levar câmera fotográfica")
-                    )
+                    ),
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-12 09:22:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 4,
@@ -352,7 +386,8 @@ class DefaultSendEmailDTOs {
                     tasks = listOf(
                         CreateEmailTaskDTO(description = "Reservar hotel na praia"),
                         CreateEmailTaskDTO(description = "Preparar lista de atividades")
-                    )
+                    ),
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-12 09:22:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 5,
@@ -362,7 +397,8 @@ class DefaultSendEmailDTOs {
                     tasks = listOf(
                         CreateEmailTaskDTO(description = "Comprar equipamento de caminhada"),
                         CreateEmailTaskDTO(description = "Trazer lanche e água")
-                    )
+                    ),
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-12 09:22:00")!!
                 ),
                 //Newsletter Emails
                 SendEmailDTO(
@@ -370,35 +406,40 @@ class DefaultSendEmailDTOs {
                     recipientIds = listOf(2L, 3L),
                     subject = "Últimas Notícias da Semana",
                     text = "Confira as últimas notícias da semana em nossa newsletter!",
-                    tasks = emptyList()
+                    tasks = emptyList(),
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-12 09:22:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 2,
                     recipientIds = listOf(1L, 3L),
                     subject = "Novidades e Atualizações",
                     text = "Fique por dentro das novidades e atualizações em nossa newsletter mensal.",
-                    tasks = emptyList()
+                    tasks = emptyList(),
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-12 09:22:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 3,
                     recipientIds = listOf(1L, 2L),
                     subject = "Destaques da Indústria",
                     text = "Os principais destaques da indústria em nossa newsletter quinzenal.",
-                    tasks = emptyList()
+                    tasks = emptyList(),
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-12 09:22:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 4,
                     recipientIds = listOf(1L, 2L, 3L),
                     subject = "Resumo Semanal",
                     text = "Confira nosso resumo semanal com as notícias mais importantes.",
-                    tasks = emptyList()
+                    tasks = emptyList(),
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-12 09:22:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 5,
                     recipientIds = listOf(2L, 4L),
                     subject = "Melhores Artigos do Mês",
                     text = "Veja os melhores artigos do mês em nossa newsletter especial.",
-                    tasks = emptyList()
+                    tasks = emptyList(),
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-12 09:22:00")!!
                 )
             )
         }

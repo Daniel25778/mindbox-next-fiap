@@ -16,5 +16,5 @@ data class Email(
     @Embedded var sender: User? = null,
     var subject: String = "",
     var text: String = "",
-    @ColumnInfo(name = "send_date") var sendDate: Date? = null
+    @ColumnInfo(name = "send_date") var sendDate: Date = Date()
 )

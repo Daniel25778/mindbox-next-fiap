@@ -98,12 +98,6 @@ class MainActivity : ComponentActivity() {
                             )
                             LaunchedEffect(key1 = state.isSignInSuccessful) {
                                 if(state.isSignInSuccessful) {
-                                    Toast.makeText(
-                                        applicationContext,
-                                        "Autenticado com sucesso",
-                                        Toast.LENGTH_LONG
-                                    ).show()
-
                                     AuthorizationService(applicationContext).authenticateUser(LoginDTO("gilberto@locaweb.com.br", "Senha@123"))
                                     navController.navigate("dashboard")
                                     viewModel.resetState()

@@ -60,6 +60,7 @@ import br.com.mindbox.R
 import br.com.mindbox.components.AnimatedGradientBackground
 import br.com.mindbox.components.Avatar
 import br.com.mindbox.components.DrawerItem
+import br.com.mindbox.database.repository.CalendarEventRepository
 import br.com.mindbox.model.user.User
 import br.com.mindbox.service.AuthorizationService
 import br.com.mindbox.service.ChatBotService
@@ -79,7 +80,8 @@ fun ChatScreen(
     val emailService = EmailService(context)
     val authorizationService = AuthorizationService(context)
     val loggedUser = authorizationService.getLoggedUsers()[0]
-    val chatBotService = ChatBotService(emailService, loggedUser)
+    val calendarEventRepository = CalendarEventRepository(context)
+    val chatBotService = ChatBotService(emailService, loggedUser, calendarEventRepository)
 
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val startAnimation by remember { mutableStateOf(false) }
@@ -96,6 +98,7 @@ fun ChatScreen(
 
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
+    var isSendingMessage by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         val initialResponse = chatBotService.processMessage("")
@@ -224,6 +227,8 @@ fun ChatScreen(
                             contentAlignment = Alignment.Center,
                         ) {
                             IconButton(onClick = {
+                                if (isSendingMessage) return@IconButton
+                                isSendingMessage = true
                                 chatMessages = chatMessages + ChatMessage(
                                     messageText,
                                     isUserMessage = true
@@ -238,6 +243,7 @@ fun ChatScreen(
                                         responseText,
                                         isUserMessage = false
                                     )
+                                    isSendingMessage = false
                                 }
                             },
                                 enabled = expectedUserResponse.isNotEmpty(),
