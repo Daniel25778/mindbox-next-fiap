@@ -57,14 +57,20 @@ class ChatBotService(
         const val EMAIL_INSTRUCTIONS = "enviar e-mail"
         const val EMAIL_PREVIEW =
             "escreva um e-mail para o gabriel dizendo para ele vir participar do next 2024, envie o e-mail daqui meia hora para que eu tenha a chance de editar"
-        const val SEND_EMAIL = "está tudo certo!"
+        const val SEND_EMAIL = "O e-mail parece certinho"
         const val SCHEDULE_MEETING = "marcar reunião"
         const val MEETING_DETAILS =
             "quero me reunir com todos da equipe de marketing para um brainstorming assim que estiverem disponíveis durante o expediente"
         const val MEETING_ADJUST =
             "na verdade, a reunião irá durar uma hora"
-        const val CONFIRM_MEETING = "está tudo certo"
-        const val PRAISE = "Por enquanto é só. Muito obrigado!"
+        const val CONFIRM_MEETING = "Agora as informações da reunião estão corretas"
+        const val CHECK_PENDING_TASKS = "Pode me mostrar as tarefas que tenho para esta semana?"
+        const val MARK_TASK_AS_FINISHED = "Já enviei o convite da reunião para a equipe"
+        const val ORGANIZE_EDUCATION_EMAILS  = "Obrigado. Mudando de assunto, estou me sentindo perdido sobre os e-mails da categoria de educação. Você pode me ajudar a organizar essa bagunça?"
+        const val OLD_FIAP_MEETINGS  = "há alguns e-mails da FIAP que são convites para reuniões que já aconteceram"
+        const val ORGANIZE_COURSE_EMAILS = "Sim. Os e-mails sobre novos cursos devem ser marcados como importantes ou movidos para uma pasta chamada \"Cursos Futuros\""
+        const val CHECK_BOOK_DISCOUNT_EMAILS = "Ah, e mais uma coisa... Você poderia verificar se há algum e-mail sobre descontos em livros? Esses são os meus favoritos!"
+        const val PRAISE = "Muito obrigado por me salvar das tempestades de e-mails! Por enquanto é só isso"
     }
 
     fun processMessage(userMessage: String): ChatBotResponse {
@@ -78,6 +84,12 @@ class ChatBotService(
             ExpectedResponses.MEETING_DETAILS -> getWrongMeetingToCreateResponse()
             ExpectedResponses.MEETING_ADJUST -> getAdjustedMeetingConfirmationResponse()
             ExpectedResponses.CONFIRM_MEETING -> confirmMeetingAndGetResponse()
+            ExpectedResponses.CHECK_PENDING_TASKS -> getPendingTasksResponse()
+            ExpectedResponses.MARK_TASK_AS_FINISHED -> markTaskAsFinishedAndGetResponse()
+            ExpectedResponses.ORGANIZE_EDUCATION_EMAILS -> askHowToOrganizeEducationEmailsAndGetResponse()
+            ExpectedResponses.OLD_FIAP_MEETINGS -> deleteOldFIAPMeetingsAndGetResponse()
+            ExpectedResponses.ORGANIZE_COURSE_EMAILS -> organizeCoursesEmailsAndGetResponse()
+            ExpectedResponses.CHECK_BOOK_DISCOUNT_EMAILS -> checkBookDiscountEmailsAndGetResponse()
             else -> getUnknownCommandResponse()
         }
     }
@@ -135,7 +147,7 @@ $GABRIEL_EMAIL
 Texto:
 ${SEND_MAIL_INPUT_DTO.text}
 
-Momento de enviar:
+Momento de envio:
 Daqui 30 miuntos
             """.trimIndent(), expectedUserResponse = ExpectedResponses.SEND_EMAIL
         )
@@ -202,7 +214,7 @@ Daqui 30 miuntos
 
         return ChatBotResponse(
             message = """
-        Aqui estão os detalhes da reunião com os ajustes:
+        Ops... Vou mudar a duração agora mesmo:
         
         Data e hora: 
         $formattedStartDate
@@ -226,6 +238,57 @@ Daqui 30 miuntos
 
         return ChatBotResponse(
             message = "Sua reunião foi marcada com sucesso! 🎉 Ajudo em algo mais?",
+            expectedUserResponse = ExpectedResponses.CHECK_PENDING_TASKS
+        )
+    }
+    private fun getPendingTasksResponse(): ChatBotResponse {
+        return ChatBotResponse(
+            message = """
+                Com certeza!
+                
+                Enviado por: daniel@locaweb.com.br
+                Prazo: Terça-feira, às 13:00
+                ✅ Revisar o relatório de vendas
+                
+                Enviado por: gui@locaweb.com.br
+                Prazo: Sexta-feira, às 15:30
+                ✅ Revisar o relatório de vendas
+                ❌ Enviar convites para a reunião de equipe - Prazo: 12 de junho
+                
+                Enviado por: claudio@locaweb.com.br
+                Prazo: Quinta-feira, às 23:59
+                ✅ Preparar a apresentação para o cliente - Prazo: 14 de junho
+            """.trimIndent(),
+            expectedUserResponse = ExpectedResponses.MARK_TASK_AS_FINISHED
+        )
+    }
+    private fun markTaskAsFinishedAndGetResponse(): ChatBotResponse {
+        return ChatBotResponse(
+            message = "Entendido! A tarefa \"Enviar convites para a reunião de equipe\" foi marcada como concluída! ✅",
+            expectedUserResponse = ExpectedResponses.ORGANIZE_EDUCATION_EMAILS
+        )
+    }
+    private fun askHowToOrganizeEducationEmailsAndGetResponse(): ChatBotResponse {
+        return ChatBotResponse(
+            message = "Claro, vamos acalmar essas ondas turbulentas de e-mails educacionais! \uD83D\uDCBC O que exatamente você gostaria de fazer com esses e-mails?",
+            expectedUserResponse = ExpectedResponses.OLD_FIAP_MEETINGS
+        )
+    }
+    private fun deleteOldFIAPMeetingsAndGetResponse(): ChatBotResponse {
+        return ChatBotResponse(
+            message = "Entendi, vamos nos despedir desses e-mails desatualizados! Além disso, você gostaria de organizar os e-mails restantes de alguma forma específica?",
+            expectedUserResponse = ExpectedResponses.ORGANIZE_COURSE_EMAILS
+        )
+    }
+    private fun organizeCoursesEmailsAndGetResponse(): ChatBotResponse {
+        return ChatBotResponse(
+            message = "Ótima ideia! Vou garantir que os e-mails dos cursos futuros tenham um lugar especial e que se destaquem na sua caixa de entrada! \uD83C\uDF1F",
+            expectedUserResponse = ExpectedResponses.CHECK_BOOK_DISCOUNT_EMAILS
+        )
+    }
+    private fun checkBookDiscountEmailsAndGetResponse(): ChatBotResponse {
+        return ChatBotResponse(
+            message = " Claro! No momento não encontrei nenhuma preciosidade literária para você. Mas irei te notificar assim que encontrar! \uD83D\uDC8E",
             expectedUserResponse = ExpectedResponses.PRAISE
         )
     }
