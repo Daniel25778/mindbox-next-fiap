@@ -23,6 +23,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.composable
 import br.com.mindbox.data.onboarding.AppOnboardingDataProvider
+import br.com.mindbox.data.onboarding.CalendarMonthDataProvider
 import br.com.mindbox.data.onboarding.ChatOnboardingDataProvider
 import br.com.mindbox.data.onboarding.NavBottomItemDataProvider
 import br.com.mindbox.dto.auth.LoginDTO
@@ -65,7 +66,7 @@ class MainActivity : ComponentActivity() {
 
                     AnimatedNavHost(
                         navController = navController,
-                        startDestination = "splash",
+                        startDestination = "splashpsuh",
                         exitTransition = {
                             slideOutOfContainer(
                                 towards =
@@ -182,7 +183,8 @@ class MainActivity : ComponentActivity() {
                                         navController.popBackStack()
                                     }
                                 },
-                                NavBottomItemDataProvider().getItems()
+                                CalendarMonthDataProvider().getItems(),
+                                NavBottomItemDataProvider().getItems(),
                             )
                         }
                         composable(route = "contact") {
