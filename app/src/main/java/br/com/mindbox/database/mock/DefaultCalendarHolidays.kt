@@ -6,7 +6,7 @@ import br.com.mindbox.util.date.DateUtils
 class DefaultCalendarHolidays {
     companion object {
         fun get(): List<CalendarHoliday> {
-            val format = DateUtils.getFormat()
+            val format = DateUtils.getDateFormat()
             return listOf(
                 CalendarHoliday(name = "Ano Novo", holidayDate = format.parse("2024-01-01")!!),
                 CalendarHoliday(name = "Carnaval", holidayDate = format.parse("2024-02-25")!!),

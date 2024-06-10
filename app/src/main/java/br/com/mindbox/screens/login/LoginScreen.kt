@@ -82,7 +82,6 @@ fun Login(
 
     val onAuthenticationResult = { user: User? ->
         if (user != null) {
-            Toast.makeText(context, "Autenticação bem sucedida", Toast.LENGTH_SHORT).show()
             navController.navigate("dashboard")
         } else {
             Toast.makeText(context, "Falha na autenticação. Email ou senha incorretos.", Toast.LENGTH_SHORT).show()

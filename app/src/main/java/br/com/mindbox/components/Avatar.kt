@@ -18,35 +18,30 @@ import coil.compose.AsyncImage
 
 @Composable
 fun Avatar(
-    user: User,
-    size: Dp,
-    withText: Boolean
+    user: User, size: Dp, withText: Boolean
 ) {
-    if (withText)
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            AsyncImage(
-                model = user.profilePictureUrl,
-                contentDescription = null,
-                modifier = Modifier
-                    .size(60.dp)
-                    .clip(CircleShape)
-            )
-            Text(
-                text = user.fullName,
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(top = 4.dp)
-            )
-        }
-    else (
-            AsyncImage(
-                model = user.profilePictureUrl,
-                contentDescription = "Profile picture",
-                modifier = Modifier
-                    .size(size)
-                    .clip(CircleShape),
-                contentScale = ContentScale.Crop
-            )
-            )
+    if (withText) Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        AsyncImage(
+            model = user.profilePictureUrl,
+            contentDescription = null,
+            modifier = Modifier
+                .size(60.dp)
+                .clip(CircleShape)
+        )
+        Text(
+            text = user.fullName,
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.padding(top = 4.dp)
+        )
+    }
+    else AsyncImage(
+        model = user.profilePictureUrl,
+        contentDescription = "Profile picture",
+        modifier = Modifier
+            .size(size)
+            .clip(CircleShape),
+        contentScale = ContentScale.Crop
+    )
 }

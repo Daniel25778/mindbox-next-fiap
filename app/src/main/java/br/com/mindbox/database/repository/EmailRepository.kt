@@ -2,10 +2,10 @@ package br.com.mindbox.database.repository
 
 import android.content.Context
 import androidx.room.Transaction
-import br.com.mindbox.database.settings.ConfigDb
 import br.com.mindbox.database.dao.EmailDAO
 import br.com.mindbox.database.dao.EmailRecipientDAO
 import br.com.mindbox.database.dao.EmailTaskDAO
+import br.com.mindbox.database.settings.ConfigDb
 import br.com.mindbox.dto.email.CreateEmailDTO
 import br.com.mindbox.model.email.Email
 import br.com.mindbox.model.email.EmailRecipient
@@ -47,32 +47,40 @@ class EmailRepository(context: Context) {
         return emailDAO.delete(email)
     }
 
-    fun findEmailsSentToUsers(recipientIds: List<Long>): List<EmailWithTasks> {
-        return emailDAO.findEmailsSentToUsers(recipientIds)
+    fun findEmailsByRecipientIds(recipientIds: List<Long>): List<EmailWithTasks> {
+        return emailDAO.findEmailsByRecipientIds(recipientIds)
     }
 
-    fun findEmailsSentToUsersByCategory(recipientIds: List<Long>, categoryId: Long): List<EmailWithTasks> {
-        return emailDAO.findEmailsSentToUsersByCategory(recipientIds, categoryId)
+    fun findEmailsBySenderIds(senderIds: List<Long>): List<EmailWithTasks> {
+        return emailDAO.findEmailsBySenderIds(senderIds)
     }
 
-    fun findDeletedEmailsSentToUsersByCategory(
+    fun findEmailsByCategoryAndRecipientIds(recipientIds: List<Long>, categoryId: Long): List<EmailWithTasks> {
+        return emailDAO.findEmailsByCategoryAndRecipientIds(recipientIds, categoryId)
+    }
+
+    fun findDeletedEmailsByCategoryAndRecipientIds(
         recipientIds: List<Long>,
         categoryId: Long
     ): List<EmailWithTasks> {
-        return emailDAO.findDeletedEmailsSentToUsersByCategory(recipientIds, categoryId)
+        return emailDAO.findDeletedEmailsByCategoryAndRecipientIds(recipientIds, categoryId)
     }
 
-    fun findDeletedEmailsSentToUsers(
+    fun findDeletedEmailsByRecipientIds(
         recipientIds: List<Long>,
     ): List<EmailWithTasks> {
-        return emailDAO.findDeletedEmailsSentToUsers(recipientIds)
+        return emailDAO.findDeletedEmailsByRecipientIds(recipientIds)
     }
 
-    fun findSpamEmailsSentToUsers(recipientIds: List<Long>): List<EmailWithTasks> {
-        return emailDAO.findSpamEmailsSentToUsers(recipientIds)
+    fun findSpamEmailsByRecipientIds(recipientIds: List<Long>): List<EmailWithTasks> {
+        return emailDAO.findSpamEmailsByRecipientIds(recipientIds)
     }
 
-    fun findSpamEmailsSentToUsersByCategory(recipientIds: List<Long>, categoryId: Long): List<EmailWithTasks> {
-        return emailDAO.findSpamEmailsSentToUsersByCategory(recipientIds, categoryId)
+    fun findSpamEmailsByCategoryAndRecipientIds(recipientIds: List<Long>, categoryId: Long): List<EmailWithTasks> {
+        return emailDAO.findSpamEmailsByCategoryAndRecipientIds(recipientIds, categoryId)
+    }
+
+    fun findAll(): List<EmailWithTasks> {
+        return emailDAO.findAll()
     }
 }

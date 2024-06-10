@@ -15,5 +15,5 @@ data class EmailWithTasks(
         parentColumn = "sender_id",
         entityColumn = "user_id"
     )
-    var sender: User?
+    var sender: User
 )

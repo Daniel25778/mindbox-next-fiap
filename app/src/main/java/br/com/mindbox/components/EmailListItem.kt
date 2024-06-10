@@ -16,12 +16,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import br.com.mindbox.model.user.User
+import br.com.mindbox.model.email.EmailWithTasks
 import coil.compose.AsyncImage
 
 @Composable
 fun EmailListItem(
-    data: User
+    emailWithTasks: EmailWithTasks
 ) {
     Row(
         modifier = Modifier
@@ -29,7 +29,7 @@ fun EmailListItem(
         verticalAlignment = Alignment.CenterVertically
     ) {
         AsyncImage(
-            model = data.profilePictureUrl,
+            model = emailWithTasks.sender.profilePictureUrl,
             contentDescription = "Profile picture",
             modifier = Modifier
                 .size(60.dp)
@@ -39,13 +39,13 @@ fun EmailListItem(
         Spacer(modifier = Modifier.width(16.dp))
         Column (){
             Text(
-                text = "Daniel Wilson",
+                text = emailWithTasks.sender.fullName,
                 style = MaterialTheme.typography.bodyMedium,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
             Text(
-                text = "Lorem ipsum dolor sit amet concectecur teste testestetstsete",
+                text = emailWithTasks.email.subject,
                 style = MaterialTheme.typography.bodyMedium,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis

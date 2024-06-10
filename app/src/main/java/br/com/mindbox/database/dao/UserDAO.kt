@@ -27,8 +27,8 @@ interface UserDAO {
     @Query("SELECT * FROM tbl_user WHERE is_logged_in = 1")
     fun findLoggedUsers(): List<User>
 
-    @Query("SELECT u.* FROM tbl_user u INNER JOIN tbl_email e ON u.user_id = e.sender_id WHERE e.sender_id = :senderId ORDER BY e.send_date DESC")
-    fun findUsersWithRecentEmailsSent(senderId: Long): List<User>
+    @Query("SELECT DISTINCT u.* FROM tbl_user u INNER JOIN tbl_email_recipient er ON u.user_id = er.recipient_id INNER JOIN tbl_email e ON er.email_id = e.email_id WHERE e.sender_id = :senderId ORDER BY e.send_date DESC")
+    fun findReceiversBySenderIdOrderByRecentEmails(senderId: Long): List<User>
 
     @Query("SELECT * FROM tbl_user WHERE user_id = :id")
     fun findById(id: Int): User?

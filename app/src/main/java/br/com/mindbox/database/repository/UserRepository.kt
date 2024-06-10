@@ -1,8 +1,8 @@
 package br.com.mindbox.database.repository
 
 import android.content.Context
-import br.com.mindbox.database.settings.ConfigDb
 import br.com.mindbox.database.dao.UserDAO
+import br.com.mindbox.database.settings.ConfigDb
 import br.com.mindbox.model.user.User
 
 class UserRepository(context: Context) {
@@ -32,8 +32,8 @@ class UserRepository(context: Context) {
         return db.findLoggedUsers()
     }
 
-    fun findUsersWithRecentEmailsSent(senderId: Long): List<User> {
-        return db.findUsersWithRecentEmailsSent(senderId)
+    fun findReceiversBySenderIdOrderByRecentEmails(senderId: Long): List<User> {
+        return db.findReceiversBySenderIdOrderByRecentEmails(senderId)
     }
 
     fun findAll(): List<User> {
