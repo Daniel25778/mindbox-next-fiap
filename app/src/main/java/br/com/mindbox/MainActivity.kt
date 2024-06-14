@@ -66,7 +66,7 @@ class MainActivity : ComponentActivity() {
 
                     AnimatedNavHost(
                         navController = navController,
-                        startDestination = "splash",
+                        startDestination = "calendar",
                         exitTransition = {
                             slideOutOfContainer(
                                 towards =
