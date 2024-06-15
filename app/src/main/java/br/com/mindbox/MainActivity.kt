@@ -31,8 +31,8 @@ import br.com.mindbox.presentation.sign_in.GoogleAuthUiClient
 import br.com.mindbox.presentation.sign_in.SignInViewModel
 import br.com.mindbox.screens.alert.Alert
 import br.com.mindbox.screens.calendar.CalendarScreen
+import br.com.mindbox.screens.category.CategoryScreen
 import br.com.mindbox.screens.chat.ChatScreen
-import br.com.mindbox.screens.contact.ContactScreen
 import br.com.mindbox.screens.dashboard.DashBoardScreen
 import br.com.mindbox.screens.login.Login
 import br.com.mindbox.screens.new_email.NewEmailScreen
@@ -181,8 +181,8 @@ class MainActivity : ComponentActivity() {
                                 NavBottomItemDataProvider().getItems(),
                             )
                         }
-                        composable(route = "contact") {
-                            ContactScreen(
+                        composable(route = "category") {
+                            CategoryScreen(
                                 navController,
                                 userData = googleAuthUiClient.getSignedInUser(),
                                 onSignOut = {

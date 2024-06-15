@@ -37,13 +37,13 @@ class NavBottomItemDataProvider: NavBottomDataProviderInterface {
             ),
 
             NavBottomItem(
-                title = "Contatos",
-                url = "contact",
+                title = "Categoria",
+                url = "category",
                 selectedIcon = null,
                 unselectedIcon = null,
                 hasNews = false,
-                painterResourceSelectedIcon = R.drawable.contact_selected_icon,
-                painterResourceUnselectedIcon = R.drawable.contact_unselected_icon
+                painterResourceSelectedIcon = R.drawable.category_selected,
+                painterResourceUnselectedIcon = R.drawable.category_unselected
             ),
             NavBottomItem(
                 title = "Chat",

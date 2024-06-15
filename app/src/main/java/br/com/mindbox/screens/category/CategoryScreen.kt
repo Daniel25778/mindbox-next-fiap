@@ -1,4 +1,4 @@
-package br.com.mindbox.screens.contact
+package br.com.mindbox.screens.category
 
 
 
@@ -71,7 +71,7 @@ import kotlinx.coroutines.launch
 @SuppressLint("SuspiciousIndentation")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ContactScreen(
+fun CategoryScreen(
     navController: NavController,
     userData: UserData?,
     onSignOut: () -> Unit,
@@ -233,7 +233,7 @@ fun ContactScreen(
                 AnimatedGradientBackground(alphaAnimate = alphaAnim.value) {
                     Column(modifier = Modifier.padding(start = 20.dp)) {
                         Text(
-                            text = "Contato",
+                            text = "Categorias",
                             style = MaterialTheme.typography.titleMedium,
                             modifier = Modifier.padding(top = 4.dp)
                         )
