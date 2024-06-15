@@ -26,9 +26,15 @@ interface CalendarEventDAO {
     @Query("SELECT * FROM tbl_calendar_event WHERE calendar_event_id = :id")
     fun findById(id: Int): CalendarEventWithUser?
 
-    @Query("SELECT * FROM tbl_calendar_event LEFT JOIN tbl_user AS participant ON ',' || tbl_calendar_event.participants_id || ',' LIKE '%,' || participant.user_id || ',%' WHERE participant.user_id = :participantId")
+    @Query("SELECT * FROM tbl_calendar_event " +
+            "INNER JOIN tbl_calendar_event_participant ON tbl_calendar_event.calendar_event_id = tbl_calendar_event_participant.calendar_event_id " +
+            "WHERE tbl_calendar_event_participant.user_id = :participantId")
     fun findEventsByParticipantId(participantId: Long): List<CalendarEventWithUser>
 
-    @Query("SELECT * FROM tbl_calendar_event LEFT JOIN tbl_user AS participant ON ',' || tbl_calendar_event.participants_id || ',' LIKE '%,' || participant.user_id || ',%' WHERE participant.user_id = :participantId AND (:meetingDay IS NULL OR date(start_date) = date(:meetingDay))")
-    fun findEventsByParticipantIdAndDate(participantId: Long, meetingDay: Date?): List<CalendarEventWithUser>
+
+    @Query("SELECT * FROM tbl_calendar_event " +
+            "INNER JOIN tbl_calendar_event_participant ON tbl_calendar_event.calendar_event_id = tbl_calendar_event_participant.calendar_event_id " +
+            "WHERE tbl_calendar_event_participant.user_id = :participantId " +
+            "AND DATE(tbl_calendar_event.start_date) = DATE(:meetingDay)")
+    fun findEventsByParticipantIdAndDay(participantId: Long, meetingDay: Date): List<CalendarEventWithUser>
 }

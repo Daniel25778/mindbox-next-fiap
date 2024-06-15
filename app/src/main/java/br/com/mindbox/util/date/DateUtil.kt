@@ -27,6 +27,12 @@ class DateUtils {
         }
 
         @JvmStatic
+        @SuppressLint("SimpleDateFormat")
+        fun getTimeFormat(): SimpleDateFormat {
+            return SimpleDateFormat("HH:mm")
+        }
+
+        @JvmStatic
         fun calculateDurationDescription(startDate: Date, endDate: Date): String {
             val differenceInMillis = abs(endDate.time - startDate.time)
             val hours = differenceInMillis / (1000 * 60 * 60)

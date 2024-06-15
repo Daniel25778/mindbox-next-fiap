@@ -1,6 +1,7 @@
 import android.content.Context
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import br.com.mindbox.database.mock.DefaultCalendarEventParticipants
 import br.com.mindbox.database.mock.DefaultCalendarEvents
 import br.com.mindbox.database.mock.DefaultCalendarHolidays
 import br.com.mindbox.database.mock.DefaultEmailCategories
@@ -39,6 +40,7 @@ class AppDatabaseCallback(private val context: Context) : RoomDatabase.Callback(
             }
 
             database.calendarEventDAO().insertAll(DefaultCalendarEvents.get())
+            database.calendarEventParticipantDAO().insertAll(DefaultCalendarEventParticipants.get())
             database.calendarHolidayDAO().insertAll(DefaultCalendarHolidays.get())
         }
     }

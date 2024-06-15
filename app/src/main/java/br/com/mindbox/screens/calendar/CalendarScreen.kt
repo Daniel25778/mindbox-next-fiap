@@ -78,20 +78,20 @@ import br.com.mindbox.R
 import br.com.mindbox.components.AnimatedGradientBackground
 import br.com.mindbox.components.Avatar
 import br.com.mindbox.components.DrawerItem
+import br.com.mindbox.components.GradientButton
 import br.com.mindbox.components.loadNavBottomItemsWithIcons
 import br.com.mindbox.database.repository.CalendarEventRepository
 import br.com.mindbox.model.calendar.CalendarEventWithUser
 import br.com.mindbox.model.calendar_onboarding.CalendarMonthItem
 import br.com.mindbox.model.navbottom.NavBottomItem
-import br.com.mindbox.model.user.User
 import br.com.mindbox.presentation.sign_in.UserData
 import br.com.mindbox.service.AuthorizationService
+import br.com.mindbox.util.date.DateUtils
 import coil.compose.AsyncImage
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
-import java.util.Locale
 
 
 @SuppressLint("SuspiciousIndentation")
@@ -118,7 +118,7 @@ fun CalendarScreen(
         ), label = ""
     )
 
-    data class DateItem(val dayNumber: String, val dayOfWeek: String, val meetingDay: Date )
+    data class DateItem(val dayNumber: String, val dayOfWeek: String, val meetingDay: Date)
 
     var selectedItemIndex by rememberSaveable {
         mutableStateOf(1)
@@ -159,6 +159,11 @@ fun CalendarScreen(
     }
 
     val navBottomItems = loadNavBottomItemsWithIcons(items = rawNavBottomItems)
+    val events = if (selectedDate.value != null) {
+        calendarEventRepository.findEventsByParticipantIdAndDay(user.id, selectedDate.value!!)
+    } else {
+        calendarEventRepository.findEventsByParticipantId(user.id)
+    }
 
     ModalNavigationDrawer(modifier = Modifier.background(colorResource(id = R.color.layer_mid)),
         drawerState = drawerState,
@@ -295,8 +300,7 @@ fun CalendarScreen(
                 AnimatedGradientBackground(alphaAnimate = alphaAnim.value) {
                     Column(modifier = Modifier.padding(start = 20.dp, end = 20.dp)) {
                         HorizontalPager(
-                            state = pagerState,
-                            modifier = Modifier.height(70.dp)
+                            state = pagerState, modifier = Modifier.height(70.dp)
                         ) { page ->
 
                             Column(
@@ -318,8 +322,7 @@ fun CalendarScreen(
                                                     val previousPage = selectedPage - 1
                                                     pagerState.animateScrollToPage(previousPage)
                                                 }
-                                            },
-                                            modifier = Modifier.size(24.dp)
+                                            }, modifier = Modifier.size(24.dp)
                                         ) {
                                             Icon(
                                                 imageVector = Icons.Default.ArrowBack,
@@ -359,8 +362,7 @@ fun CalendarScreen(
                                                     val nextPage = selectedPage + 1
                                                     pagerState.animateScrollToPage(nextPage)
                                                 }
-                                            },
-                                            modifier = Modifier.size(24.dp)
+                                            }, modifier = Modifier.size(24.dp)
                                         ) {
                                             Icon(
                                                 imageVector = Icons.Default.ArrowForward,
@@ -375,14 +377,12 @@ fun CalendarScreen(
 
                         }
                         LazyRow(
-                            modifier = Modifier
-                                .fillMaxWidth()
+                            modifier = Modifier.fillMaxWidth()
                         ) {
                             items(dates) { date ->
                                 val isSelected = date.meetingDay == selectedDate.value
 
-                                Column(
-                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                Column(horizontalAlignment = Alignment.CenterHorizontally,
                                     modifier = Modifier
                                         .padding(10.dp)
                                         .background(
@@ -395,14 +395,13 @@ fun CalendarScreen(
                                             } else {
                                                 selectedDate.value = date.meetingDay
                                             }
-                                        }
-                                ) {
+                                        }) {
                                     Text(
                                         text = date.dayNumber,
                                         Modifier.padding(10.dp),
                                         color = if (date.meetingDay == selectedDate.value) colorResource(
                                             id = R.color.layer_mid
-                                        ) else Color.White,
+                                        ) else R.color.white,
                                         fontSize = 14.sp
                                     )
                                     Text(
@@ -417,18 +416,18 @@ fun CalendarScreen(
                             }
                         }
 
-                        val events = if (selectedDate.value != null) {
-                            calendarEventRepository.findEventsByParticipantIdAndDate(user.id, selectedDate.value!!)
-                        } else {
-                            calendarEventRepository.findEventsByParticipantId(user.id)
-                        }
-
                         LazyColumn {
-                            items(events.size) { index ->
-                                Column {
-                                    Spacer(modifier = Modifier.height(16.dp))
-                                    EventItem(event = events[index])
-                                    Spacer(modifier = Modifier.height(8.dp))
+                            if (events.isEmpty()) {
+                                item {
+                                    NoMeetingsView(navController)
+                                }
+                            } else {
+                                items(events) { event ->
+                                    Column {
+                                        Spacer(modifier = Modifier.height(16.dp))
+                                        EventItem(event = event)
+                                        Spacer(modifier = Modifier.height(8.dp))
+                                    }
                                 }
                             }
                         }
@@ -446,13 +445,7 @@ fun CalendarScreen(
 fun EventItem(
     event: CalendarEventWithUser
 ) {
-    val formatter = SimpleDateFormat("HH:mm", Locale.getDefault())
-
-    val formattedStartTime =
-        event.calendarEvent.startDate?.let { formatter.format(it) } ?: "Indisponível"
-    val formattedEndTime =
-        event.calendarEvent.endDate?.let { formatter.format(it) } ?: "Indisponível"
-    val formattedTime = "$formattedStartTime - $formattedEndTime"
+    val formattedTime = "${DateUtils.getTimeFormat().format(event.calendarEvent.startDate!!)} - ${DateUtils.getTimeFormat().format(event.calendarEvent.endDate!!)}"
 
     Row(
         modifier = Modifier
@@ -463,9 +456,7 @@ fun EventItem(
                 shape = RoundedCornerShape(8.dp)
             )
             .shadow(
-                elevation = 10.dp,
-                shape = RoundedCornerShape(10.dp),
-                clip = true
+                elevation = 10.dp, shape = RoundedCornerShape(10.dp), clip = true
             )
     ) {
 
@@ -487,26 +478,19 @@ fun EventItem(
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = event.calendarEvent.description, fontSize = 12.sp, maxLines = 1,
-                    overflow = TextOverflow.Ellipsis, color = Color.White,
+                    text = event.calendarEvent.description,
+                    fontSize = 12.sp,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    color = Color.White,
                     modifier = Modifier.width(600.dp)
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 LazyRow(
                     modifier = Modifier.padding(4.dp)
                 ) {
-                    items(2) { participant ->
-                        val mockUser = User(
-                            id = 1,
-                            email = "example@email.com",
-                            passwordHash = "hashedPassword",
-                            fullName = "John Doe",
-                            birthDate = Date(946684800000),
-                            profilePictureUrl = "https://i.pinimg.com/236x/b9/67/27/b967273a436061b80293a8edd20a2977.jpg",
-                            isLoggedIn = true,
-                            externalAccountId = 123456789L
-                        )
-                        Avatar(user = mockUser, size = 28.dp, withText = false)
+                    items(event.participants) { participant ->
+                        Avatar(user = participant, size = 28.dp, withText = false)
                         Spacer(modifier = Modifier.width(2.dp))
                     }
                 }
@@ -526,17 +510,17 @@ fun EventItem(
                             RoundedCornerShape(1200.dp)
                         )
 
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.ArrowForward,
-                                contentDescription = null,
-                                tint = Color.White,
-                                modifier = Modifier.size(24.dp)
-                            )
-                        }
-                            Spacer (modifier = Modifier.height(20.dp))
-                            Text (
-                            text = formattedTime,
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowForward,
+                        contentDescription = null,
+                        tint = Color.White,
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+                Spacer(modifier = Modifier.height(20.dp))
+                Text(
+                    text = formattedTime,
                     style = MaterialTheme.typography.bodyLarge,
                     color = Color.White
                 )
@@ -546,6 +530,34 @@ fun EventItem(
     }
 }
 
+@Composable
+fun NoMeetingsView(navController: NavController) {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Spacer(modifier = Modifier.height(32.dp))
+        Text(
+            text = "Agenda livre para este dia",
+            fontWeight = FontWeight.Bold,
+            color = Color.White,
+            fontSize = 25.sp,
+            textAlign = TextAlign.Center
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        Text(
+            text = "Você pode conversar com Goma, para marcar uma nova reunião.",
+            fontWeight = FontWeight.Normal,
+            color = Color.White,
+            fontSize = 18.sp,
+            textAlign = TextAlign.Center
+        )
+        Spacer(modifier = Modifier.height(24.dp))
+        GradientButton(text = "Marcar reunião com Goma", onClick = {
+            navController.navigate("chatOnboarding")
 
-
+        })
+    }
+}
 

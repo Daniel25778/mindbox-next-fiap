@@ -1,17 +1,21 @@
 package br.com.mindbox.service
-
+import br.com.mindbox.database.repository.CalendarEventParticipantRepository
 import br.com.mindbox.database.repository.CalendarEventRepository
 import br.com.mindbox.dto.email.SendEmailDTO
 import br.com.mindbox.model.calendar.CalendarEvent
+import br.com.mindbox.model.calendar.CalendarEventParticipant
 import br.com.mindbox.model.chat.ChatBotResponse
 import br.com.mindbox.model.user.User
 import br.com.mindbox.util.date.DateUtils
 import java.util.Calendar
 
+
+
 class ChatBotService(
     private val emailService: EmailService,
-    loggedUser: User,
-    private val calendarEventRepository: CalendarEventRepository
+    private val loggedUser: User,
+    private val calendarEventRepository: CalendarEventRepository,
+    private val calendarEventParticipantRepository: CalendarEventParticipantRepository
 ) {
     private val SEND_MAIL_INPUT_DTO = SendEmailDTO(
         senderId = loggedUser.id,
@@ -37,8 +41,26 @@ class ChatBotService(
             set(Calendar.MINUTE, 0)
             set(Calendar.SECOND, 0)
         }.time,
-        participantsId = listOf(loggedUser.id, 4L, 5L, 6L),
         creatorId = loggedUser.id
+    )
+
+    private fun makeSaveCalendarEventParticipantsInputDTO (eventId: Long, loggedUserId: Long)= listOf<CalendarEventParticipant>(
+        CalendarEventParticipant(
+            calendarEventId = eventId,
+            userId = loggedUserId
+        ),
+        CalendarEventParticipant(
+            calendarEventId = eventId,
+            userId = 4L
+        ),
+        CalendarEventParticipant(
+            calendarEventId = eventId,
+            userId = 5L
+        ),
+        CalendarEventParticipant(
+            calendarEventId = eventId,
+            userId = 6L
+        ),
     )
 
     companion object {
@@ -234,8 +256,8 @@ Daqui 30 miuntos
     }
 
     private fun confirmMeetingAndGetResponse(): ChatBotResponse {
-        this.calendarEventRepository.save(this.SAVE_CALENDAR_EVENT_INPUT_DTO)
-
+        val calendarEventId = this.calendarEventRepository.save(this.SAVE_CALENDAR_EVENT_INPUT_DTO)
+        this.calendarEventParticipantRepository.insertAll(this.makeSaveCalendarEventParticipantsInputDTO(calendarEventId, loggedUser.id))
         return ChatBotResponse(
             message = "Sua reunião foi marcada com sucesso! 🎉 Ajudo em algo mais?",
             expectedUserResponse = ExpectedResponses.CHECK_PENDING_TASKS

@@ -26,7 +26,7 @@ class CalendarEventRepository(context: Context) {
         return db.findEventsByParticipantId(participantId)
     }
 
-    fun findEventsByParticipantIdAndDate(participantId: Long, meetingDay: Date): List<CalendarEventWithUser> {
-        return db.findEventsByParticipantIdAndDate(participantId, meetingDay)
+    fun findEventsByParticipantIdAndDay(participantId: Long, meetingDay: Date): List<CalendarEventWithUser> {
+        return db.findEventsByParticipantIdAndDay(participantId, meetingDay)
     }
 }

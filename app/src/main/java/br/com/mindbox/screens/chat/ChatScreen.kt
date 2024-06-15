@@ -60,6 +60,7 @@ import br.com.mindbox.R
 import br.com.mindbox.components.AnimatedGradientBackground
 import br.com.mindbox.components.Avatar
 import br.com.mindbox.components.DrawerItem
+import br.com.mindbox.database.repository.CalendarEventParticipantRepository
 import br.com.mindbox.database.repository.CalendarEventRepository
 import br.com.mindbox.model.user.User
 import br.com.mindbox.service.AuthorizationService
@@ -81,7 +82,8 @@ fun ChatScreen(
     val authorizationService = AuthorizationService(context)
     val loggedUser = authorizationService.getLoggedUsers()[0]
     val calendarEventRepository = CalendarEventRepository(context)
-    val chatBotService = ChatBotService(emailService, loggedUser, calendarEventRepository)
+    val calendarEventParticipantRepository = CalendarEventParticipantRepository(context)
+    val chatBotService = ChatBotService(emailService, loggedUser, calendarEventRepository, calendarEventParticipantRepository)
 
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val startAnimation by remember { mutableStateOf(false) }
