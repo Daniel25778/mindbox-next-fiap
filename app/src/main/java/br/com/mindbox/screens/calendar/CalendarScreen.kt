@@ -401,7 +401,7 @@ fun CalendarScreen(
                                         Modifier.padding(10.dp),
                                         color = if (date.meetingDay == selectedDate.value) colorResource(
                                             id = R.color.layer_mid
-                                        ) else R.color.white,
+                                        ) else colorResource(R.color.white),
                                         fontSize = 14.sp
                                     )
                                     Text(
