@@ -40,7 +40,7 @@ class DefaultSendEmailDTOs {
                         CreateEmailTaskDTO(description = "Estudar capítulos 1 a 5"),
                         CreateEmailTaskDTO(description = "Revisar notas de aula")
                     ),
-                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-12 11:30:00")!!
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-05-12 11:30:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 4,
@@ -85,7 +85,7 @@ class DefaultSendEmailDTOs {
                         CreateEmailTaskDTO(description = "Coletar dados de vendas"),
                         CreateEmailTaskDTO(description = "Escrever resumo do relatório")
                     ),
-                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-26 09:40:00")!!
+                    sendDate = DateUtils.getDateTimeFormat().parse("2023-06-26 09:40:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 3,
@@ -96,7 +96,7 @@ class DefaultSendEmailDTOs {
                         CreateEmailTaskDTO(description = "Listar tarefas prioritárias"),
                         CreateEmailTaskDTO(description = "Atualizar backlog do projeto")
                     ),
-                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-17 09:22:00")!!
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-10 09:22:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 4,
@@ -163,7 +163,7 @@ class DefaultSendEmailDTOs {
                         CreateEmailTaskDTO(description = "Preparar prato principal"),
                         CreateEmailTaskDTO(description = "Trazer sobremesa")
                     ),
-                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-10 09:22:00")!!
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-05-10 09:22:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 5,
@@ -197,7 +197,7 @@ class DefaultSendEmailDTOs {
                         CreateEmailTaskDTO(description = "Enviar newsletter"),
                         CreateEmailTaskDTO(description = "Configurar descontos no e-commerce")
                     ),
-                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-10 09:22:00")!!
+                    sendDate = DateUtils.getDateTimeFormat().parse("2023-06-10 09:22:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 3,
@@ -208,7 +208,7 @@ class DefaultSendEmailDTOs {
                         CreateEmailTaskDTO(description = "Preparar material de marketing"),
                         CreateEmailTaskDTO(description = "Organizar produtos em promoção")
                     ),
-                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-12 09:22:00")!!
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-04 09:22:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 4,
@@ -219,7 +219,7 @@ class DefaultSendEmailDTOs {
                         CreateEmailTaskDTO(description = "Criar código de desconto"),
                         CreateEmailTaskDTO(description = "Enviar e-mail para novos assinantes")
                     ),
-                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-12 09:22:00")!!
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-02 09:22:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 5,
@@ -230,7 +230,7 @@ class DefaultSendEmailDTOs {
                         CreateEmailTaskDTO(description = "Lançar campanha de aniversário"),
                         CreateEmailTaskDTO(description = "Oferecer brindes para compras acima de $100")
                     ),
-                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-12 09:22:00")!!
+                    sendDate = DateUtils.getDateTimeFormat().parse("2023-06-10 09:22:00")!!
                 ),
                 // Finance Emails
                 SendEmailDTO(
@@ -242,7 +242,7 @@ class DefaultSendEmailDTOs {
                         CreateEmailTaskDTO(description = "Revisar resumo de conta"),
                         CreateEmailTaskDTO(description = "Verificar transações recentes")
                     ),
-                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-12 09:22:00")!!
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-03 09:22:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 2,
@@ -253,7 +253,7 @@ class DefaultSendEmailDTOs {
                         CreateEmailTaskDTO(description = "Analisar opções de investimento"),
                         CreateEmailTaskDTO(description = "Agendar consulta com consultor financeiro")
                     ),
-                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-12 09:22:00")!!
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-04 09:22:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 3,
@@ -264,7 +264,7 @@ class DefaultSendEmailDTOs {
                         CreateEmailTaskDTO(description = "Preencher questionário financeiro"),
                         CreateEmailTaskDTO(description = "Agendar reunião com consultor")
                     ),
-                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-12 09:22:00")!!
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-05-12 09:22:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 4,
@@ -275,7 +275,7 @@ class DefaultSendEmailDTOs {
                         CreateEmailTaskDTO(description = "Revisar relatório"),
                         CreateEmailTaskDTO(description = "Ajustar portfólio de investimentos")
                     ),
-                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-12 09:22:00")!!
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-04-11 09:22:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 5,
@@ -309,7 +309,7 @@ class DefaultSendEmailDTOs {
                         CreateEmailTaskDTO(description = "Agendar vacinação"),
                         CreateEmailTaskDTO(description = "Preencher formulário de vacinação")
                     ),
-                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-12 09:22:00")!!
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-04-05 09:22:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 3,
@@ -320,7 +320,7 @@ class DefaultSendEmailDTOs {
                         CreateEmailTaskDTO(description = "Agendar exames preventivos"),
                         CreateEmailTaskDTO(description = "Levar histórico médico")
                     ),
-                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-12 09:22:00")!!
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-02-08 09:22:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 4,
@@ -331,7 +331,7 @@ class DefaultSendEmailDTOs {
                         CreateEmailTaskDTO(description = "Inscrever-se no programa"),
                         CreateEmailTaskDTO(description = "Trazer roupa de ginástica")
                     ),
-                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-12 09:22:00")!!
+                    sendDate = DateUtils.getDateTimeFormat().parse("2024-01-03 09:22:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 5,
@@ -365,7 +365,7 @@ class DefaultSendEmailDTOs {
                         CreateEmailTaskDTO(description = "Imprimir itinerário"),
                         CreateEmailTaskDTO(description = "Confirmar reservas")
                     ),
-                    sendDate = DateUtils.getDateTimeFormat().parse("2024-06-12 09:22:00")!!
+                    sendDate = DateUtils.getDateTimeFormat().parse("2021-03-12 09:22:00")!!
                 ),
                 SendEmailDTO(
                     senderId = 3,

@@ -1,7 +1,6 @@
 package br.com.mindbox.screens.dashboard
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -98,9 +97,6 @@ fun DashBoardScreen(
             durationMillis = 5000, easing = LinearEasing
         ), label = ""
     )
-    Log.d("mindbox-aoba", remember {emailsSentToUsers.toString()})
-    Log.d("mindbox-aoba", remember {emailRepository.findAll().toString()})
-    Log.d("mindbox-aoba", user.toString())
     var selectedItemIndex by rememberSaveable {
         mutableStateOf(0)
     }
@@ -263,10 +259,11 @@ fun DashBoardScreen(
                         )
                         Spacer(modifier = Modifier.height(10.dp))
                         LazyColumn(
-                            verticalArrangement = Arrangement.spacedBy(20.dp)
+                            verticalArrangement = Arrangement.spacedBy(20.dp),
+                            modifier = Modifier.padding(end = 16.dp)
                         ) {
                             items(emailsSentToUsers) {
-                                EmailListItem(emailWithTasks = it)
+                                EmailListItem(emailWithTasks = it, navController = navController)
                             }
                         }
                     }

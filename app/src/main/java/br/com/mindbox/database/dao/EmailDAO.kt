@@ -25,7 +25,7 @@ interface EmailDAO {
         SELECT * FROM tbl_email e 
         INNER JOIN tbl_email_recipient r ON e.email_id = r.email_id
         WHERE r.recipient_id IN (:recipientIds)
-        AND e.send_date < CURRENT_TIMESTAMP
+        AND e.send_date < DATETIME('now')
         ORDER BY e.send_date DESC
     """)
     fun findEmailsByRecipientIds(recipientIds: List<Long>): List<EmailWithTasks>
@@ -44,7 +44,7 @@ interface EmailDAO {
         INNER JOIN tbl_email_recipient r ON e.email_id = r.email_id
         WHERE r.recipient_id IN (:recipientIds) 
         AND r.email_category_id = :categoryId
-        AND e.send_date < CURRENT_TIMESTAMP
+        AND e.send_date < DATETIME('now')
         ORDER BY e.send_date DESC
     """)
     fun findEmailsByCategoryAndRecipientIds(recipientIds: List<Long>, categoryId: Long): List<EmailWithTasks>
@@ -56,7 +56,7 @@ interface EmailDAO {
         WHERE r.recipient_id IN (:recipientIds) 
         AND r.email_category_id = :categoryId
         AND r.finished_at IS NOT NULL
-        AND e.send_date < CURRENT_TIMESTAMP
+        AND e.send_date < DATETIME('now')
         ORDER BY e.send_date DESC
     """)
     fun findDeletedEmailsByCategoryAndRecipientIds(recipientIds: List<Long>, categoryId: Long): List<EmailWithTasks>
@@ -67,7 +67,7 @@ interface EmailDAO {
         INNER JOIN tbl_email_recipient r ON e.email_id = r.email_id
         WHERE r.recipient_id IN (:recipientIds) 
         AND r.finished_at IS NOT NULL
-        AND e.send_date < CURRENT_TIMESTAMP
+        AND e.send_date < DATETIME('now')
         ORDER BY e.send_date DESC
     """)
     fun findDeletedEmailsByRecipientIds(recipientIds: List<Long>): List<EmailWithTasks>
