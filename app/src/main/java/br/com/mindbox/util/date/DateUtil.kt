@@ -3,6 +3,7 @@ package br.com.mindbox.util.date
 import android.annotation.SuppressLint
 import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
 import kotlin.math.abs
 
 class DateUtils {
@@ -44,6 +45,31 @@ class DateUtils {
                 minutes == 30L -> "Meia hora"
                 minutes > 1 -> "$minutes minutos"
                 else -> "Menos de um minuto"
+            }
+        }
+
+        @JvmStatic
+        @SuppressLint("SimpleDateFormat")
+        fun formatRelativeDate(date: Date): String {
+            val now = Date()
+            val differenceInMillis = now.time - date.time
+            val oneDayInMillis = 1000L * 60 * 60 * 24
+            val oneYearInMillis = 1000L * 60 * 60 * 24 * 365
+
+            val dateFormatter = SimpleDateFormat("d 'de' MMM", Locale("pt", "BR"))
+            val timeFormatter = SimpleDateFormat("HH:mm")
+            val yearFormatter = SimpleDateFormat("d 'de' MMM 'de' yyyy", Locale("pt", "BR"))
+
+            return when {
+                differenceInMillis < oneDayInMillis -> {
+                    timeFormatter.format(date)
+                }
+                differenceInMillis < oneYearInMillis -> {
+                    dateFormatter.format(date)
+                }
+                else -> {
+                    yearFormatter.format(date)
+                }
             }
         }
     }
