@@ -15,9 +15,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import br.com.mindbox.R
 import br.com.mindbox.model.email.EmailWithTasks
 import br.com.mindbox.util.date.DateUtils
 import coil.compose.AsyncImage
@@ -31,8 +33,8 @@ fun EmailListItem(
         modifier = Modifier
             .fillMaxWidth()
             .clickable {
-            navController.navigate("email-detail/${emailWithTasks.email.id}")
-        },
+                navController.navigate("email-detail/${emailWithTasks.email.id}")
+            },
         verticalAlignment = Alignment.CenterVertically
     ) {
         AsyncImage(
@@ -53,6 +55,7 @@ fun EmailListItem(
             ) {
                 Text(
                     text = emailWithTasks.sender.fullName,
+                    color = colorResource(id = R.color.white),
                     style = MaterialTheme.typography.bodyMedium,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
@@ -60,6 +63,7 @@ fun EmailListItem(
                 )
                 Text(
                     text = DateUtils.formatRelativeDate(emailWithTasks.email.sendDate),
+                    color = colorResource(id = R.color.white),
                     style = MaterialTheme.typography.bodyMedium,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
@@ -67,6 +71,7 @@ fun EmailListItem(
             }
             Text(
                 text = emailWithTasks.email.subject,
+                color = colorResource(id = R.color.white),
                 style = MaterialTheme.typography.bodyMedium,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis

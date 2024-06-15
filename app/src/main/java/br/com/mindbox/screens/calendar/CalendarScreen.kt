@@ -327,7 +327,7 @@ fun CalendarScreen(
                                             Icon(
                                                 imageVector = Icons.Default.ArrowBack,
                                                 contentDescription = "Last Month",
-                                                tint = Color.White
+                                                tint = colorResource(R.color.white)
                                             )
                                         }
                                         Spacer(modifier = Modifier.width(4.dp))
@@ -342,7 +342,7 @@ fun CalendarScreen(
 
                                     Text(
                                         text = calendarMonthItems[page].currentMonth,
-                                        color = Color.White,
+                                        color = colorResource(R.color.white),
                                         fontSize = 20.sp,
                                         style = MaterialTheme.typography.titleLarge
                                     )
@@ -367,7 +367,7 @@ fun CalendarScreen(
                                             Icon(
                                                 imageVector = Icons.Default.ArrowForward,
                                                 contentDescription = "Next Month",
-                                                tint = Color.White
+                                                tint = colorResource(R.color.white)
                                             )
                                         }
                                     }
@@ -386,7 +386,7 @@ fun CalendarScreen(
                                     modifier = Modifier
                                         .padding(10.dp)
                                         .background(
-                                            color = if (date.meetingDay == selectedDate.value) Color.White else Color.Transparent,
+                                            color = if (date.meetingDay == selectedDate.value) colorResource(R.color.white) else Color.Transparent,
                                             shape = MaterialTheme.shapes.medium
                                         )
                                         .clickable {
@@ -409,7 +409,7 @@ fun CalendarScreen(
                                         Modifier.padding(5.dp),
                                         color = if (date.meetingDay == selectedDate.value) colorResource(
                                             id = R.color.layer_mid
-                                        ) else Color.White,
+                                        ) else colorResource(R.color.white),
                                         fontSize = 14.sp
                                     )
                                 }
@@ -471,7 +471,7 @@ fun EventItem(
                 Text(
                     text = event.calendarEvent.title,
                     fontWeight = FontWeight.Bold,
-                    color = Color.White,
+                    color = colorResource(R.color.white),
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                     modifier = Modifier.width(900.dp)
@@ -482,7 +482,7 @@ fun EventItem(
                     fontSize = 12.sp,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
-                    color = Color.White,
+                    color = colorResource(R.color.white),
                     modifier = Modifier.width(600.dp)
                 )
                 Spacer(modifier = Modifier.height(4.dp))
@@ -514,7 +514,7 @@ fun EventItem(
                     Icon(
                         imageVector = Icons.Default.ArrowForward,
                         contentDescription = null,
-                        tint = Color.White,
+                        tint = colorResource(R.color.white),
                         modifier = Modifier.size(24.dp)
                     )
                 }
@@ -522,7 +522,7 @@ fun EventItem(
                 Text(
                     text = formattedTime,
                     style = MaterialTheme.typography.bodyLarge,
-                    color = Color.White
+                    color = colorResource(R.color.white)
                 )
             }
         }
@@ -541,7 +541,7 @@ fun NoMeetingsView(navController: NavController) {
         Text(
             text = "Agenda livre para este dia",
             fontWeight = FontWeight.Bold,
-            color = Color.White,
+            color = colorResource(R.color.white),
             fontSize = 25.sp,
             textAlign = TextAlign.Center
         )
@@ -549,7 +549,7 @@ fun NoMeetingsView(navController: NavController) {
         Text(
             text = "Você pode conversar com Goma, para marcar uma nova reunião.",
             fontWeight = FontWeight.Normal,
-            color = Color.White,
+            color = colorResource(R.color.white),
             fontSize = 18.sp,
             textAlign = TextAlign.Center
         )

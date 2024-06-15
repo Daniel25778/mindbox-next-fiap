@@ -339,7 +339,7 @@ fun NewEmailScreen(
                                 OutlinedButton(onClick = { body = suggestion.content }) {
                                     Text(suggestion.displayText, color = colorResource(id = R.color.white))
                                 }
-                                Spacer(modifier = Modifier.width(2.dp))
+                                Spacer(modifier = Modifier.width(4.dp))
                             }
                         }
                         Spacer(modifier = Modifier.height(16.dp))

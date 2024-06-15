@@ -255,7 +255,7 @@ fun ChatScreen(
                                         painter = painterResource(id = R.drawable.send_chat_message_icon),
                                         contentDescription = "Enviar mensagem",
                                         modifier = Modifier.size(24.dp),
-                                        tint = Color.White
+                                        tint = colorResource(R.color.white)
                                     )
                                 })
                         }

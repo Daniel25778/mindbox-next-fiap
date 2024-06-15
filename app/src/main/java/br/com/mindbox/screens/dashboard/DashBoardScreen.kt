@@ -238,6 +238,7 @@ fun DashBoardScreen(
                     Column(modifier = Modifier.padding(start = 20.dp)) {
                         Text(
                             text = "Recentes",
+                            color = colorResource(id = R.color.white),
                             style = MaterialTheme.typography.titleMedium,
                             modifier = Modifier.padding(top = 4.dp)
                         )
@@ -256,6 +257,7 @@ fun DashBoardScreen(
                         Text(
                             text = "Todos da caixa de entrada",
                             style = MaterialTheme.typography.titleMedium,
+                            color = colorResource(id = R.color.white)
                         )
                         Spacer(modifier = Modifier.height(10.dp))
                         LazyColumn(

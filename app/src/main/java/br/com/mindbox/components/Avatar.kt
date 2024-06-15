@@ -11,8 +11,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import br.com.mindbox.R
 import br.com.mindbox.model.user.User
 import coil.compose.AsyncImage
 
@@ -33,7 +35,8 @@ fun Avatar(
         Text(
             text = user.fullName,
             style = MaterialTheme.typography.bodyMedium,
-            modifier = Modifier.padding(top = 4.dp)
+            modifier = Modifier.padding(top = 4.dp),
+            color = colorResource(id = R.color.white)
         )
     }
     else AsyncImage(
