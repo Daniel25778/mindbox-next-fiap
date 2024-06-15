@@ -20,7 +20,7 @@ class ChatOnboardingDataProvider : OnboardingDataProviderInterface {
             OnboardingItem(
                 R.raw.chat_onboarding_goma,
                 "Goma. Assistente virtual",
-                "O nome de nossa assistente virtual é uma homenagem aos visionários que inspiraram nossa jornada: Gilberto Mautner e Claudio Gora, fundadores da Locaweb.",
+                "Conheça Goma, sua assistente virtual inteligente. Pronta para simplificar sua experiência com e-mails. Inicie agora e experimente o futuro da comunicação!",
             ),
         )
     }
