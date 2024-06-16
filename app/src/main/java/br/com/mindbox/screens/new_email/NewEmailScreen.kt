@@ -2,12 +2,16 @@ package br.com.mindbox.screens.new_email
 
 
 import android.annotation.SuppressLint
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.widget.Toast
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,9 +28,11 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -38,6 +44,8 @@ import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -70,8 +78,11 @@ import br.com.mindbox.components.loadNavBottomItemsWithIcons
 import br.com.mindbox.model.navbottom.NavBottomItem
 import br.com.mindbox.presentation.sign_in.UserData
 import br.com.mindbox.service.AuthorizationService
+import br.com.mindbox.util.date.DateUtils
 import coil.compose.AsyncImage
 import kotlinx.coroutines.launch
+import java.util.Calendar
+import java.util.Date
 
 
 @SuppressLint("SuspiciousIndentation")
@@ -84,8 +95,11 @@ fun NewEmailScreen(
     rawNavBottomItems: List<NavBottomItem>,
 ) {
     data class Suggestion(
-        val displayText: String,
-        val content: String
+        val displayText: String, val content: String
+    )
+
+    data class Task(
+        val title: String, val isCompleted: Boolean
     )
 
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -106,53 +120,110 @@ fun NewEmailScreen(
     var recipient by remember { mutableStateOf("") }
     var subject by remember { mutableStateOf("") }
     var body by remember { mutableStateOf("") }
+    var tasks by remember { mutableStateOf(listOf<Task>()) }
+    var scheduledDateTime by rememberSaveable {
+        mutableStateOf<Date?>(null)
+    }
     val suggestions = listOf(
         Suggestion(
             "Saudação",
             "Olá, espero que você esteja bem. Como estão as coisas por aí? Espero que esteja aproveitando seu dia."
-        ),
-        Suggestion(
+        ), Suggestion(
             "Informativo",
             "Estou escrevendo para informá-lo sobre a nova política da empresa que entrará em vigor na próxima semana."
-        ),
-        Suggestion(
+        ), Suggestion(
             "Reunião",
             "Gostaria de agendar uma reunião para discutir os resultados do último trimestre e definir metas para o próximo."
-        ),
-        Suggestion(
+        ), Suggestion(
             "Agradecimento",
             "Gostaria de agradecer pelo seu tempo e atenção na última reunião. Suas contribuições foram muito valiosas."
-        ),
-        Suggestion(
+        ), Suggestion(
             "Urgente",
             "Este é um assunto urgente e precisa de sua atenção imediata. Por favor, revise o documento anexo o mais rápido possível."
-        ),
-        Suggestion(
+        ), Suggestion(
             "Sugestão",
             "Gostaria de sugerir uma nova abordagem para nosso projeto. Acredito que podemos melhorar os resultados implementando essa ideia."
-        ),
-        Suggestion(
+        ), Suggestion(
             "Confirmação",
             "Gostaria de confirmar nossa reunião agendada para amanhã às 10h. Está confirmado o seu comparecimento?"
-        ),
-        Suggestion(
+        ), Suggestion(
             "Solicitação",
             "Estou escrevendo para solicitar sua ajuda com o processo de integração do novo funcionário. Podemos agendar uma conversa para alinhar os próximos passos?"
-        ),
-        Suggestion(
+        ), Suggestion(
             "Feedback",
             "Gostaria de compartilhar algumas observações sobre o último projeto. Estou impressionado com o trabalho realizado, mas acredito que podemos melhorar em alguns aspectos."
-        ),
-        Suggestion(
+        ), Suggestion(
             "Convite",
             "Estou organizando um evento para a equipe no próximo mês e gostaria de convidá-lo para participar. Seria ótimo contar com sua presença."
-        ),
-        Suggestion(
+        ), Suggestion(
             "Anúncio",
             "Tenho o prazer de informar que fomos selecionados para apresentar nosso projeto na conferência internacional. Parabéns a todos pelo excelente trabalho!"
         )
     )
 
+    fun addTask(newTask: Task) {
+        tasks = tasks + newTask
+    }
+
+    fun updateTaskTitle(index: Int, title: String) {
+        if (index >= 0 && index < tasks.size) {
+            tasks = tasks.toMutableList().apply {
+                this[index] = this[index].copy(title = title)
+            }
+        }
+    }
+
+    fun toggleTaskCompletion(index: Int) {
+        if (index >= 0 && index < tasks.size) {
+            tasks = tasks.toMutableList().apply {
+                this[index] = this[index].copy(isCompleted = !this[index].isCompleted)
+            }
+        }
+    }
+
+    fun removeTask(index: Int) {
+        if (index >= 0 && index < tasks.size) {
+            tasks = tasks.toMutableList().apply {
+                removeAt(index)
+            }
+        }
+    }
+
+    fun showTimePicker(context: android.content.Context) {
+        val calendar = Calendar.getInstance()
+        calendar.time = scheduledDateTime!!
+        val initialHour = calendar.get(Calendar.HOUR_OF_DAY)
+        val initialMinute = calendar.get(Calendar.MINUTE)
+
+        val timePickerDialog = TimePickerDialog(
+            context,
+            { _, hourOfDay, minute ->
+                calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
+                calendar.set(Calendar.MINUTE, minute)
+                scheduledDateTime = calendar.time
+            },
+            initialHour, initialMinute, true
+        )
+        timePickerDialog.show()
+    }
+
+    fun showDatePicker(context: android.content.Context) {
+        val calendar = Calendar.getInstance()
+        val initialYear = calendar.get(Calendar.YEAR)
+        val initialMonth = calendar.get(Calendar.MONTH)
+        val initialDay = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(
+            context,
+            { _, year, month, day ->
+                calendar.set(year, month, day)
+                scheduledDateTime = calendar.time
+                showTimePicker(context)
+            },
+            initialYear, initialMonth, initialDay
+        )
+        datePickerDialog.show()
+    }
 
     val onSendEmailResult: () -> Unit = {
         navController.navigate("dashboard")
@@ -294,11 +365,13 @@ fun NewEmailScreen(
                     .padding(paddingValues)
             ) {
                 AnimatedGradientBackground(alphaAnimate = alphaAnim.value) {
-                    Column(modifier = Modifier
-                        .padding(start = 20.dp, end = 20.dp)
-                        .verticalScroll(
-                            rememberScrollState()
-                        )) {
+                    Column(
+                        modifier = Modifier
+                            .padding(start = 20.dp, end = 20.dp)
+                            .verticalScroll(
+                                rememberScrollState()
+                            )
+                    ) {
                         Input(
                             value = recipient,
                             onValueChange = { recipient = it },
@@ -322,13 +395,39 @@ fun NewEmailScreen(
                                 .fillMaxWidth()
                                 .height(250.dp),
                         )
+                        Spacer(modifier = Modifier.height(16.dp))
+                        OutlinedTextField(
+                            value = scheduledDateTime?.let { DateUtils.getBrazilianDateTimeFormat().format(it) } ?: "",
+                            enabled = false,
+                            onValueChange = {},
+                            label = { Text("Agendar envio") },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    showDatePicker(context)
+                                },
+                            colors = OutlinedTextFieldDefaults.colors(
+                                disabledPlaceholderColor = colorResource(id = R.color.white),
+                                disabledTextColor = colorResource(id = R.color.white),
+                                disabledLabelColor = colorResource(id = R.color.white),
+                                disabledBorderColor = colorResource(R.color.grey_550)
+                            ),
+                        )
 
                         Spacer(modifier = Modifier.height(16.dp))
-                        
+
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            Text(text = "Quer uma ajudinha?",color = colorResource(id = R.color.white),  style = MaterialTheme.typography.titleMedium)
+                            Text(
+                                text = "Quer uma ajudinha?",
+                                color = colorResource(id = R.color.white),
+                                style = MaterialTheme.typography.titleMedium
+                            )
                             Spacer(modifier = Modifier.width(10.dp))
-                            Icon(painter = painterResource(id = R.drawable.chat_unselected_icon), contentDescription = "chat", modifier = Modifier.size(20.dp))
+                            Icon(
+                                painter = painterResource(id = R.drawable.chat_unselected_icon),
+                                contentDescription = "chat",
+                                modifier = Modifier.size(20.dp)
+                            )
                         }
 
                         Spacer(modifier = Modifier.height(16.dp))
@@ -337,15 +436,73 @@ fun NewEmailScreen(
                         ) {
                             items(suggestions) { suggestion ->
                                 OutlinedButton(onClick = { body = suggestion.content }) {
-                                    Text(suggestion.displayText, color = colorResource(id = R.color.white))
+                                    Text(
+                                        suggestion.displayText,
+                                        color = colorResource(id = R.color.white)
+                                    )
                                 }
-                                Spacer(modifier = Modifier.width(4.dp))
+                                Spacer(modifier = Modifier.width(8.dp))
                             }
                         }
                         Spacer(modifier = Modifier.height(16.dp))
+                        Divider(color = colorResource(id = R.color.white), thickness = 1.dp)
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        Text(
+                            text = "Associe tarefas a este e-mail",
+                            color = colorResource(id = R.color.white),
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                        Spacer(modifier = Modifier.height(16.dp))
+                        tasks.forEachIndexed { index, task ->
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Center,
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Checkbox(
+                                    checked = task.isCompleted,
+                                    onCheckedChange = { isChecked ->
+                                        toggleTaskCompletion(index)
+                                    },
+                                    modifier = Modifier.padding(end = 8.dp, top = 20.dp)
+                                )
+                                Input(
+                                    value = task.title,
+                                    onValueChange = { newTitle ->
+                                        updateTaskTitle(index, newTitle)
+                                    },
+                                    placeholder = "Tarefa ${index + 1}",
+                                    label = "Tarefa ${index + 1}",
+                                    modifier = Modifier.weight(1f) // Takes remaining space in the Row
+                                )
+                                IconButton(
+                                    onClick = {
+                                        removeTask(index)
+                                    },
+                                    modifier = Modifier.padding(start = 8.dp, top = 20.dp)
+                                ) {
+                                    Icon(
+                                        Icons.Default.Delete,
+                                        contentDescription = "Delete Task"
+                                    )
+                                }
+                            }
+                            Spacer(modifier = Modifier.height(8.dp))
+                        }
+                            OutlinedButton(onClick = {
+                                val newTask = Task("", isCompleted = false)
+                                addTask(newTask)
+                            }) {
+                                Text(
+                                    color = colorResource(id = R.color.white),
+                                    text = "Adicionar tarefa"
+                                )
+                            }
+                        Spacer(modifier = Modifier.height(8.dp))
 
                         GradientButton(
-                            onClick = {onSendEmailResult()}, text = "Enviar"
+                            onClick = { onSendEmailResult() }, text = "Enviar"
                         )
 
                     }
