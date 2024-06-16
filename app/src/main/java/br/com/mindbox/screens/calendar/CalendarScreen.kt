@@ -5,7 +5,6 @@ import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -26,28 +25,16 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material3.Badge
-import androidx.compose.material3.BadgedBox
-import androidx.compose.material3.Divider
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalDrawerSheet
-import androidx.compose.material3.ModalNavigationDrawer
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -56,18 +43,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -77,8 +60,8 @@ import androidx.navigation.NavController
 import br.com.mindbox.R
 import br.com.mindbox.components.AnimatedGradientBackground
 import br.com.mindbox.components.Avatar
-import br.com.mindbox.components.DrawerItem
 import br.com.mindbox.components.GradientButton
+import br.com.mindbox.components.NavigationLayout
 import br.com.mindbox.components.loadNavBottomItemsWithIcons
 import br.com.mindbox.database.repository.CalendarEventRepository
 import br.com.mindbox.model.calendar.CalendarEventWithUser
@@ -87,7 +70,6 @@ import br.com.mindbox.model.navbottom.NavBottomItem
 import br.com.mindbox.presentation.sign_in.UserData
 import br.com.mindbox.service.AuthorizationService
 import br.com.mindbox.util.date.DateUtils
-import coil.compose.AsyncImage
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -120,9 +102,6 @@ fun CalendarScreen(
 
     data class DateItem(val dayNumber: String, val dayOfWeek: String, val meetingDay: Date)
 
-    var selectedItemIndex by rememberSaveable {
-        mutableStateOf(1)
-    }
 
     val selectedDate = remember { mutableStateOf<Date?>(null) }
     val dates = remember {
@@ -165,269 +144,79 @@ fun CalendarScreen(
         calendarEventRepository.findEventsByParticipantId(user.id)
     }
 
-    ModalNavigationDrawer(modifier = Modifier.background(colorResource(id = R.color.layer_mid)),
-        drawerState = drawerState,
-        drawerContent = {
-            ModalDrawerSheet(
-                modifier = Modifier.background(colorResource(id = R.color.layer_mid))
-            ) {
-                Column(
-                    modifier = Modifier
-                        .background(colorResource(id = R.color.layer_mid))
-                        .padding(start = 15.dp)
-                ) {
-                    Spacer(
-                        modifier = Modifier
-                            .height(100.dp)
-                            .background(colorResource(id = R.color.layer_mid))
-                    )
-                    Box(
-                        contentAlignment = Alignment.TopStart,
-                        modifier = Modifier
-                            .height(40.dp)
-                            .width(150.dp)
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.app_logo_horizontal),
-                            contentDescription = "App Logo",
-                            contentScale = ContentScale.Fit,
-                            modifier = Modifier.fillMaxSize()
-                        )
-                    }
-                    Spacer(modifier = Modifier.height(10.dp))
-                    Divider()
-                    Spacer(modifier = Modifier.height(10.dp))
-                    DrawerItem("Alerta", navController, "alert")
-                }
-            }
-        }
+    NavigationLayout(navController = navController, selectedItemIndex =  1, rawNavBottomItems = navBottomItems) {
+        AnimatedGradientBackground(alphaAnimate = alphaAnim.value) {
+            Column(modifier = Modifier.padding(start = 20.dp, end = 20.dp)) {
+                HorizontalPager(
+                    state = pagerState, modifier = Modifier.height(70.dp)
+                ) { page ->
 
-    ) {
-        Scaffold(modifier = Modifier
-            .fillMaxSize()
-            .background(colorResource(id = R.color.layer_mid)),
-            bottomBar = {
-                NavigationBar(
-                    containerColor = colorResource(id = R.color.layer_mid),
-                    modifier = Modifier.background(colorResource(id = R.color.layer_mid))
-                ) {
-                    navBottomItems.forEachIndexed { index, item ->
-                        NavigationBarItem(selected = selectedItemIndex == index, onClick = {
-                            index.also { selectedItemIndex = it }
-                            navController.navigate(item.url)
-                        }, label = {
-                            Text(text = item.title)
-                        }, alwaysShowLabel = false, icon = {
-                            BadgedBox(badge = {
-                                if (item.badgeCount != null) {
-                                    Badge {
-                                        Text(text = item.badgeCount.toString())
-                                    }
-                                } else if (item.hasNews) {
-                                    Badge()
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 16.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                IconButton(
+                                    onClick = {
+                                        scope.launch {
+                                            val previousPage = selectedPage - 1
+                                            pagerState.animateScrollToPage(previousPage)
+                                        }
+                                    }, modifier = Modifier.size(24.dp)
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.ArrowBack,
+                                        contentDescription = "Last Month",
+                                        tint = colorResource(R.color.white)
+                                    )
                                 }
-                            }) {
-                                Image(
-                                    painter = if (index == selectedItemIndex) {
-                                        item.selectedIcon
-                                            ?: painterResource(id = R.drawable.chat_unselected_icon)
-                                    } else {
-                                        item.unselectedIcon
-                                            ?: painterResource(id = R.drawable.chat_unselected_icon)
-                                    },
-                                    contentDescription = item.title,
-                                    modifier = Modifier.size(24.dp)
+                                Spacer(modifier = Modifier.width(4.dp))
+                                Text(
+                                    calendarMonthItems[page].lastMonth,
+                                    textAlign = TextAlign.Center,
+                                    color = colorResource(id = R.color.white),
+                                    fontWeight = FontWeight.Bold,
+                                    style = MaterialTheme.typography.labelSmall,
                                 )
                             }
-                        })
-                    }
-                }
-            },
-            topBar = {
-                TopAppBar(title = {}, colors = TopAppBarDefaults.smallTopAppBarColors(
-                    containerColor = colorResource(
-                        id = R.color.layer_mid
-                    )
-                ), navigationIcon = {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.width(500.dp)
-                    ) {
-                        IconButton(onClick = {
-                            coroutineScope.launch { drawerState.open() }
-                        }) {
-                            Icon(
-                                Icons.Default.Menu,
-                                contentDescription = "Menu",
+
+                            Text(
+                                text = calendarMonthItems[page].currentMonth,
+                                color = colorResource(R.color.white),
+                                fontSize = 20.sp,
+                                style = MaterialTheme.typography.titleLarge
                             )
-                        }
-                        Image(
-                            painter = painterResource(id = R.drawable.app_logo_horizontal),
-                            contentDescription = "App Logo",
-                            contentScale = ContentScale.Fit,
-                            modifier = Modifier
-                                .height(30.dp)
-                                .padding(start = 8.dp)
-                        )
-                    }
-                }, actions = {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.padding(end = 8.dp)
-                    ) {
-                        if (userData?.profilePictureUrl != null) {
-                            AsyncImage(
-                                model = userData.profilePictureUrl,
-                                contentDescription = "Profile picture",
-                                modifier = Modifier
-                                    .size(30.dp)
-                                    .clip(CircleShape),
-                                contentScale = ContentScale.Crop
-                            )
-                            Spacer(modifier = Modifier.height(16.dp))
-                        } else Avatar(user = user, size = 40.dp, withText = false)
-                    }
-                }
 
-                )
-            }) { paddingValues ->
-
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues)
-            ) {
-                AnimatedGradientBackground(alphaAnimate = alphaAnim.value) {
-                    Column(modifier = Modifier.padding(start = 20.dp, end = 20.dp)) {
-                        HorizontalPager(
-                            state = pagerState, modifier = Modifier.height(70.dp)
-                        ) { page ->
-
-                            Column(
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                modifier = Modifier.fillMaxSize()
-                            ) {
-
-                                Row(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(vertical = 16.dp),
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.SpaceBetween
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Text(
+                                    calendarMonthItems[page].nextMonth,
+                                    textAlign = TextAlign.Center,
+                                    color = colorResource(id = R.color.white),
+                                    fontWeight = FontWeight.Bold,
+                                    style = MaterialTheme.typography.labelSmall,
+                                )
+                                Spacer(modifier = Modifier.width(4.dp))
+                                IconButton(
+                                    onClick = {
+                                        scope.launch {
+                                            val nextPage = selectedPage + 1
+                                            pagerState.animateScrollToPage(nextPage)
+                                        }
+                                    }, modifier = Modifier.size(24.dp)
                                 ) {
-                                    Row(verticalAlignment = Alignment.CenterVertically) {
-                                        IconButton(
-                                            onClick = {
-                                                scope.launch {
-                                                    val previousPage = selectedPage - 1
-                                                    pagerState.animateScrollToPage(previousPage)
-                                                }
-                                            }, modifier = Modifier.size(24.dp)
-                                        ) {
-                                            Icon(
-                                                imageVector = Icons.Default.ArrowBack,
-                                                contentDescription = "Last Month",
-                                                tint = colorResource(R.color.white)
-                                            )
-                                        }
-                                        Spacer(modifier = Modifier.width(4.dp))
-                                        Text(
-                                            calendarMonthItems[page].lastMonth,
-                                            textAlign = TextAlign.Center,
-                                            color = colorResource(id = R.color.white),
-                                            fontWeight = FontWeight.Bold,
-                                            style = MaterialTheme.typography.labelSmall,
-                                        )
-                                    }
-
-                                    Text(
-                                        text = calendarMonthItems[page].currentMonth,
-                                        color = colorResource(R.color.white),
-                                        fontSize = 20.sp,
-                                        style = MaterialTheme.typography.titleLarge
+                                    Icon(
+                                        imageVector = Icons.Default.ArrowForward,
+                                        contentDescription = "Next Month",
+                                        tint = colorResource(R.color.white)
                                     )
-
-                                    Row(verticalAlignment = Alignment.CenterVertically) {
-                                        Text(
-                                            calendarMonthItems[page].nextMonth,
-                                            textAlign = TextAlign.Center,
-                                            color = colorResource(id = R.color.white),
-                                            fontWeight = FontWeight.Bold,
-                                            style = MaterialTheme.typography.labelSmall,
-                                        )
-                                        Spacer(modifier = Modifier.width(4.dp))
-                                        IconButton(
-                                            onClick = {
-                                                scope.launch {
-                                                    val nextPage = selectedPage + 1
-                                                    pagerState.animateScrollToPage(nextPage)
-                                                }
-                                            }, modifier = Modifier.size(24.dp)
-                                        ) {
-                                            Icon(
-                                                imageVector = Icons.Default.ArrowForward,
-                                                contentDescription = "Next Month",
-                                                tint = colorResource(R.color.white)
-                                            )
-                                        }
-                                    }
-                                }
-
-                            }
-
-                        }
-                        LazyRow(
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            items(dates) { date ->
-                                val isSelected = date.meetingDay == selectedDate.value
-
-                                Column(horizontalAlignment = Alignment.CenterHorizontally,
-                                    modifier = Modifier
-                                        .padding(10.dp)
-                                        .background(
-                                            color = if (date.meetingDay == selectedDate.value) colorResource(R.color.white) else Color.Transparent,
-                                            shape = MaterialTheme.shapes.medium
-                                        )
-                                        .clickable {
-                                            if (isSelected) {
-                                                selectedDate.value = null
-                                            } else {
-                                                selectedDate.value = date.meetingDay
-                                            }
-                                        }) {
-                                    Text(
-                                        text = date.dayNumber,
-                                        Modifier.padding(10.dp),
-                                        color = if (date.meetingDay == selectedDate.value) colorResource(
-                                            id = R.color.layer_mid
-                                        ) else colorResource(R.color.white),
-                                        fontSize = 14.sp
-                                    )
-                                    Text(
-                                        text = date.dayOfWeek,
-                                        Modifier.padding(5.dp),
-                                        color = if (date.meetingDay == selectedDate.value) colorResource(
-                                            id = R.color.layer_mid
-                                        ) else colorResource(R.color.white),
-                                        fontSize = 14.sp
-                                    )
-                                }
-                            }
-                        }
-
-                        LazyColumn {
-                            if (events.isEmpty()) {
-                                item {
-                                    NoMeetingsView(navController)
-                                }
-                            } else {
-                                items(events) { event ->
-                                    Column {
-                                        Spacer(modifier = Modifier.height(16.dp))
-                                        EventItem(event = event)
-                                        Spacer(modifier = Modifier.height(8.dp))
-                                    }
                                 }
                             }
                         }
@@ -435,9 +224,67 @@ fun CalendarScreen(
                     }
 
                 }
+                LazyRow(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    items(dates) { date ->
+                        val isSelected = date.meetingDay == selectedDate.value
+
+                        Column(horizontalAlignment = Alignment.CenterHorizontally,
+                            modifier = Modifier
+                                .padding(10.dp)
+                                .background(
+                                    color = if (date.meetingDay == selectedDate.value) colorResource(R.color.white) else Color.Transparent,
+                                    shape = MaterialTheme.shapes.medium
+                                )
+                                .clickable {
+                                    if (isSelected) {
+                                        selectedDate.value = null
+                                    } else {
+                                        selectedDate.value = date.meetingDay
+                                    }
+                                }) {
+                            Text(
+                                text = date.dayNumber,
+                                Modifier.padding(10.dp),
+                                color = if (date.meetingDay == selectedDate.value) colorResource(
+                                    id = R.color.layer_mid
+                                ) else colorResource(R.color.white),
+                                fontSize = 14.sp
+                            )
+                            Text(
+                                text = date.dayOfWeek,
+                                Modifier.padding(5.dp),
+                                color = if (date.meetingDay == selectedDate.value) colorResource(
+                                    id = R.color.layer_mid
+                                ) else colorResource(R.color.white),
+                                fontSize = 14.sp
+                            )
+                        }
+                    }
+                }
+
+                LazyColumn {
+                    if (events.isEmpty()) {
+                        item {
+                            NoMeetingsView(navController)
+                        }
+                    } else {
+                        items(events) { event ->
+                            Column {
+                                Spacer(modifier = Modifier.height(16.dp))
+                                EventItem(event = event)
+                                Spacer(modifier = Modifier.height(8.dp))
+                            }
+                        }
+                    }
+                }
+
             }
+
         }
     }
+
 }
 
 

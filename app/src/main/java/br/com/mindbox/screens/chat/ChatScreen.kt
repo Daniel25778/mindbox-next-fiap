@@ -44,11 +44,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
@@ -110,6 +110,10 @@ fun ChatScreen(
         chatMessages = chatMessages + ChatMessage(responseText, isUserMessage = false)
     }
 
+    var emailListType by rememberSaveable {
+        mutableStateOf("inbox")
+    }
+
     ModalNavigationDrawer(modifier = Modifier.background(colorResource(id = R.color.layer_mid)),
         drawerState = drawerState,
         drawerContent = {
@@ -142,7 +146,20 @@ fun ChatScreen(
                     Spacer(modifier = Modifier.height(10.dp))
                     Divider()
                     Spacer(modifier = Modifier.height(10.dp))
-                    DrawerItem("Alerta", navController, "alert")
+                    Text(text = "E-mails")
+                    Spacer(modifier = Modifier.height(10.dp))
+                    DrawerItem("Todos da caixa de entrada", navController, "alert", R.drawable.home_selected_icon,  emailListType = "inbox")
+                    DrawerItem("Enviados", navController, "alert", R.drawable.home_selected_icon, emailListType = "inbox")
+                    Divider()
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Text(text = "Menu")
+                    Spacer(modifier = Modifier.height(10.dp))
+                    DrawerItem("Início", navController, "dashboard", R.drawable.home_selected_icon,  emailListType = "inbox")
+                    DrawerItem("Calendário", navController, "calendar", R.drawable.calendar_selected_icon, emailListType = "inbox")
+                    DrawerItem("Novo", navController, "new-email", R.drawable.add_selected_icon, emailListType = "inbox")
+                    DrawerItem("Categoria", navController, "category", R.drawable.category_selected, emailListType = "inbox")
+                    DrawerItem("Chat", navController, "chatOnboarding", R.drawable.chat_selected_icon, emailListType = "inbox")
+                    Spacer(modifier = Modifier.fillMaxSize())
                 }
             }
         }

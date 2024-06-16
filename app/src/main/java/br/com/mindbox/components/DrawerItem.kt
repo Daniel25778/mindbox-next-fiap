@@ -19,9 +19,10 @@ import androidx.navigation.NavController
 import br.com.mindbox.R
 
 @Composable
-fun DrawerItem(text: String, navController: NavController, destination: String) {
+fun DrawerItem(text: String, navController: NavController,  destination: String, painter: Int, emailListType: String) {
     Row(
         modifier = Modifier.clickable {
+
             navController.navigate(destination)
         },
         horizontalArrangement = Arrangement.Center,
@@ -29,8 +30,8 @@ fun DrawerItem(text: String, navController: NavController, destination: String) 
     ) {
         Icon(
             modifier = Modifier.size(20.dp),
-            painter = painterResource(id = R.drawable.flat_color_icons_google),
-            contentDescription = "teste"
+            painter = painterResource(id = painter),
+            contentDescription = "menu"
         )
         Text(
             text = text,

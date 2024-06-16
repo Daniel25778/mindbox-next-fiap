@@ -29,7 +29,6 @@ import br.com.mindbox.data.onboarding.NavBottomItemDataProvider
 import br.com.mindbox.dto.auth.LoginDTO
 import br.com.mindbox.presentation.sign_in.GoogleAuthUiClient
 import br.com.mindbox.presentation.sign_in.SignInViewModel
-import br.com.mindbox.screens.alert.Alert
 import br.com.mindbox.screens.calendar.CalendarScreen
 import br.com.mindbox.screens.category.CategoryScreen
 import br.com.mindbox.screens.chat.ChatScreen
@@ -146,7 +145,6 @@ class MainActivity : ComponentActivity() {
                         composable(route = "dashboard") {
                             DashBoardScreen(
                                 navController,
-                                userData = googleAuthUiClient.getSignedInUser(),
                                 onSignOut = {
                                     lifecycleScope.launch {
                                         googleAuthUiClient.signOut()
@@ -209,12 +207,6 @@ class MainActivity : ComponentActivity() {
                                     }
                                 },
                                 NavBottomItemDataProvider().getItems()
-                            )
-                        }
-                        composable(route = "alert") {
-                            Alert(
-                                navController,
-                                MenuText = "Alertas Próximos"
                             )
                         }
                         composable(route = "chat") { ChatScreen(navController) }
