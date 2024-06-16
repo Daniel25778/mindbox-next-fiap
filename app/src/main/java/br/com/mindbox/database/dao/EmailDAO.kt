@@ -33,6 +33,13 @@ interface EmailDAO {
     @Transaction
     @Query("""
         SELECT * FROM tbl_email e 
+        WHERE e.email_id = :email_id
+    """)
+    fun findEmailByIdWithSender(email_id: Long): EmailWithTasks?
+
+    @Transaction
+    @Query("""
+        SELECT * FROM tbl_email e 
         WHERE e.sender_id IN (:senderIds)
         ORDER BY e.send_date DESC
     """)

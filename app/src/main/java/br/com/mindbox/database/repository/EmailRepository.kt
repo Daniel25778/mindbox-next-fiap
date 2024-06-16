@@ -51,6 +51,10 @@ class EmailRepository(context: Context) {
         return emailDAO.findEmailsByRecipientIds(recipientIds)
     }
 
+    fun findEmailByIdWithSender(id: Long): EmailWithTasks? {
+        return emailDAO.findEmailByIdWithSender(id)
+    }
+
     fun findEmailsBySenderIds(senderIds: List<Long>): List<EmailWithTasks> {
         return emailDAO.findEmailsBySenderIds(senderIds)
     }

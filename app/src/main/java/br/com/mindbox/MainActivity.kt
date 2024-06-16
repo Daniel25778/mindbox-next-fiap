@@ -34,6 +34,7 @@ import br.com.mindbox.screens.calendar.CalendarScreen
 import br.com.mindbox.screens.category.CategoryScreen
 import br.com.mindbox.screens.chat.ChatScreen
 import br.com.mindbox.screens.dashboard.DashBoardScreen
+import br.com.mindbox.screens.email_detail.EmailDetailScreen
 import br.com.mindbox.screens.login.Login
 import br.com.mindbox.screens.new_email.NewEmailScreen
 import br.com.mindbox.screens.register.alert.AnimatedSplashScreen
@@ -59,69 +60,88 @@ class MainActivity : ComponentActivity() {
         setContent {
             Theme {
                 Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
                 ) {
                     val navController = rememberAnimatedNavController()
 
-                    AnimatedNavHost(
-                        navController = navController,
+                    AnimatedNavHost(navController = navController,
                         startDestination = "splash",
                         exitTransition = {
                             slideOutOfContainer(
-                                towards =
-                                AnimatedContentTransitionScope.SlideDirection.End,
+                                towards = AnimatedContentTransitionScope.SlideDirection.End,
                                 animationSpec = tween(1000)
                             )
-                        }
-                    ) {
+                        }) {
                         composable(route = "login") {
                             val viewModel = viewModel<SignInViewModel>()
                             val state by viewModel.state.collectAsStateWithLifecycle()
 
                             LaunchedEffect(key1 = Unit) {
-                                if(googleAuthUiClient.getSignedInUser() != null) {
+                                if (googleAuthUiClient.getSignedInUser() != null) {
                                     navController.navigate("dashboard")
                                 }
                             }
-                            val launcher = rememberLauncherForActivityResult(
-                                contract = ActivityResultContracts.StartIntentSenderForResult(),
-                                onResult = { result ->
-                                    if(result.resultCode == RESULT_OK) {
-                                        lifecycleScope.launch {
-                                            val signInResult = googleAuthUiClient.signInWithIntent(
-                                                intent = result.data ?: return@launch
-                                            )
-                                            viewModel.onSignInResult(signInResult)
+                            val launcher =
+                                rememberLauncherForActivityResult(contract = ActivityResultContracts.StartIntentSenderForResult(),
+                                    onResult = { result ->
+                                        if (result.resultCode == RESULT_OK) {
+                                            lifecycleScope.launch {
+                                                val signInResult =
+                                                    googleAuthUiClient.signInWithIntent(
+                                                        intent = result.data ?: return@launch
+                                                    )
+                                                viewModel.onSignInResult(signInResult)
+                                            }
                                         }
-                                    }
-                                }
-                            )
+                                    })
                             LaunchedEffect(key1 = state.isSignInSuccessful) {
-                                if(state.isSignInSuccessful) {
-                                    AuthorizationService(applicationContext).authenticateUser(LoginDTO("gilberto@locaweb.com.br", "Senha@123"))
+                                if (state.isSignInSuccessful) {
+                                    AuthorizationService(applicationContext).authenticateUser(
+                                        LoginDTO("gilberto@locaweb.com.br", "Senha@123")
+                                    )
                                     navController.navigate("dashboard")
                                     viewModel.resetState()
                                 }
                             }
 
-                            Login(navController, state = state,
-                                onSignInClick = {
-                                    lifecycleScope.launch {
-                                        val signInIntentSender = googleAuthUiClient.signIn()
-                                        launcher.launch(
-                                            IntentSenderRequest.Builder(
-                                                signInIntentSender ?: return@launch
-                                            ).build()
-                                        )
-                                    }
-                                })
+                            Login(navController, state = state, onSignInClick = {
+                                lifecycleScope.launch {
+                                    val signInIntentSender = googleAuthUiClient.signIn()
+                                    launcher.launch(
+                                        IntentSenderRequest.Builder(
+                                            signInIntentSender ?: return@launch
+                                        ).build()
+                                    )
+                                }
+                            })
+                        }
+                        composable(route = "email-detail/{emailId}") { backStackEntry ->
+                            val emailId = backStackEntry.arguments?.getString("emailId")?.toLongOrNull()
+
+                            EmailDetailScreen(
+                                navController = navController,
+                                emailId = emailId!!,
+                                userData = googleAuthUiClient.getSignedInUser(),
+                                rawNavBottomItems = NavBottomItemDataProvider().getItems(),
+                            )
                         }
                         composable(route = "splash") { AnimatedSplashScreen(navController) }
 
-                        composable(route = "appOnboarding") { OnboardingScreen(navController, AppOnboardingDataProvider().getItems(), "login") }
+                        composable(route = "appOnboarding") {
+                            OnboardingScreen(
+                                navController,
+                                AppOnboardingDataProvider().getItems(),
+                                "login"
+                            )
+                        }
 
-                        composable(route = "chatOnboarding") { OnboardingScreen(navController, ChatOnboardingDataProvider().getItems(), "chat") }
+                        composable(route = "chatOnboarding") {
+                            OnboardingScreen(
+                                navController,
+                                ChatOnboardingDataProvider().getItems(),
+                                "chat"
+                            )
+                        }
 
                         composable(route = "dashboard") {
                             DashBoardScreen(
@@ -131,11 +151,8 @@ class MainActivity : ComponentActivity() {
                                     lifecycleScope.launch {
                                         googleAuthUiClient.signOut()
                                         Toast.makeText(
-                                            applicationContext,
-                                            "Saiu da conta",
-                                            Toast.LENGTH_LONG
+                                            applicationContext, "Saiu da conta", Toast.LENGTH_LONG
                                         ).show()
-
                                         navController.popBackStack()
                                     }
                                 },
@@ -150,9 +167,7 @@ class MainActivity : ComponentActivity() {
                                     lifecycleScope.launch {
                                         googleAuthUiClient.signOut()
                                         Toast.makeText(
-                                            applicationContext,
-                                            "Saiu da conta",
-                                            Toast.LENGTH_LONG
+                                            applicationContext, "Saiu da conta", Toast.LENGTH_LONG
                                         ).show()
 
                                         navController.popBackStack()
@@ -169,9 +184,7 @@ class MainActivity : ComponentActivity() {
                                     lifecycleScope.launch {
                                         googleAuthUiClient.signOut()
                                         Toast.makeText(
-                                            applicationContext,
-                                            "Saiu da conta",
-                                            Toast.LENGTH_LONG
+                                            applicationContext, "Saiu da conta", Toast.LENGTH_LONG
                                         ).show()
 
                                         navController.popBackStack()
@@ -189,9 +202,7 @@ class MainActivity : ComponentActivity() {
                                     lifecycleScope.launch {
                                         googleAuthUiClient.signOut()
                                         Toast.makeText(
-                                            applicationContext,
-                                            "Saiu da conta",
-                                            Toast.LENGTH_LONG
+                                            applicationContext, "Saiu da conta", Toast.LENGTH_LONG
                                         ).show()
 
                                         navController.popBackStack()
@@ -200,7 +211,12 @@ class MainActivity : ComponentActivity() {
                                 NavBottomItemDataProvider().getItems()
                             )
                         }
-                        composable(route = "alert") { Alert(navController, MenuText="Alertas Próximos") }
+                        composable(route = "alert") {
+                            Alert(
+                                navController,
+                                MenuText = "Alertas Próximos"
+                            )
+                        }
                         composable(route = "chat") { ChatScreen(navController) }
                     }
                 }
