@@ -65,7 +65,7 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberAnimatedNavController()
 
                     AnimatedNavHost(navController = navController,
-                        startDestination = "splash",
+                        startDestination = "dashboard",
                         exitTransition = {
                             slideOutOfContainer(
                                 towards = AnimatedContentTransitionScope.SlideDirection.End,

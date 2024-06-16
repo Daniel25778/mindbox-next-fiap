@@ -326,7 +326,7 @@ fun NewEmailScreen(
                         Spacer(modifier = Modifier.height(16.dp))
                         
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            Text(text = "Quer uma ajudinha?",  style = MaterialTheme.typography.titleMedium)
+                            Text(text = "Quer uma ajudinha?",color = colorResource(id = R.color.white),  style = MaterialTheme.typography.titleMedium)
                             Spacer(modifier = Modifier.width(10.dp))
                             Icon(painter = painterResource(id = R.drawable.chat_unselected_icon), contentDescription = "chat", modifier = Modifier.size(20.dp))
                         }

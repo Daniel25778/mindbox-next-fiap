@@ -30,7 +30,8 @@ fun Avatar(
             contentDescription = null,
             modifier = Modifier
                 .size(60.dp)
-                .clip(CircleShape)
+                .clip(CircleShape),
+            contentScale = ContentScale.Crop
         )
         Text(
             text = user.fullName,
