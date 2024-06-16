@@ -93,6 +93,7 @@ fun NewEmailScreen(
     userData: UserData?,
     onSignOut: () -> Unit,
     rawNavBottomItems: List<NavBottomItem>,
+    emailTo: String?,
 ) {
     data class Suggestion(
         val displayText: String, val content: String
@@ -117,7 +118,7 @@ fun NewEmailScreen(
         mutableStateOf(2)
     }
 
-    var recipient by remember { mutableStateOf("") }
+    var recipient by remember { mutableStateOf(emailTo ?: "") }
     var subject by remember { mutableStateOf("") }
     var body by remember { mutableStateOf("") }
     var tasks by remember { mutableStateOf(listOf<Task>()) }

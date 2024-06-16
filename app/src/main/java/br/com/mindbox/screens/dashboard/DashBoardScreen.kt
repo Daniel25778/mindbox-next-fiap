@@ -248,7 +248,9 @@ fun DashBoardScreen(
                             horizontalArrangement = Arrangement.spacedBy(20.dp)
                         ) {
                             items(usersWithRecentEmails) {
-                                Avatar(user = it, withText = true, size = 60.dp)
+                                Avatar(user = it, withText = true, size = 60.dp, onClick = {
+                                    navController.navigate("new-email?emailTo=${it.email}")
+                                })
                             }
                         }
                         Spacer(modifier = Modifier.height(10.dp))

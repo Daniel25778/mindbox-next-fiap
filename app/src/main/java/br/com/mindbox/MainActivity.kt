@@ -159,7 +159,8 @@ class MainActivity : ComponentActivity() {
                                 NavBottomItemDataProvider().getItems()
                             )
                         }
-                        composable(route = "new-email") {
+                        composable(route = "new-email?emailTo={emailTo}") { backStackEntry ->
+                            val emailTo = backStackEntry.arguments?.getString("emailTo")
                             NewEmailScreen(
                                 navController,
                                 userData = googleAuthUiClient.getSignedInUser(),
@@ -173,7 +174,8 @@ class MainActivity : ComponentActivity() {
                                         navController.popBackStack()
                                     }
                                 },
-                                NavBottomItemDataProvider().getItems()
+                                emailTo = emailTo,
+                                rawNavBottomItems = NavBottomItemDataProvider().getItems()
                             )
                         }
                         composable(route = "calendar") {
