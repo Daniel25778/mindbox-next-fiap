@@ -154,7 +154,7 @@ class MainActivity : ComponentActivity() {
                                         navController.popBackStack()
                                     }
                                 },
-                                userData = null,
+                                userData = googleAuthUiClient.getSignedInUser(),
                                 rawNavBottomItems = NavBottomItemDataProvider().getItems(),
                             )
                         }
