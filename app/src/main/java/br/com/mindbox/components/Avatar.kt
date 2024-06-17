@@ -1,5 +1,6 @@
 package br.com.mindbox.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -20,7 +21,7 @@ import coil.compose.AsyncImage
 
 @Composable
 fun Avatar(
-    user: User, size: Dp, withText: Boolean
+    user: User, size: Dp, withText: Boolean, onClick: () -> Unit = {}
 ) {
     if (withText) Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -31,6 +32,10 @@ fun Avatar(
             modifier = Modifier
                 .size(60.dp)
                 .clip(CircleShape)
+                .clickable {
+                    onClick()
+                },
+            contentScale = ContentScale.Crop
         )
         Text(
             text = user.fullName,
@@ -44,7 +49,12 @@ fun Avatar(
         contentDescription = "Profile picture",
         modifier = Modifier
             .size(size)
-            .clip(CircleShape),
+            .clip(CircleShape)
+            .clickable {
+                if (onClick !== null) {
+                    onClick()
+                }
+            },
         contentScale = ContentScale.Crop
     )
 }
