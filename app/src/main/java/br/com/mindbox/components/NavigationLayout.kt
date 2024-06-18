@@ -1,5 +1,6 @@
 package br.com.mindbox.components
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -55,7 +56,7 @@ fun NavigationLayout(
     selectedItemIndex: Int,
     rawNavBottomItems: List<NavBottomItem>,
     content: @Composable (String) -> Unit,
-){
+) {
     val navBottomItems = loadNavBottomItemsWithIcons(items = rawNavBottomItems)
     var selectedItemIndex by rememberSaveable {
         mutableStateOf(selectedItemIndex)
@@ -103,17 +104,58 @@ fun NavigationLayout(
                     Spacer(modifier = Modifier.height(10.dp))
                     Text(text = "E-mails")
                     Spacer(modifier = Modifier.height(10.dp))
-                    DrawerItem("Todos da caixa de entrada", navController, "dashboard", R.drawable.all_emails, emailListType = "inbox")
-                    DrawerItem("Enviados", navController, "dashboard", R.drawable.all_emails, emailListType = "sent")
+                    DrawerItem(
+                        "Todos da caixa de entrada",
+                        { navController.navigate("dashboard") },
+                        R.drawable.all_emails,
+                        emailListType = "inbox"
+                    )
+                    DrawerItem(
+                        "Enviados",
+                        { navController.navigate("dashboard") },
+                        R.drawable.all_emails,
+                        emailListType = "sent"
+                    )
                     Divider()
                     Spacer(modifier = Modifier.height(10.dp))
                     Text(text = "Menu")
                     Spacer(modifier = Modifier.height(10.dp))
-                    DrawerItem("Início", navController, "dashboard", R.drawable.home_selected_icon, emailListType = "inbox")
-                    DrawerItem("Calendário", navController, "calendar", R.drawable.calendar_selected_icon, emailListType = "inbox")
-                    DrawerItem("Novo", navController, "new-email", R.drawable.add_selected_icon, emailListType = "inbox")
-                    DrawerItem("Categoria", navController, "category", R.drawable.category_selected, emailListType = "inbox")
-                    DrawerItem("Chat", navController, "chatOnboarding", R.drawable.chat_selected_icon, emailListType = "inbox")
+                    DrawerItem(
+                        "Início",
+                        { navController.navigate("dashboard") },
+                        R.drawable.home_selected_icon,
+                        emailListType = "inbox"
+                    )
+                    DrawerItem(
+                        "Calendário",
+                        { navController.navigate("calendar") },
+                        R.drawable.calendar_selected_icon,
+                        emailListType = "inbox"
+                    )
+                    DrawerItem(
+                        "Chat",
+                        { navController.navigate("chatOnboarding") },
+                        R.drawable.chat_selected_icon,
+                        emailListType = "inbox"
+                    )
+                    DrawerItem(
+                        "Novo",
+                        { navController.navigate("new-email") },
+                        R.drawable.add_selected_icon,
+                        emailListType = "inbox"
+                    )
+                    DrawerItem(
+                        "Categoria",
+                        {
+                            Toast.makeText(
+                                context,
+                                "Em breve gerenciamento de categorias estará disponível!",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        },
+                        R.drawable.category_selected,
+                        emailListType = "inbox"
+                    )
                     Spacer(modifier = Modifier.fillMaxSize())
                 }
             }
@@ -130,8 +172,16 @@ fun NavigationLayout(
                 ) {
                     navBottomItems.forEachIndexed { index, item ->
                         NavigationBarItem(selected = selectedItemIndex == index, onClick = {
-                            index.also { selectedItemIndex = it }
-                            navController.navigate(item.url)
+                            if (item.url !== "category") {
+                                navController.navigate(item.url)
+                                index.also { selectedItemIndex = it }
+                            } else {
+                                Toast.makeText(
+                                    context,
+                                    "Em breve gerenciamento de categorias estará disponível!",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
                         }, label = {
                             Text(text = item.title)
                         }, alwaysShowLabel = false, icon = {
@@ -192,7 +242,7 @@ fun NavigationLayout(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier.padding(end = 8.dp)
                     ) {
-                         Avatar(user = user, size = 40.dp, withText = false)
+                        Avatar(user = user, size = 40.dp, withText = false)
                     }
                 }
 

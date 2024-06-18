@@ -115,7 +115,7 @@ fun NewEmailScreen(
         ), label = ""
     )
     var selectedItemIndex by rememberSaveable {
-        mutableStateOf(2)
+        mutableStateOf(3)
     }
 
     var recipient by remember { mutableStateOf(emailTo ?: "") }
@@ -197,13 +197,11 @@ fun NewEmailScreen(
         val initialMinute = calendar.get(Calendar.MINUTE)
 
         val timePickerDialog = TimePickerDialog(
-            context,
-            { _, hourOfDay, minute ->
+            context, { _, hourOfDay, minute ->
                 calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
                 calendar.set(Calendar.MINUTE, minute)
                 scheduledDateTime = calendar.time
-            },
-            initialHour, initialMinute, true
+            }, initialHour, initialMinute, true
         )
         timePickerDialog.show()
     }
@@ -215,13 +213,11 @@ fun NewEmailScreen(
         val initialDay = calendar.get(Calendar.DAY_OF_MONTH)
 
         val datePickerDialog = DatePickerDialog(
-            context,
-            { _, year, month, day ->
+            context, { _, year, month, day ->
                 calendar.set(year, month, day)
                 scheduledDateTime = calendar.time
                 showTimePicker(context)
-            },
-            initialYear, initialMonth, initialDay
+            }, initialYear, initialMonth, initialDay
         )
         datePickerDialog.show()
     }
@@ -267,17 +263,46 @@ fun NewEmailScreen(
                     Spacer(modifier = Modifier.height(10.dp))
                     Text(text = "E-mails")
                     Spacer(modifier = Modifier.height(10.dp))
-                    DrawerItem("Todos da caixa de entrada", navController, "dashboard", R.drawable.all_emails, emailListType = "inbox")
-                    DrawerItem("Enviados", navController, "dashboard", R.drawable.all_emails, emailListType = "sent")
+                    DrawerItem(
+                        "Todos da caixa de entrada",
+                        { navController.navigate("dashboard") },
+                        R.drawable.all_emails,
+                        emailListType = "inbox"
+                    )
+                    DrawerItem(
+                        "Enviados",
+                        { navController.navigate("dashboard") },
+                        R.drawable.all_emails,
+                        emailListType = "sent"
+                    )
                     Divider()
                     Spacer(modifier = Modifier.height(10.dp))
                     Text(text = "Menu")
                     Spacer(modifier = Modifier.height(10.dp))
-                    DrawerItem("Início", navController, "dashboard", R.drawable.home_selected_icon, emailListType = "inbox")
-                    DrawerItem("Calendário", navController, "calendar", R.drawable.calendar_selected_icon, emailListType = "inbox")
-                    DrawerItem("Novo", navController, "new-email", R.drawable.add_selected_icon, emailListType = "inbox")
-                    DrawerItem("Categoria", navController, "category", R.drawable.category_selected, emailListType = "inbox")
-                    DrawerItem("Chat", navController, "chatOnboarding", R.drawable.chat_selected_icon, emailListType = "inbox")
+                    DrawerItem(
+                        "Início",
+                        { navController.navigate("dashboard") },
+                        R.drawable.home_selected_icon,
+                        emailListType = "inbox"
+                    )
+                    DrawerItem(
+                        "Calendário",
+                        { navController.navigate("calendar") },
+                        R.drawable.calendar_selected_icon,
+                        emailListType = "inbox"
+                    )
+                    DrawerItem(
+                        "Novo",
+                        { navController.navigate("new-email") },
+                        R.drawable.add_selected_icon,
+                        emailListType = "inbox"
+                    )
+                    DrawerItem(
+                        "Categoria",
+                        { Toast.makeText(context, "Em breve gerenciamento de categorias estará disponível!", Toast.LENGTH_SHORT).show() },
+                        R.drawable.category_selected,
+                        emailListType = "inbox"
+                    )
                     Spacer(modifier = Modifier.fillMaxSize())
                 }
             }
@@ -294,8 +319,16 @@ fun NewEmailScreen(
                 ) {
                     navBottomItems.forEachIndexed { index, item ->
                         NavigationBarItem(selected = selectedItemIndex == index, onClick = {
-                            index.also { selectedItemIndex = it }
-                            navController.navigate(item.url)
+                            if (item.url !== "category") {
+                                navController.navigate(item.url)
+                                index.also { selectedItemIndex = it }
+                            } else {
+                                Toast.makeText(
+                                    context,
+                                    "Em breve gerenciamento de categorias estará disponível!",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
                         }, label = {
                             Text(text = item.title)
                         }, alwaysShowLabel = false, icon = {
@@ -411,7 +444,9 @@ fun NewEmailScreen(
                         )
                         Spacer(modifier = Modifier.height(16.dp))
                         OutlinedTextField(
-                            value = scheduledDateTime?.let { DateUtils.getBrazilianDateTimeFormat().format(it) } ?: "",
+                            value = scheduledDateTime?.let {
+                                DateUtils.getBrazilianDateTimeFormat().format(it)
+                            } ?: "",
                             enabled = false,
                             onValueChange = {},
                             label = { Text("Agendar envio") },
@@ -475,11 +510,9 @@ fun NewEmailScreen(
                                 modifier = Modifier.fillMaxWidth()
                             ) {
                                 Checkbox(
-                                    checked = task.isCompleted,
-                                    onCheckedChange = { isChecked ->
+                                    checked = task.isCompleted, onCheckedChange = { isChecked ->
                                         toggleTaskCompletion(index)
-                                    },
-                                    modifier = Modifier.padding(end = 8.dp, top = 20.dp)
+                                    }, modifier = Modifier.padding(end = 8.dp, top = 20.dp)
                                 )
                                 Input(
                                     value = task.title,
@@ -493,26 +526,23 @@ fun NewEmailScreen(
                                 IconButton(
                                     onClick = {
                                         removeTask(index)
-                                    },
-                                    modifier = Modifier.padding(start = 8.dp, top = 20.dp)
+                                    }, modifier = Modifier.padding(start = 8.dp, top = 20.dp)
                                 ) {
                                     Icon(
-                                        Icons.Default.Delete,
-                                        contentDescription = "Delete Task"
+                                        Icons.Default.Delete, contentDescription = "Delete Task"
                                     )
                                 }
                             }
                             Spacer(modifier = Modifier.height(8.dp))
                         }
-                            OutlinedButton(onClick = {
-                                val newTask = Task("", isCompleted = false)
-                                addTask(newTask)
-                            }) {
-                                Text(
-                                    color = colorResource(id = R.color.white),
-                                    text = "Adicionar tarefa"
-                                )
-                            }
+                        OutlinedButton(onClick = {
+                            val newTask = Task("", isCompleted = false)
+                            addTask(newTask)
+                        }) {
+                            Text(
+                                color = colorResource(id = R.color.white), text = "Adicionar tarefa"
+                            )
+                        }
                         Spacer(modifier = Modifier.height(8.dp))
 
                         GradientButton(
@@ -526,8 +556,3 @@ fun NewEmailScreen(
         }
     }
 }
-
-
-
-
-

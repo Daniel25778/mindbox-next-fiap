@@ -86,7 +86,7 @@ class ChatBotService(
         const val MEETING_ADJUST =
             "na verdade, a reunião irá durar uma hora"
         const val CONFIRM_MEETING = "Agora as informações da reunião estão corretas"
-        const val CHECK_PENDING_TASKS = "Pode me mostrar as tarefas que tenho para esta semana?"
+        const val CHECK_PENDING_TASKS = "Pode me mostrar as tarefas pendentes que tenho para esta semana?"
         const val MARK_TASK_AS_FINISHED = "Já enviei o convite da reunião para a equipe"
         const val ORGANIZE_EDUCATION_EMAILS  = "Obrigado. Mudando de assunto, estou me sentindo perdido sobre os e-mails da categoria de educação. Você pode me ajudar a organizar essa bagunça?"
         const val OLD_FIAP_MEETINGS  = "há alguns e-mails da FIAP que são convites para reuniões que já aconteceram"

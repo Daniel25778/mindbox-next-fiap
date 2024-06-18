@@ -25,7 +25,15 @@ class NavBottomItemDataProvider: NavBottomDataProviderInterface {
                 painterResourceSelectedIcon = R.drawable.calendar_selected_icon,
                 painterResourceUnselectedIcon = R.drawable.calendar_unselected_icon
             ),
-
+            NavBottomItem(
+                title = "Chat",
+                url = "chatOnboarding",
+                selectedIcon = null,
+                unselectedIcon = null,
+                hasNews = false,
+                painterResourceSelectedIcon = R.drawable.chat_selected_icon,
+                painterResourceUnselectedIcon = R.drawable.chat_unselected_icon
+            ),
             NavBottomItem(
                 title = "Novo",
                 url = "new-email",
@@ -44,15 +52,6 @@ class NavBottomItemDataProvider: NavBottomDataProviderInterface {
                 hasNews = false,
                 painterResourceSelectedIcon = R.drawable.category_selected,
                 painterResourceUnselectedIcon = R.drawable.category_unselected
-            ),
-            NavBottomItem(
-                title = "Chat",
-                url = "chatOnboarding",
-                selectedIcon = null,
-                unselectedIcon = null,
-                hasNews = false,
-                painterResourceSelectedIcon = R.drawable.chat_selected_icon,
-                painterResourceUnselectedIcon = R.drawable.chat_unselected_icon
             ),
         )
     }

@@ -1,6 +1,7 @@
 package br.com.mindbox.screens.dashboard
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -89,7 +90,8 @@ fun DashBoardScreen(
     val userRepository = UserRepository(context)
     val emailRepository = EmailRepository(context)
     val listRecipients: List<Long> = listOf<Long>(user.id)
-    val usersWithRecentEmails = remember { userRepository.findReceiversBySenderIdOrderByRecentEmails(user.id) }
+    val usersWithRecentEmails =
+        remember { userRepository.findReceiversBySenderIdOrderByRecentEmails(user.id) }
     val emailsSentToUsers = remember { emailRepository.findEmailsByRecipientIds(listRecipients) }
     val startAnimation by remember { mutableStateOf(false) }
     val alphaAnim: State<Float> = animateFloatAsState(
@@ -136,17 +138,58 @@ fun DashBoardScreen(
                     Spacer(modifier = Modifier.height(10.dp))
                     Text(text = "E-mails")
                     Spacer(modifier = Modifier.height(10.dp))
-                    DrawerItem("Todos da caixa de entrada", navController, "dashboard", R.drawable.all_emails, emailListType = "inbox")
-                    DrawerItem("Enviados", navController, "dashboard", R.drawable.all_emails, emailListType = "sent")
+                    DrawerItem(
+                        "Todos da caixa de entrada",
+                        { navController.navigate("dashboard") },
+                        R.drawable.all_emails,
+                        emailListType = "inbox"
+                    )
+                    DrawerItem(
+                        "Enviados",
+                        { navController.navigate("dashboard") },
+                        R.drawable.all_emails,
+                        emailListType = "sent"
+                    )
                     Divider()
                     Spacer(modifier = Modifier.height(10.dp))
                     Text(text = "Menu")
                     Spacer(modifier = Modifier.height(10.dp))
-                    DrawerItem("Início", navController, "dashboard", R.drawable.home_selected_icon, emailListType = "inbox")
-                    DrawerItem("Calendário", navController, "calendar", R.drawable.calendar_selected_icon, emailListType = "inbox")
-                    DrawerItem("Novo", navController, "new-email", R.drawable.add_selected_icon, emailListType = "inbox")
-                    DrawerItem("Categoria", navController, "category", R.drawable.category_selected, emailListType = "inbox")
-                    DrawerItem("Chat", navController, "chatOnboarding", R.drawable.chat_selected_icon, emailListType = "inbox")
+                    DrawerItem(
+                        "Início",
+                        { navController.navigate("dashboard") },
+                        R.drawable.home_selected_icon,
+                        emailListType = "inbox"
+                    )
+                    DrawerItem(
+                        "Calendário",
+                        { navController.navigate("calendar") },
+                        R.drawable.calendar_selected_icon,
+                        emailListType = "inbox"
+                    )
+                    DrawerItem(
+                        "Chat",
+                        { navController.navigate("chatOnboarding") },
+                        R.drawable.chat_selected_icon,
+                        emailListType = "inbox"
+                    )
+                    DrawerItem(
+                        "Novo",
+                        { navController.navigate("new-email") },
+                        R.drawable.add_selected_icon,
+                        emailListType = "inbox"
+                    )
+                    DrawerItem(
+                        "Categoria",
+                        {
+                            Toast.makeText(
+                                context,
+                                "Em breve gerenciamento de categorias estará disponível!",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        },
+                        R.drawable.category_selected,
+                        emailListType = "inbox"
+                    )
                     Spacer(modifier = Modifier.fillMaxSize())
                 }
             }
@@ -163,8 +206,16 @@ fun DashBoardScreen(
                 ) {
                     navBottomItems.forEachIndexed { index, item ->
                         NavigationBarItem(selected = selectedItemIndex == index, onClick = {
-                            index.also { selectedItemIndex = it }
-                            navController.navigate(item.url)
+                            if (item.url !== "category") {
+                                navController.navigate(item.url)
+                                index.also { selectedItemIndex = it }
+                            } else {
+                                Toast.makeText(
+                                    context,
+                                    "Em breve gerenciamento de categorias estará disponível!",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
                         }, label = {
                             Text(text = item.title)
                         }, alwaysShowLabel = false, icon = {
@@ -284,7 +335,6 @@ fun DashBoardScreen(
                             }
                         }
                     }
-
                 }
             }
         }

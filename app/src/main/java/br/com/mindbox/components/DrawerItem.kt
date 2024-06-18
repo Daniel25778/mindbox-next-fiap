@@ -15,15 +15,13 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import br.com.mindbox.R
 
 @Composable
-fun DrawerItem(text: String, navController: NavController,  destination: String, painter: Int, emailListType: String) {
+fun DrawerItem(text: String,  onClick: () -> Unit, painter: Int, emailListType: String) {
     Row(
         modifier = Modifier.clickable {
-
-            navController.navigate(destination)
+            onClick()
         },
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically

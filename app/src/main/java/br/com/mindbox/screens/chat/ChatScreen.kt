@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -21,14 +20,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Divider
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalDrawerSheet
-import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -44,12 +40,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -59,7 +53,6 @@ import androidx.navigation.NavController
 import br.com.mindbox.R
 import br.com.mindbox.components.AnimatedGradientBackground
 import br.com.mindbox.components.Avatar
-import br.com.mindbox.components.DrawerItem
 import br.com.mindbox.database.repository.CalendarEventParticipantRepository
 import br.com.mindbox.database.repository.CalendarEventRepository
 import br.com.mindbox.model.user.User
@@ -109,62 +102,6 @@ fun ChatScreen(
         messageText = initialResponse.expectedUserResponse
         chatMessages = chatMessages + ChatMessage(responseText, isUserMessage = false)
     }
-
-    var emailListType by rememberSaveable {
-        mutableStateOf("inbox")
-    }
-
-    ModalNavigationDrawer(modifier = Modifier.background(colorResource(id = R.color.layer_mid)),
-        drawerState = drawerState,
-        drawerContent = {
-            ModalDrawerSheet(
-                modifier = Modifier.background(colorResource(id = R.color.layer_mid))
-            ) {
-                Column(
-                    modifier = Modifier
-                        .background(colorResource(id = R.color.layer_mid))
-                        .padding(start = 15.dp)
-                ) {
-                    Spacer(
-                        modifier = Modifier
-                            .height(100.dp)
-                            .background(colorResource(id = R.color.layer_mid))
-                    )
-                    Box(
-                        contentAlignment = Alignment.TopStart,
-                        modifier = Modifier
-                            .height(40.dp)
-                            .width(150.dp)
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.app_logo_horizontal),
-                            contentDescription = "App Logo",
-                            contentScale = ContentScale.Fit,
-                            modifier = Modifier.fillMaxSize()
-                        )
-                    }
-                    Spacer(modifier = Modifier.height(10.dp))
-                    Divider()
-                    Spacer(modifier = Modifier.height(10.dp))
-                    Text(text = "E-mails")
-                    Spacer(modifier = Modifier.height(10.dp))
-                    DrawerItem("Todos da caixa de entrada", navController, "alert", R.drawable.home_selected_icon,  emailListType = "inbox")
-                    DrawerItem("Enviados", navController, "alert", R.drawable.home_selected_icon, emailListType = "inbox")
-                    Divider()
-                    Spacer(modifier = Modifier.height(10.dp))
-                    Text(text = "Menu")
-                    Spacer(modifier = Modifier.height(10.dp))
-                    DrawerItem("Início", navController, "dashboard", R.drawable.home_selected_icon,  emailListType = "inbox")
-                    DrawerItem("Calendário", navController, "calendar", R.drawable.calendar_selected_icon, emailListType = "inbox")
-                    DrawerItem("Novo", navController, "new-email", R.drawable.add_selected_icon, emailListType = "inbox")
-                    DrawerItem("Categoria", navController, "category", R.drawable.category_selected, emailListType = "inbox")
-                    DrawerItem("Chat", navController, "chatOnboarding", R.drawable.chat_selected_icon, emailListType = "inbox")
-                    Spacer(modifier = Modifier.fillMaxSize())
-                }
-            }
-        }
-
-    ) {
         Scaffold(modifier = Modifier
             .fillMaxSize()
             .background(colorResource(id = R.color.layer_mid)),
@@ -307,7 +244,6 @@ fun ChatScreen(
             }
         }
     }
-}
 
 @Composable
 fun ChatBotMessage(message: String) {

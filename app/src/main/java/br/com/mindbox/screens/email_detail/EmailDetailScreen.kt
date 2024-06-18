@@ -95,15 +95,15 @@ fun EmailDetailScreen(
     val (replyValue, setReplyValue) = remember { mutableStateOf("") }
 
     val gomaActions = listOf<GomaAction>(GomaAction(displayText = "Traduzir", action = {
-        Toast.makeText(context, "Funcionalidade em construção!", Toast.LENGTH_SHORT).show()
-    }), GomaAction(displayText = "Responder automaticamente", action = {
-        Toast.makeText(context, "Funcionalidade em construção!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "Em breve disponível!", Toast.LENGTH_SHORT).show()
+    }), GomaAction(displayText = "Sugestão de resposta", action = {
+        Toast.makeText(context, "Em breve disponível!", Toast.LENGTH_SHORT).show()
     }), GomaAction(displayText = "Resumir", action = {
-        Toast.makeText(context, "Funcionalidade em construção!", Toast.LENGTH_SHORT).show()
-    }), GomaAction(displayText = "Adicionar ao calendário", action = {
-        Toast.makeText(context, "Funcionalidade em construção!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "Em breve disponível!", Toast.LENGTH_SHORT).show()
+    }), GomaAction(displayText = "Adicionar a minhas tarefas", action = {
+        Toast.makeText(context, "Em breve disponível!", Toast.LENGTH_SHORT).show()
     }), GomaAction(displayText = "Criar tarefa", action = {
-        Toast.makeText(context, "Funcionalidade em construção!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "Em breve disponível!", Toast.LENGTH_SHORT).show()
     }))
 
 
