@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -28,6 +29,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -49,6 +51,9 @@ import br.com.mindbox.dto.auth.LoginDTO
 import br.com.mindbox.model.user.User
 import br.com.mindbox.presentation.sign_in.SignInState
 import br.com.mindbox.service.AuthorizationService
+import br.com.mindbox.service.api.AuthRepository
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 @SuppressLint("SuspiciousIndentation")
 @Composable
@@ -65,6 +70,8 @@ fun Login(
         ), label = ""
     )
     val defaultEmail = "gilberto@locaweb.com.br"
+    var isLoading by rememberSaveable { mutableStateOf(false) }
+    var errorMessage by rememberSaveable { mutableStateOf<String?>(null) }
     var email by remember {
         mutableStateOf(defaultEmail)
     }
@@ -80,13 +87,10 @@ fun Login(
 //    if (loggedUsers.isNotEmpty())
 //        navController.navigate("dashboard")
 
-    val onAuthenticationResult = { user: User? ->
-        if (user != null) {
-            Toast.makeText(context, "Seja bem-vindo!", Toast.LENGTH_SHORT).show()
-            navController.navigate("dashboard")
-        } else {
-            Toast.makeText(context, "Falha na autenticação. Email ou senha incorretos.", Toast.LENGTH_SHORT).show()
-        }
+    val onAuthenticationResult = {
+        Toast.makeText(context, "Seja bem-vindo!", Toast.LENGTH_SHORT).show()
+        navController.navigate("dashboard")
+
     }
     Box {
 
@@ -161,10 +165,30 @@ fun Login(
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 GradientButton(text = "Entrar", onClick = {
-                    val loginDTO = LoginDTO(email, password)
-                    val user = authorizationService.authenticateUser(loginDTO)
-                    onAuthenticationResult(user)
+//                    Versão sem chamada para API
+//                    val loginDTO = LoginDTO(email, password)
+//                    val user = authorizationService.authenticateUser(loginDTO)
+//                    onAuthenticationResult(user)
+
+
+                    isLoading = true
+                    GlobalScope.launch {
+                        val result = AuthRepository.login(email, password)
+                        isLoading = false
+                        result.onSuccess {
+                            onAuthenticationResult()
+                        }.onFailure {
+                            errorMessage = it.message
+                        }
+                    }
+
                 })
+                if (isLoading) {
+                    CircularProgressIndicator()
+                }
+                if (errorMessage != null) {
+                    Text(text = errorMessage!!, color = Color.Red)
+                }
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Text(
@@ -188,7 +212,9 @@ fun Login(
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
-                            modifier = Modifier.size(40.dp).padding(10.dp),
+                            modifier = Modifier
+                                .size(40.dp)
+                                .padding(10.dp),
                             painter = painterResource(id = R.drawable.flat_color_icons_google),
                             contentDescription = "Google",
                             tint = Color.Unspecified
@@ -203,7 +229,9 @@ fun Login(
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
-                            modifier = Modifier.size(40.dp).padding(10.dp),
+                            modifier = Modifier
+                                .size(40.dp)
+                                .padding(10.dp),
                             painter = painterResource(id = R.drawable.outlook_icon),
                             contentDescription = "Outlook",
                             tint = Color.Unspecified

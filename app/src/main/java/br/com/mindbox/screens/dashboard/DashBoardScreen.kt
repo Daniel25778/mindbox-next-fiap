@@ -1,6 +1,7 @@
 package br.com.mindbox.screens.dashboard
 
 import android.annotation.SuppressLint
+import android.telecom.Call
 import android.widget.Toast
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloatAsState
@@ -42,6 +43,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -67,10 +69,16 @@ import br.com.mindbox.components.loadNavBottomItemsWithIcons
 import br.com.mindbox.database.repository.EmailRepository
 import br.com.mindbox.database.repository.UserRepository
 import br.com.mindbox.model.navbottom.NavBottomItem
+import br.com.mindbox.model.user.MyUserResponseDTO
 import br.com.mindbox.presentation.sign_in.UserData
 import br.com.mindbox.service.AuthorizationService
+import br.com.mindbox.service.api.ApiClient
+import br.com.mindbox.service.api.AuthRepository
+import br.com.mindbox.service.api.UserService
 import coil.compose.AsyncImage
 import kotlinx.coroutines.launch
+import retrofit2.Response
+import javax.security.auth.callback.Callback
 
 
 @SuppressLint("SuspiciousIndentation")
@@ -82,9 +90,39 @@ fun DashBoardScreen(
     onSignOut: () -> Unit,
     rawNavBottomItems: List<NavBottomItem>,
 ) {
+
+    var myUserApiResponse by rememberSaveable { mutableStateOf<MyUserResponseDTO?>(null) }
+    var errorMessage by rememberSaveable { mutableStateOf<String?>(null) }
+
+    val context = LocalContext.current
+    val token = AuthRepository.getToken(context) ?: ""
+
+    val userApiService: UserService
+    val apiClient = ApiClient.createClient(token);
+    userApiService = apiClient.create(UserService::class.java)
+
+    LaunchedEffect(Unit) {
+        userApiService.getMe().enqueue(object : retrofit2.Callback<MyUserResponseDTO> {
+            override fun onResponse(
+                call: retrofit2.Call<MyUserResponseDTO>,
+                response: Response<MyUserResponseDTO>
+            ) {
+                if (response.isSuccessful) {
+                    myUserApiResponse = response.body()
+                } else {
+                    errorMessage = "Erro: ${response.code()} - ${response.message()}"
+                }
+            }
+
+            override fun onFailure(call: retrofit2.Call<MyUserResponseDTO>, t: Throwable) {
+                errorMessage = "Erro na requisição: ${t.message}"
+            }
+        })
+    }
+
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val coroutineScope = rememberCoroutineScope()
-    val context = LocalContext.current
+
     val authorizationService = AuthorizationService(context)
     val user = authorizationService.getLoggedUsers()[0];
     val userRepository = UserRepository(context)
@@ -103,6 +141,8 @@ fun DashBoardScreen(
         mutableStateOf(0)
     }
     val navBottomItems = loadNavBottomItemsWithIcons(items = rawNavBottomItems)
+
+
 
     ModalNavigationDrawer(modifier = Modifier.background(colorResource(id = R.color.layer_mid)),
         drawerState = drawerState,
@@ -320,11 +360,13 @@ fun DashBoardScreen(
                         Spacer(modifier = Modifier.height(10.dp))
                         Divider()
                         Spacer(modifier = Modifier.height(10.dp))
-                        Text(
-                            text = "Todos da caixa de entrada",
-                            style = MaterialTheme.typography.titleMedium,
-                            color = colorResource(id = R.color.white)
-                        )
+                        myUserApiResponse?.let {
+                            Text(
+                                text = it.fullName,
+                                style = MaterialTheme.typography.titleMedium,
+                                color = colorResource(id = R.color.white)
+                            )
+                        }
                         Spacer(modifier = Modifier.height(10.dp))
                         LazyColumn(
                             verticalArrangement = Arrangement.spacedBy(20.dp),
