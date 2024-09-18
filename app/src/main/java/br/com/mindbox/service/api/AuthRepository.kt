@@ -11,8 +11,12 @@ object AuthRepository {
     private val authService: AuthService = ApiClient.createAuthClient().create(AuthService::class.java)
 
     suspend fun login(email: String, password: String): Result<String> {
+        println("teste daaaaaa1")
         return try {
+            println("teste daaaaaa2")
             val response = authService.login(LoginDTO(email, password))
+            println("Código de resposta: ${response.code()}")
+            println("Mensagem de resposta: ${response.message()}")
             if (response.isSuccessful) {
                 val token = response.body()?.token
                 if (token != null) {
@@ -38,7 +42,7 @@ object AuthRepository {
     }
 
     fun getToken(context: Context): String? {
-        val sharedPreferences = context.getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE)
-        return sharedPreferences.getString("AUTH_TOKEN", null)
+        val sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        return sharedPreferences.getString("auth_token", null) // Use a mesma chave que foi usada para salvar
     }
 }

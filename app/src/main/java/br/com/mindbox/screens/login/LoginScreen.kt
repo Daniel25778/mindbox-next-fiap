@@ -29,6 +29,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -71,6 +72,7 @@ fun Login(
     )
     val defaultEmail = "gilberto@locaweb.com.br"
     var isLoading by rememberSaveable { mutableStateOf(false) }
+    val coroutineScope = rememberCoroutineScope()
     var errorMessage by rememberSaveable { mutableStateOf<String?>(null) }
     var email by remember {
         mutableStateOf(defaultEmail)
@@ -172,20 +174,17 @@ fun Login(
 
 
                     isLoading = true
-                    GlobalScope.launch {
+                    coroutineScope.launch {
                         val result = AuthRepository.login(email, password)
-                        isLoading = false
+
                         result.onSuccess {
-                            onAuthenticationResult()
+                            println("Autenticação bem-sucedida! Token: $it")
                         }.onFailure {
-                            errorMessage = it.message
+                            println("Falha na autenticação: ${it.message}")
                         }
                     }
 
                 })
-                if (isLoading) {
-                    CircularProgressIndicator()
-                }
                 if (errorMessage != null) {
                     Text(text = errorMessage!!, color = Color.Red)
                 }
