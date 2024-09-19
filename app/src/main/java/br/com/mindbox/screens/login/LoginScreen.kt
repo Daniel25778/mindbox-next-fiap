@@ -178,7 +178,7 @@ fun Login(
                         val result = AuthRepository.login(email, password)
 
                         result.onSuccess {
-                            println("Autenticação bem-sucedida! Token: $it")
+                            onAuthenticationResult()
                         }.onFailure {
                             println("Falha na autenticação: ${it.message}")
                         }
@@ -189,6 +189,7 @@ fun Login(
                     Text(text = errorMessage!!, color = Color.Red)
                 }
                 Spacer(modifier = Modifier.height(16.dp))
+
 
                 Text(
                     text = "ou",
